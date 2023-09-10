@@ -1,14 +1,12 @@
 import React from "react";
 import BasicDatePicker from './DatePicker';
-import Categories from './CategoryPicker';
 import styled from 'styled-components';
 export default function Filters() {
     return(
         <FilterField>
-            <FilterHeader>Filter by date/category:</FilterHeader>
+            <FilterHeader>Filter by date:</FilterHeader>
             <BasicDatePicker label="From"/>
             <BasicDatePicker label="To"/>
-            <Categories />
         </FilterField>
     );
 }

@@ -25,7 +25,6 @@ const StyledHeader = styled.header`
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-start;
-    gap: 20px;
     align-items: center;
     box-shadow: 0px 7px 25px rgba(0,0,0,.1);
     border-bottom: 1px solid rgba(0,0,0,.1);
@@ -38,18 +37,22 @@ const StyledHeader = styled.header`
 `;
 
 const Balance = styled.div`
-    font-family: 'Play', sans-serif;
-    color: #707070;
+    font-family: 'Roboto', sans-serif;
+    color: #606060;
     margin-left: auto;
     font-weight: 600;
     margin-right: 20px;
+    transition : color .3s ease;
+    &:hover {
+        color: #176CC0;
+    }
 `
 
 const Italic = styled.span`
     font-style: italic;
 `
 const Logo = styled.img`
-    margin-left: 10px;
+    margin-left: 20px;
     width: 40px;
     height: 40px;
 

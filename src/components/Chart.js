@@ -33,7 +33,7 @@ export const options = {
     },
     title: {
       display: true,
-      text: 'Chart.js Line Chart',
+      text: 'Income/Expenses chart. Click the datasets to filter out categories.',
     },
   },
 };
