@@ -3,6 +3,8 @@ import styles from "./styles/reg_log.module.css";
 import Button from '@mui/material/Button';
 import { Link } from "react-router-dom";
 import Card from '@mui/material/Card';
+import Checkbox from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
 
 export default function LoginPage(){
     return (
@@ -14,8 +16,10 @@ export default function LoginPage(){
                         <TextField fullWidth id="outlined-basic" label="Email" variant="outlined" />
                         <TextField fullWidth id="outlined-password-input" label="Password" type="password" autoComplete="current-password"/>
                     </div>
-
-                    <Button variant="contained">Sign in</Button>
+                    <div className={styles.btnCheckContainer}>
+                        <FormControlLabel control={<Checkbox />} label="Remember me" />
+                        <Button variant="contained">Sign in</Button>
+                    </div>
                     <Link to="/register"> You don't have an account? Sign un</Link>
                 </div>    
             </Card>

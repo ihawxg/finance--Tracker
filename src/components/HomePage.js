@@ -7,7 +7,7 @@ import Filters from './Filters';
 import EnhancedTable from './EntriesHistory';
 export default function Home() {
     return (
-        <>
+        <HomePage>
             <UpperPageWrapper>
                 <Chart />
                 <AsideWrapper>
@@ -19,14 +19,12 @@ export default function Home() {
             <TransactionHistoryWrapper>
                 <EnhancedTable/>
             </TransactionHistoryWrapper>
-        </>
+        </HomePage>
 
     )
 }
 const HomePage = styled.div`
-    width: 100%;
-    display: flex;
-    flex-flow: row nowrap;
+    margin: 10px;
 `
 const UpperPageWrapper = styled.div`
     display : flex;

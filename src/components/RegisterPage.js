@@ -1,10 +1,8 @@
 import React from "react";
 import DatePick from "./DatePick";
-import Checkbox from '@mui/material/Checkbox';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
 import Button from '@mui/material/Button';
-import { Link, renderMatches } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styles from "./styles/reg_log.module.css";
 import Card from '@mui/material/Card';
 
@@ -19,7 +17,7 @@ export default function RegisterPage(){
             .then(data => setCurrency(Object.keys(data[0].currencies)[0]))
 
         }
-
+    
         fetch("https://spott.p.rapidapi.com/places/ip/me", {
             "method": "GET",
             "headers": {
@@ -54,11 +52,11 @@ export default function RegisterPage(){
                         <DatePick />
                         <TextField className={styles.currency} disabled id="filled-disabled" label="Currency" value={currency} variant="filled" />
                     </div>
-                    <div className={styles.btnCheckContainer}>
-                        <FormControlLabel control={<Checkbox />} label="Remember me" />
-                        <Button variant="contained">Sign up</Button>
-                    </div>
-                        <Link to="/login"> You already have account? Sign in</Link>
+                    
+                    <Button variant="contained">Sign up</Button>
+                
+                    <Link to="/login"> You already have account? Sign in</Link>
+
                 </div>
             </Card>
         </div>

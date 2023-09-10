@@ -63,5 +63,5 @@ export function Chart() {
 }
 
 const ChartContainer = styled.div`
-  width: 70%;
+  width: 80%;
 `

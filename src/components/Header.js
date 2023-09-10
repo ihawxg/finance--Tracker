@@ -27,7 +27,8 @@ const StyledHeader = styled.header`
     justify-content: flex-start;
     gap: 20px;
     align-items: center;
-    box-shadow: 0px 7px 25px rgba(0,0,0,.3);
+    box-shadow: 0px 7px 25px rgba(0,0,0,.1);
+    border-bottom: 1px solid rgba(0,0,0,.1);
 
     @media (max-width: 768px) {
         height: auto;
