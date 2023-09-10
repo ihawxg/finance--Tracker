@@ -1,0 +1,66 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.curve {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+    fill: #2F40A2;
+}
+
+.reverseCurve{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+    transform: rotate(180deg);
+    fill: #2F40A2;
+}
+
+.separator{
+    position: relative;
+}
+
+.someContent{
+    margin-left: 100px;
+    height: 90vh;
+    display: flex;
+    align-items: center;
+    column-gap: 50px;
+}
+
+.graphShow{
+    width: 50vw;
+    height: 350px;
+}
+
+.greetings{
+    color: white;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    font-size: 40px;
+    background-color: #2F40A2;
+    height: 200px;
+    padding-top: 50px;
+}
+
+.restContent{
+    height: 80vh;
+    background-color: #2F40A2;
+}
+
+.salesText{
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    height: 200px;
+    width: 400px;
+}

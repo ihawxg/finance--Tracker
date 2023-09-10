@@ -2,7 +2,7 @@ import styles from "./styles/about_us.module.css"
 
 export default function AboutUsPage(){
     return (
-        <div>
+        <div className="mt-minus">
             <h1 className={styles.greetings}>Welcome to Finance Tracker</h1>
             <div className={styles.separator}>
                 <div className={styles.curve}>
