@@ -1,4 +1,9 @@
-
 .btn{
     margin-left: 20px;
+    text-decoration: none;
+    font-family: 'Play', sans-serif;
+    color: #707070;
+}
+.btn:hover {
+    color: #176CC0;
 }

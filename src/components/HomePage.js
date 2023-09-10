@@ -33,8 +33,6 @@ const UpperPageWrapper = styled.div`
     width: 100%;
     flex-flow : row wrap;
     justify-content: space-between;
-
-
 `;
 const TransactionHistoryWrapper = styled.div`
     margin: 20px;

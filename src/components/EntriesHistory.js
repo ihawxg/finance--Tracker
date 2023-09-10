@@ -21,7 +21,6 @@ import Switch from '@mui/material/Switch';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
-import ArrowDropUpRoundedIcon from '@mui/icons-material/ArrowDropUpRounded';
 
 function createData(type, amount, descr, category, date, id) {
   return {
@@ -93,7 +92,7 @@ const headCells = [
     label: 'Amount',
   },
   {
-    id: 'description',
+    id: 'descr',
     numeric: false,
     disablePadding: false,
     label: 'Description',

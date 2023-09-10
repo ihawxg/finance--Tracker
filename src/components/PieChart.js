@@ -1,4 +1,3 @@
-import { faker } from '@faker-js/faker';
 import styled from 'styled-components'
 import React from 'react';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
@@ -39,4 +38,5 @@ export function PieChart() {
 const ChartContainer = styled.div`
   height: 250px;
   width: 250px;
+
 `
