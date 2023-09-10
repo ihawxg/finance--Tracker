@@ -1,4 +1,5 @@
 import { Routes, Route, Link } from "react-router-dom";
+import HomePage from "./HomePage";
 import AboutUsPage from "./AboutUsPage";
 import LoginPage from "./LoginPage";
 import RegisterPage from "./RegisterPage";
@@ -15,7 +16,7 @@ export default function header(){
             <Link className={styles.btn} to="/about">About us</Link>
 
             <Routes>
-                {/* <Route path="/home" element={<HomePage />}/> */}
+                <Route path="/home" element={<HomePage />}/>
                 <Route path="/login" element={<LoginPage />}/>
                 <Route path="/register" element={<RegisterPage />}/>
                 <Route path="/about" element={<AboutUsPage />}/>
