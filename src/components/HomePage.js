@@ -4,6 +4,7 @@ import { Chart } from './Chart';
 import{ PieChart } from './PieChart';
 import styled from 'styled-components';
 import Filters from './Filters';
+import EnhancedTable from './EntriesHistory';
 export default function Home() {
     return (
         <>
@@ -15,9 +16,9 @@ export default function Home() {
                     <PieChart />
                 </AsideWrapper>
             </UpperPageWrapper>
-            {/* <TransactionHistoryWrapper>
-
-            </TransactionHistoryWrapper> */}
+            <TransactionHistoryWrapper>
+                <EnhancedTable/>
+            </TransactionHistoryWrapper>
         </>
 
     )
@@ -35,8 +36,9 @@ const UpperPageWrapper = styled.div`
 
 
 `;
-// const TransactionHistoryWrapper = styled.div`
-// `;
+const TransactionHistoryWrapper = styled.div`
+    margin: 20px;
+`;
 const AsideWrapper = styled.div`
     display: flex;
     flex-direction: column;
