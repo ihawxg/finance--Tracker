@@ -37,6 +37,8 @@ export default function RegisterPage(){
                 return "";           
         }
     }
+
+    //getting the local currency of the user
     React.useEffect( () => {
         function getCurrency(country){
             fetch(`https://restcountries.com/v3.1/name/${country}?fullText=true`)
@@ -61,6 +63,11 @@ export default function RegisterPage(){
         })
     }, []);
 
+    const handleDateChange = (ev) => {
+        console.log("Vasko");
+        console.log(ev.target.value);
+    }
+
     return (
         <div className={styles.formContainer}>
             <Card className={styles.regCard}>
@@ -74,7 +81,7 @@ export default function RegisterPage(){
                         <TextField fullWidth name="confirm" id="pass-rep" label="Repeat Password" type="password" autoComplete="current-password" onInput={e => handleInput(e)}/>
                     </div>
                     <div className={styles.dateCurrencyContainer}>
-                        <DatePick name="birthDate"/>
+                        <DatePick name="birthDate" onChange={handleDateChange}/>
                         <TextField className={styles.currency} disabled id="filled-disabled" label="Currency" value={currency} variant="filled" />
                     </div>
                     
