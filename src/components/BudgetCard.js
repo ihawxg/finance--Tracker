@@ -35,8 +35,8 @@ export default function BudgetCard(){
                     
                 </div>
                 <div className={styles.btnContainer}>
-                    <FormDialog clickAction={(amount) => setGoal(prev => ({...prev, amount: prev.amount + amount}))} value="Savings" title="Add savings"/>
-                    <Button className="w-200" variant="outlined" color="error" onClick={handleClick}>Abort Goal</Button>
+                    <FormDialog className={styles.btn} clickAction={(amount) => setGoal(prev => ({...prev, amount: prev.amount + amount}))} value="Savings" title="Add savings"/>
+                    <Button className={styles.btn} variant="outlined" color="error" onClick={handleClick}>Abort Goal</Button>
                 </div>
 
             </Card>}
@@ -45,3 +45,4 @@ export default function BudgetCard(){
     );
     
 }
+

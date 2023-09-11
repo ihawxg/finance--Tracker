@@ -10,6 +10,7 @@ import { StyledEngineProvider } from '@mui/material/styles';
 import CategoryPicker from "./CategoryPicker";
 import styled from 'styled-components';
 import { useState } from 'react';
+import styles from "./styles/progress_card.module.css";
 
 export default function FormDialog(props) {
   const [open, setOpen] = useState(false);
@@ -17,7 +18,7 @@ export default function FormDialog(props) {
   const [descr, setDescr] = useState("");
   const [date, setDate] = useState(new Date());
   const [category, setCategory] = useState("");
-// there's a one char delay on input/change if we console.log the result
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -55,7 +56,7 @@ export default function FormDialog(props) {
 
   return (
     <div>
-      <Button className="w-200" variant="outlined" onClick={handleClickOpen}>
+      <Button className={styles.btn} variant="outlined" onClick={handleClickOpen}>
         {props.title}
       </Button>
       <Dialog open={open} onClose={handleClose}>

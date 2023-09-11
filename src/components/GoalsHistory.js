@@ -338,7 +338,7 @@ export default function GoalHistory() {
                       </TableCell>
                       <TableCell align="right">{row.amount}</TableCell>
                       <TableCell align="right">{row.descr}</TableCell>
-                      <TableCell align="right">{row.category}</TableCell>
+                      {/* <TableCell align="right">{row.category}</TableCell> */}
                       <TableCell align="right">{row.date}</TableCell>
                     </TableRow>
                   );

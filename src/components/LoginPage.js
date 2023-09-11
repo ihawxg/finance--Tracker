@@ -37,6 +37,9 @@ export default function LoginPage(){
         signInWithEmailAndPassword(auth, email, pass)
         .then((userCredential) => {
             const user = userCredential.user;
+            if(rememberMe){
+                localStorage.setItem("currenctUser", email);
+            } 
             navigate("/home");
         })
         .catch((error) => {

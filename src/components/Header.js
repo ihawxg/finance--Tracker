@@ -14,13 +14,22 @@ export default function Header(){
     }, []);
     const [navStatusOpen, setNavStatusOpen] = useState(false);
     const [screenSize, setScreenSize] = useState("large");
+    const [accountText, setAccountText] = useState(false);
     const handleHeaderOnResize = () => {
         setScreenSize(window.innerWidth);
+        if(window.innerWidth < 768) {
+            setAccountText(true);
+        }
+        else{
+            setAccountText(false);
+        }
     }
+
     const handleClick = () => {
         if(screenSize < 768) {
-            setNavStatusOpen(!navStatusOpen)  
+            setNavStatusOpen(!navStatusOpen);
         }
+        
     }
     return (
         <StyledHeader status={navStatusOpen}>
@@ -31,10 +40,12 @@ export default function Header(){
             <Link className={styles.btn} to="/register">Register</Link>
             <Balance><Italic>Balance:</Italic> BGN 0.00</Balance>
             <div className={styles.profileIcon}>
-                <Link className={styles.profile} to="/profile">
-                    <AccountCircleIcon fontSize="large" />
+                <Link className={styles.btn} to="/profile">
+                    {accountText ? "Account" : <AccountCircleIcon fontSize="large" />}
                 </Link>
             </div>
+                
+            <Link className={styles.btn} to="/">Logout</Link>
         </StyledHeader>
     );
 }

@@ -21,7 +21,7 @@ export default function UserInfo(){
 
     return (
         <div className={styles.boxContainer}>
-                <Paper elevation={2} className={styles.box}>
+            <Paper elevation={2} className={styles.box}>
                 <div className={styles.pic}>
                     <img src="prof_pic.png" className={styles.image} alt="profile-pic"/>
                 </div>
@@ -33,10 +33,11 @@ export default function UserInfo(){
                     <div className={styles.nameContainer}>
                         <TextField disabled={!editable} className={styles.mailInput} name="email" id="email" label="Email" variant="outlined" value={user.email} onInput={handleInput}/>
                     </div>
-                    <div className={styles.birthEditContainer}>
-                        <DatePick disabled={!editable}/>
-                        <Button onClick={handleClick} variant="contained" color={editable ? "success" : "primary"}>{editable ? "Save" : "Edit"}</Button>
-                    </div>
+               
+                    <div className={styles.nameContainer}>
+                        <DatePick disabled={!editable} className={styles.date}/>
+                        <Button className="w-200" onClick={handleClick} variant="contained" color={editable ? "success" : "primary"}>{editable ? "Save Info" : "Edit Info"}</Button>
+                    </div> 
                 </div>
             </Paper>
         </div>
