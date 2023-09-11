@@ -6,37 +6,42 @@ import { Link } from "react-router-dom";
 import styles from "./styles/reg_log.module.css";
 import Card from '@mui/material/Card';
 import { useState } from 'react';
+import Alert from '@mui/material/Alert';
+import { auth } from "../firebase";
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+
 export default function RegisterPage(){
 
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
-    const [email, setEmail] = useState("");
-    const [pass, setPass] = useState("");
-    const [confirm, setConfrim] = useState("");
-    // const [birthDate, setBirthDate] = useState("");
+    const [userData, setUserData] = useState({firstName: "", lastName: "", email: "", pass: "", confirm: "", birthdate: "", startBudget: ""});
+
     const [currency, setCurrency] = useState("");
 
+    const [message, setMessage] = useState("You'r dead baka");
+
+    const [hasError, setHasError] = useState(false);
+
     const handleInput = e => {
-        switch(e.target.name) {
-            case "firstName" :
-                setFirstName(e.target.value.trim());
-                break;
-            case "lastName":
-                setLastName(e.target.value.trim());
-                break;
-            case "email":
-                setEmail(e.target.value.trim());
-                break;
-            case "pass":
-                setPass(e.target.value.trim());
-                break;
-            case "confirm":
-                setConfrim(e.target.value.trim());
-                break;
-            default :
-                return "";           
+        setUserData(prevData => ({...prevData, [e.target.name]: e.target.value}));
+        console.log(userData);
+    }
+
+    const handleClick = () => {
+        if(userData.pass !== userData.confirm){
+            setHasError(true);
+            setMessage("Password missmatch!")
+        }
+        else{
+            createUserWithEmailAndPassword(auth, userData.email, userData.pass)
+            .then((userCredential) => {
+                const user = userCredential.user;
+            })
+            .catch((error) => {
+                setHasError(true);
+                setMessage("Account with the same email already exists!");
+            });
         }
     }
+
 
     //getting the local currency of the user
     React.useEffect( () => {
@@ -63,32 +68,35 @@ export default function RegisterPage(){
         })
     }, []);
 
-    const handleDateChange = (ev) => {
-        console.log("Vasko");
-        console.log(ev.target.value);
+    const isFilled = () => {
+        return (userData.firstName && userData.lastName && userData.email && userData.pass && userData.confirm && userData.birthdate && userData.startBudget && userData.startBudget != 0);
     }
 
     return (
         <div className={styles.formContainer}>
             <Card className={styles.regCard}>
+                
                 <div className={styles.Regform}>
                 <h3 className={styles.formText}>Registration</h3>
                     <div className={styles.input_container}>
-                        <TextField fullWidth name="firstName" id="fname" label="First Name" variant="outlined" onInput={e => handleInput(e)} />
-                        <TextField fullWidth name="lastName" id="lname" label="Last Name" variant="outlined" onInput={e => handleInput(e)}/>
-                        <TextField fullWidth name="email" id="email" label="Email" variant="outlined" onInput={e => handleInput(e)}/>
-                        <TextField fullWidth name="pass" id="pass" label="Password" type="password" autoComplete="current-password" onInput={e => handleInput(e)}/>
-                        <TextField fullWidth name="confirm" id="pass-rep" label="Repeat Password" type="password" autoComplete="current-password" onInput={e => handleInput(e)}/>
+                        <TextField fullWidth name="firstName" id="fname" label="First Name" variant="outlined" value={userData.firstName} onInput={e => handleInput(e)} />
+                        <TextField fullWidth name="lastName" id="lname" label="Last Name" variant="outlined" value={userData.lastName} onInput={e => handleInput(e)}/>
+                        <TextField fullWidth name="email" id="email" label="Email" variant="outlined" value={userData.email} onInput={e => handleInput(e)}/>
+                        <TextField fullWidth name="pass" id="pass" label="Password" type="password" value={userData.pass} autoComplete="current-password" onInput={e => handleInput(e)}/>
+                        <TextField fullWidth name="confirm" id="pass-rep" label="Repeat Password" type="password" value={userData.confirm} autoComplete="current-password" onInput={e => handleInput(e)}/>
                     </div>
                     <div className={styles.dateCurrencyContainer}>
-                        <DatePick name="birthDate" onChange={handleDateChange}/>
-                        <TextField className={styles.currency} disabled id="filled-disabled" label="Currency" value={currency} variant="filled" />
+                        <DatePick name="birthDate" handleDateChange={setUserData}/>
+                        <TextField className={styles.startBudget} name="startBudget" id="budget" label="Start Budget" variant="outlined" onInput={e => handleInput(e)} />
+                        <TextField className={styles.currency} disabled id="currency" label="Currency" value={currency} variant="filled" />
                     </div>
                     
-                    <Button variant="contained">Sign up</Button>
+                    <Button variant="contained" disabled={!isFilled()} onClick={handleClick}>Sign up</Button>
                 
-                    <Link to="/login"> You already have account? Sign in</Link>
-
+                    <div>
+                        <span> You already have account? </span> <Link to="/login"> Sign in</Link>
+                    </div>
+                    { hasError && <Alert severity="error">{message}</Alert> }
                 </div>
             </Card>
         </div>

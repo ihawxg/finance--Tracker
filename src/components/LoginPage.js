@@ -6,12 +6,19 @@ import Card from '@mui/material/Card';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import { useState } from 'react';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../firebase';
+import { Alert } from '@mui/material';
+import { useNavigate } from "react-router-dom";
 
 export default function LoginPage(){
+
+    const navigate = useNavigate();
 
     const [email, setEmail] = useState("");
     const [pass, setPass] = useState("");
     const [rememberMe, setRememberMe] = useState(false);
+    const [hasError, setHasError] = useState(false);
 
     const handleInput = e => {
         if(e.target.name === "loginEmail") {
@@ -19,6 +26,22 @@ export default function LoginPage(){
         } else if(e.target.name === "loginPass") {
             setPass(e.target.value.trim());
         } 
+    }
+
+    const handleChange = () => {
+        setRememberMe(prev => !prev);
+        console.log(rememberMe);
+    }
+
+    const handleClick = () => {
+        signInWithEmailAndPassword(auth, email, pass)
+        .then((userCredential) => {
+            const user = userCredential.user;
+            navigate("/home");
+        })
+        .catch((error) => {
+            setHasError(true)
+        });
     }
 
     return (
@@ -44,10 +67,11 @@ export default function LoginPage(){
                             onInput={(e) => handleInput(e)}/>
                     </div>
                     <div className={styles.btnCheckContainer}>
-                        <FormControlLabel control={<Checkbox />} label="Remember me" />
-                        <Button variant="contained" disabled={(email && pass) ? false : true}>Sign in</Button>
+                        <FormControlLabel control={<Checkbox checked={rememberMe} onChange={handleChange}/>} label="Remember me" />
+                        <Button variant="contained" disabled={(email && pass) ? false : true} onClick={handleClick}>Sign in</Button>
                     </div>
-                    <Link to="/register"> You don't have an account? Sign up</Link>
+                    <span> Need an account? </span> <Link to="/register"> Sign up</Link>
+                    { hasError && <Alert severity="error">You have entered wrong credentials! Please try again</Alert> }
                 </div>    
             </Card>
         </div>
