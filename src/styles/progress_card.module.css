@@ -1,0 +1,26 @@
+.progress{
+    width: 50vw;
+    height: 25px;
+}
+
+.card{
+    display: flex;
+    justify-content: center;
+}
+
+.formContainer{
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+.progCard{
+    width: 60vw;
+    height: 500px;
+}
+
+.infoContainer{
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 60px;
+}

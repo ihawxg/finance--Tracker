@@ -1,4 +1,5 @@
-import styles from "./styles/about_us.module.css"
+import styles from "../styles/about_us.module.css"
+
 
 export default function AboutUsPage(){
     return (

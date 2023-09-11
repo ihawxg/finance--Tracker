@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import styles from "./styles/nav.module.css";
 import styled from 'styled-components';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 export default function Header(){
    
@@ -12,6 +13,11 @@ export default function Header(){
             <Link className={styles.btn} to="/login">Login</Link>
             <Link className={styles.btn} to="/register">Register</Link>
             <Balance><Italic>Current Balance:</Italic> BGN 0.00</Balance>
+            <div>
+                <Link className={styles.profile} to="/profile">
+                    <AccountCircleIcon fontSize="large"/>
+                </Link>
+            </div>
         </StyledHeader>
     );
 }

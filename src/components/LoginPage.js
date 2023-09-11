@@ -20,7 +20,7 @@ export default function LoginPage(){
                         <FormControlLabel control={<Checkbox />} label="Remember me" />
                         <Button variant="contained">Sign in</Button>
                     </div>
-                    <Link to="/register"> You don't have an account? Sign un</Link>
+                    <Link to="/register"> You don't have an account? Sign up</Link>
                 </div>    
             </Card>
         </div>

@@ -3,7 +3,7 @@ import DatePick from "./DatePick";
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { Link } from "react-router-dom";
-import styles from "./styles/reg_log.module.css";
+import styles from "../styles/reg_log.module.css";
 import Card from '@mui/material/Card';
 
 export default function RegisterPage(){

@@ -4,6 +4,8 @@ import HomePage from "./components/HomePage";
 import AboutUsPage from "./components/AboutUsPage";
 import LoginPage from "./components/LoginPage";
 import RegisterPage from "./components/RegisterPage";
+import ProfilePage from "./components/ProfilePage";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './main.css';
 
 function App() {
@@ -16,8 +18,10 @@ function App() {
             <Route path="/register" element={<RegisterPage />}/>
             <Route path="/about" element={<AboutUsPage />}/>
             <Route path="/" element={<AboutUsPage />}/>
+            <Route path="/profile" element={<ProfilePage/>}/>
         </Routes>
     </>
   );
 }
+
 export default App;

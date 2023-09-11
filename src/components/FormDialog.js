@@ -38,7 +38,7 @@ export default function FormDialog(props) {
             fullWidth
             variant="standard"
           />
-          {props.value === "Expense" && (
+          {props.value === "Expense" || props.value === "Savings" && (
             <TextField
             margin="dense"
             id="name"
@@ -48,14 +48,14 @@ export default function FormDialog(props) {
             variant="standard"
           />
           )}
-
+          
           <Pickers>
             <StyledEngineProvider injectFirst>
               <BasicDatePicker label="Choose date" />
               {props.value === "Expense" && (<CategoryPicker />)}
             </StyledEngineProvider>
           </Pickers>
-
+          
         </DialogContent>
         <DialogActions>
           <Button fullWidth={true} onClick={handleClose}>Cancel</Button>
