@@ -24,7 +24,6 @@ export default function FormDialog(props) {
 
   const handleAdd = (clickAction, val) => {
     if(typeof clickAction != "undefined"){
-      console.log(val);
       clickAction(Number(val));
     }
     setOpen(false);

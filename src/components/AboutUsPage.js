@@ -1,9 +1,10 @@
-import styles from "../styles/about_us.module.css"
-
-
+import styles from "./styles/about_us.module.css"
+import Form from './ContactForm';
+import Footer from "./Footer";
 export default function AboutUsPage(){
     return (
         <div className="mt-minus">
+            <Form/>
             <h1 className={styles.greetings}>Welcome to Finance Tracker</h1>
             <div className={styles.separator}>
                 <div className={styles.curve}>
@@ -32,9 +33,8 @@ export default function AboutUsPage(){
             </div>
 
             <div className={styles.restContent}>
-
+               <Footer />
             </div>
-            
         </div>
     );
 }
