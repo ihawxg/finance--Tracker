@@ -9,6 +9,8 @@ import { useState } from 'react';
 import Alert from '@mui/material/Alert';
 import { auth } from "../firebase";
 import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { db } from "../firebase";
+import { getDocs, addDoc, updateDoc, deleteDoc, doc, collection } from "firebase/firestore";
 
 export default function RegisterPage(){
 
@@ -20,12 +22,33 @@ export default function RegisterPage(){
 
     const [hasError, setHasError] = useState(false);
 
+    const usersCollectionRef = collection(db, "users");
+
+    const createUser = async () => {
+        //init a new User with his coresponding data
+        await addDoc(usersCollectionRef, { firstName: userData.firstName,
+                                            lastName: userData.lastName,
+                                            email: userData.email, 
+                                            birthdate: userData.birthdate,
+                                            startBudget: userData.startBudget,
+                                            incomes: [],
+                                            expenses: [],
+                                            goals: []});
+    };
+
+    const updateUser = async (id, age) => {
+        // const userDoc = doc(db, "users", id);
+        // const newFields = { age: age + 1 };
+        // await updateDoc(userDoc, newFields);
+    };
+
     const handleInput = e => {
         setUserData(prevData => ({...prevData, [e.target.name]: e.target.value}));
-        console.log(userData);
     }
 
     const handleClick = () => {
+        setHasError(false);
+
         if(userData.pass !== userData.confirm){
             setHasError(true);
             setMessage("Password missmatch!")
@@ -33,7 +56,14 @@ export default function RegisterPage(){
         else{
             createUserWithEmailAndPassword(auth, userData.email, userData.pass)
             .then((userCredential) => {
-                const user = userCredential.user;
+                try{
+                    const user = userCredential.user;
+                    createUser();
+                }
+                catch(err){
+                    setHasError(true);
+                    setMessage("Unable to create an account");
+                }
             })
             .catch((error) => {
                 setHasError(true);

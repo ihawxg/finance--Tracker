@@ -43,12 +43,12 @@ export default function FormDialog(props) {
           setAmount(ev.target.value);
           break;
       case "description": 
-          setDescr(ev.target.value.trim());
+          setDescr(ev.target.value);
           break;
       case "category"  :
         setCategory(ev.target.value);
         console.log(category);
-        break;  
+        break;
     }
    
   }

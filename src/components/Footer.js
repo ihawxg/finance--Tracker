@@ -68,4 +68,5 @@ const StyledFooter = styled.footer`
 const Column = styled.div`
     display: flex;
     flex-direction : column;
+    margin-top: 50px;
 `
