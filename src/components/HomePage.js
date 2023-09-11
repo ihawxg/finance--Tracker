@@ -31,6 +31,10 @@ const UpperPageWrapper = styled.div`
     width: 100%;
     flex-flow : row wrap;
     justify-content: space-between;
+    @media (max-width: 900px) {
+        flex-direction : column;
+        align-items: center;
+    }
 `;
 const TransactionHistoryWrapper = styled.div`
     margin: 20px;
@@ -40,4 +44,5 @@ const AsideWrapper = styled.div`
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+   
 `;

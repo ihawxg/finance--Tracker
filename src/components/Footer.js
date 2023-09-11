@@ -9,45 +9,45 @@ export default function Footer() {
 
     return(
         <StyledFooter>
-                   <Column>
-                    <h4>About</h4>
-                    <a>About Finance Tracker</a>
-                    <a>Accessibilty</a>
-                    <a>Customer Reviews</a>
-                    <a>Terms and Conditions</a>
-                   </Column>
-                   <Column>
-                   <h4>Our Services</h4>
-                    <a>Consulting</a>
-                    <a>Open an account</a>
-                    <a>Portfolio Management</a>
-                    <a>Budget Planner</a>
-                    <a>Income/Expenses Tracker</a>
-                   </Column>
-                   <Column>
-                   <h4>Become a part of us</h4>
-                    <a>Leave us your resume</a>
-                    <a>Refer a friend</a>
-                    <a>Contact our HR</a>
-                    <a>Visit our LinkenIn Page</a>
-                    <a>Come meet us!</a>
-                   </Column>
-                   <Column>
-                   <h4>Customer Support</h4>
-                    <a>Leave a message</a>
-                    <a>Call us</a>
-                    <a>Visit our office</a>
-                    <a>Find us on any social platform</a>
-                   </Column>
-                   <Column>
-                   <h4>Get social with us</h4>
-                   <a><ShareIcon/> Share our page</a>
-                   <a><LinkedInIcon/> Get on board on Linkedin</a>
-                   <a><FacebookIcon/> Find us on Facebook</a>
-                   <a><TwitterIcon/> Follow us on Twitter</a>
-                   <a><YouTubeIcon/> ...And don't forget to subscribe!</a>
-                   </Column>
-               </StyledFooter>
+            <Column>
+                <h4>About</h4>
+                <a>About Finance Tracker</a>
+                <a>Accessibilty</a>
+                <a>Customer Reviews</a>
+                <a>Terms and Conditions</a>
+            </Column>
+            <Column>
+                <h4>Our Services</h4>
+                <a>Consulting</a>
+                <a>Open an account</a>
+                <a>Portfolio Management</a>
+                <a>Budget Planner</a>
+                <a>Income/Expenses Tracker</a>
+            </Column>
+            <Column>
+                <h4>Become a part of us</h4>
+                <a>Leave us your resume</a>
+                <a>Refer a friend</a>
+                <a>Contact our HR</a>
+                <a>Visit our LinkenIn Page</a>
+                <a>Come meet us!</a>
+            </Column>
+            <Column>
+                <h4>Customer Support</h4>
+                <a>Leave a message</a>
+                <a>Call us</a>
+                <a>Visit our office</a>
+                <a>Find us on any social platform</a>
+            </Column>
+            <Column>
+                <h4>Get social with us</h4>
+                <a><ShareIcon/> Share our page</a>
+                <a><LinkedInIcon/> Get on board on Linkedin</a>
+                <a><FacebookIcon/> Find us on Facebook</a>
+                <a><TwitterIcon/> Follow us on Twitter</a>
+                <a><YouTubeIcon/> ...And don't forget to subscribe!</a>
+            </Column>
+        </StyledFooter>
     )
 }
 

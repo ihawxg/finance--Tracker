@@ -195,7 +195,7 @@ const EnhancedTableToolbar = (props) => {
           id="tableTitle"
           component="div"
         >
-          Recent entries
+          Recent Goals
         </Typography>
       )}
 

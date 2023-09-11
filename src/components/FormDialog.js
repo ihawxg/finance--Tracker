@@ -9,17 +9,24 @@ import BasicDatePicker from './DatePicker';
 import { StyledEngineProvider } from '@mui/material/styles';
 import CategoryPicker from "./CategoryPicker";
 import styled from 'styled-components';
+import { useState } from 'react';
 
 export default function FormDialog(props) {
-  const [open, setOpen] = React.useState(false);
-
+  const [open, setOpen] = useState(false);
+  const [amount, setAmount] = useState(0);
+  const [descr, setDescr] = useState("");
+  const [date, setDate] = useState(new Date());
+  const [category, setCategory] = useState("");
+// there's a one char delay on input/change if we console.log the result
   const handleClickOpen = () => {
     setOpen(true);
   };
 
   const handleClose = () => {
-    setOpen(false);
     setAmount(0);
+    setDescr("");
+    setOpen(false);
+    
   };
 
   const handleAdd = (clickAction, val) => {
@@ -30,10 +37,20 @@ export default function FormDialog(props) {
     setAmount(0);
   };
 
-  const [amount, setAmount] = React.useState(0);
-
   const handleInput = (ev) => {
-    setAmount(ev.target.value);
+    switch(ev.target.name) {
+      case "amount": 
+          setAmount(ev.target.value);
+          break;
+      case "description": 
+          setDescr(ev.target.value.trim());
+          break;
+      case "category"  :
+        setCategory(ev.target.value);
+        console.log(category);
+        break;  
+    }
+   
   }
 
   return (
@@ -52,8 +69,9 @@ export default function FormDialog(props) {
             type="number"
             fullWidth
             variant="standard"
+            name="amount"
             value={amount}
-            onInput={handleInput}
+            onChange={handleInput}
           />
           {(props.value === "Expense" || props.value === "Savings") && (
             <TextField
@@ -63,14 +81,16 @@ export default function FormDialog(props) {
             type="text"
             fullWidth
             variant="standard"
-            
+            name ="description"
+            value={descr}
+            onInput={handleInput}
           />
           )}
           
           <Pickers>
             <StyledEngineProvider injectFirst>
               <BasicDatePicker label="Choose date" />
-              {props.value === "Expense" && (<CategoryPicker />)}
+              {props.value === "Expense" && (<CategoryPicker name="category" onChange={handleInput}/>)}
             </StyledEngineProvider>
           </Pickers>
           
