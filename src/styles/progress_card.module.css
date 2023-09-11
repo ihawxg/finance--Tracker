@@ -16,11 +16,18 @@
 
 .progCard{
     width: 60vw;
-    height: 500px;
+    height: 300px;
 }
 
 .infoContainer{
     display: flex;
     justify-content: space-between;
     padding: 20px 60px;
+}
+
+.btnContainer{
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 40px;
+
 }

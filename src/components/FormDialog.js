@@ -19,7 +19,23 @@ export default function FormDialog(props) {
 
   const handleClose = () => {
     setOpen(false);
+    setAmount(0);
   };
+
+  const handleAdd = (clickAction, val) => {
+    if(typeof clickAction != "undefined"){
+      console.log(val);
+      clickAction(Number(val));
+    }
+    setOpen(false);
+    setAmount(0);
+  };
+
+  const [amount, setAmount] = React.useState(0);
+
+  const handleInput = (ev) => {
+    setAmount(ev.target.value);
+  }
 
   return (
     <div>
@@ -37,8 +53,10 @@ export default function FormDialog(props) {
             type="number"
             fullWidth
             variant="standard"
+            value={amount}
+            onInput={handleInput}
           />
-          {props.value === "Expense" || props.value === "Savings" && (
+          {(props.value === "Expense" || props.value === "Savings") && (
             <TextField
             margin="dense"
             id="name"
@@ -46,6 +64,7 @@ export default function FormDialog(props) {
             type="text"
             fullWidth
             variant="standard"
+            
           />
           )}
           
@@ -59,7 +78,7 @@ export default function FormDialog(props) {
         </DialogContent>
         <DialogActions>
           <Button fullWidth={true} onClick={handleClose}>Cancel</Button>
-          <Button fullWidth={true} variant="contained" onClick={handleClose}>Add {props.value}</Button>
+          <Button fullWidth={true} variant="contained" onClick={ () => handleAdd(props.clickAction, amount) }>Add {props.value}</Button>
         </DialogActions>
       </Dialog>
     </div>
