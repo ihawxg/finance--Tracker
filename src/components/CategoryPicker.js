@@ -1,22 +1,33 @@
 import * as React from 'react';
-import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import { useSelector } from 'react-redux';
 
-export default function ComboBox(props) {
-  const categories = ['food', 'rent', 'entertainment', 'clothes', 'restaurants', 'accomodation', 'studies/courses', 'gifts', 'investments', 'cosmetics', 'travel' , 'other' ];  
+export default function SelectVariants(props) {
+  const categories = useSelector(state => state.userData.user.categories);
+  const accounts = useSelector(state => state.userData.user.accounts);
+
   return (
-    <Autocomplete
-      disablePortal
-      disableClearable
-      autoComplete
-     
-      id="combo-box-demo"
-      options={categories}
-      sx={{ width: 240 }}
-      renderInput={(params) => <TextField {...params} 
-        name={props.name}
-        onChange={props.onChange}
-        label="Category" />}
-    />
+      <div>
+        <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+          <InputLabel id="demo-simple-select-standard-label">{props.name == "account" ? "Account" : "Category"}</InputLabel>
+          <Select
+              labelId="demo-simple-select-standard-label"
+              id="demo-simple-select-standard"
+              value={props.value}
+              onChange={props.onChange}
+              label={props.name == "account" ? "Account" : "Category"}
+          >
+            <MenuItem value="">
+              <em>None</em>
+            </MenuItem>
+            {props.name == "account" ?
+                accounts.map(account => (<MenuItem key={account} value={account}>{account}</MenuItem>)) :
+                categories.map(category => (<MenuItem key={category} value={category}>{category}</MenuItem>))  }
+          </Select>
+        </FormControl>
+      </div>
   );
 }

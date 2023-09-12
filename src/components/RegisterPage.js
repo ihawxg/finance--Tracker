@@ -11,8 +11,11 @@ import { auth } from "../firebase";
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { db } from "../firebase";
 import { getDocs, addDoc, updateDoc, deleteDoc, doc, collection } from "firebase/firestore";
+import { useDispatch } from 'react-redux';
+import { setSnackbar } from '../redux/actions/snackbarActions';
 
 export default function RegisterPage(){
+    const dispatch = useDispatch();
 
     const [userData, setUserData] = useState({firstName: "", lastName: "", email: "", pass: "", confirm: "", birthdate: "", startBudget: ""});
 
@@ -27,13 +30,13 @@ export default function RegisterPage(){
     const createUser = async () => {
         //init a new User with his coresponding data
         await addDoc(usersCollectionRef, { firstName: userData.firstName,
-                                            lastName: userData.lastName,
-                                            email: userData.email, 
-                                            birthdate: userData.birthdate,
-                                            startBudget: userData.startBudget,
-                                            incomes: [],
-                                            expenses: [],
-                                            goals: []});
+            lastName: userData.lastName,
+            email: userData.email,
+            birthdate: userData.birthdate,
+            startBudget: userData.startBudget,
+            incomes: [],
+            expenses: [],
+            goals: []});
     };
 
     const updateUser = async (id, age) => {
@@ -53,26 +56,23 @@ export default function RegisterPage(){
             setHasError(true);
             setMessage("Password missmatch!")
         }
-        else if(userData.email.split('@').length !== 2){
-            setHasError(true);
-            setMessage("Incorectly typed email!");
-        }
         else{
             createUserWithEmailAndPassword(auth, userData.email, userData.pass)
-            .then((userCredential) => {
-                try{
-                    const user = userCredential.user;
-                    createUser();
-                }
-                catch(err){
+                .then((userCredential) => {
+                    try{
+                        const user = userCredential.user;
+                        createUser();
+                        dispatch(setSnackbar(true, "success", "Registration successfull!"))
+                    }
+                    catch(err){
+                        setHasError(true);
+                        setMessage("Unable to create an account");
+                    }
+                })
+                .catch((error) => {
                     setHasError(true);
-                    setMessage("Unable to create an account");
-                }
-            })
-            .catch((error) => {
-                setHasError(true);
-                setMessage("Account with the same email already exists!");
-            });
+                    setMessage("Account with the same email already exists!");
+                });
         }
     }
 
@@ -81,8 +81,8 @@ export default function RegisterPage(){
     React.useEffect( () => {
         function getCurrency(country){
             fetch(`https://restcountries.com/v3.1/name/${country}?fullText=true`)
-            .then(resp => resp.json())
-            .then(data => setCurrency(Object.keys(data[0].currencies)[0]))
+                .then(resp => resp.json())
+                .then(data => setCurrency(Object.keys(data[0].currencies)[0]))
         }
         fetch("https://spott.p.rapidapi.com/places/ip/me", {
             "method": "GET",
@@ -91,15 +91,15 @@ export default function RegisterPage(){
                 "x-rapidapi-key": "c53e90f3c9msh82b20dd55873607p113bc7jsnf803978e85bc"
             }
         })
-        .then(resp => resp.json())
-        .then(data => {
-            if(typeof data.country != "undefined"){
-                getCurrency(data.country.name);
-            }
-            else{
-                getCurrency(data.name);
-            }
-        })
+            .then(resp => resp.json())
+            .then(data => {
+                if(typeof data.country != "undefined"){
+                    getCurrency(data.country.name);
+                }
+                else{
+                    getCurrency(data.name);
+                }
+            })
     }, []);
 
     const isFilled = () => {
@@ -109,9 +109,9 @@ export default function RegisterPage(){
     return (
         <div className={styles.formContainer}>
             <Card className={styles.regCard}>
-                
+
                 <div className={styles.Regform}>
-                <h3 className={styles.formText}>Registration</h3>
+                    <h3 className={styles.formText}>Registration</h3>
                     <div className={styles.input_container}>
                         <TextField fullWidth name="firstName" id="fname" label="First Name" variant="outlined" value={userData.firstName} onInput={e => handleInput(e)} />
                         <TextField fullWidth name="lastName" id="lname" label="Last Name" variant="outlined" value={userData.lastName} onInput={e => handleInput(e)}/>
@@ -124,9 +124,9 @@ export default function RegisterPage(){
                         <TextField className={styles.startBudget} name="startBudget" id="budget" label="Start Budget" variant="outlined" onInput={e => handleInput(e)} />
                         <TextField className={styles.currency} disabled id="currency" label="Currency" value={currency} variant="filled" />
                     </div>
-                    
+
                     <Button variant="contained" disabled={!isFilled()} onClick={handleClick}>Sign up</Button>
-                
+
                     <div>
                         <span> You already have account? </span> <Link to="/login"> Sign in</Link>
                     </div>

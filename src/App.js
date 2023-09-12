@@ -12,6 +12,7 @@ function App() {
   return (
     <>
         <Header />
+        <Snackbar/>
         <Routes>
             <Route path="/home" element={<HomePage />}/>
             <Route path="/login" element={<LoginPage />}/>
