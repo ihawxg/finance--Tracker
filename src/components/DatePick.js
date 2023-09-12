@@ -15,7 +15,7 @@ export default function DatePick(props){
                 label="Birthdate"
                 openTo="year"
                 views={['year', 'month', 'day']}
-                value={value}
+                value={props.value}
                 onChange={(newValue) => {
                     const data = JSON.stringify(newValue["_d"]).slice(1,11);
                     setValue(newValue);

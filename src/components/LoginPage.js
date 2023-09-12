@@ -7,11 +7,16 @@ import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import { useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../firebase';
+import { auth, db } from '../firebase';
 import { Alert } from '@mui/material';
 import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { loginAction } from '../redux/actions/userActions';
+
 
 export default function LoginPage(){
+
+    const dispatch = useDispatch();
 
     const navigate = useNavigate();
 
@@ -24,13 +29,14 @@ export default function LoginPage(){
         if(e.target.name === "loginEmail") {
             setEmail( e.target.value);
             setTimeout(() => {
-                console.log(email)
+                // console.log(email)
             }, 2000);
         } else if(e.target.name === "loginPass") {
             setPass(e.target.value);
-            console.log(pass)
+            // console.log(pass)
         }
     }
+
     const handleLogin = () => {
 
 
@@ -38,16 +44,19 @@ export default function LoginPage(){
 
     const handleChange = () => {
         setRememberMe(prev => !prev);
-        console.log(rememberMe);
     }
 
     const handleClick = () => {
         signInWithEmailAndPassword(auth, email, pass)
             .then((userCredential) => {
-                const user = userCredential.user;
+                // const user = userCredential.user;
                 if(rememberMe){
-                    localStorage.setItem("currenctUser", email);
+                    localStorage.setItem("currentUser", email);
                 }
+
+                //setRedux user
+                let currentUser = localStorage.getItem("currentUser");
+                dispatch(loginAction(currentUser));
                 navigate("/home");
             })
             .catch((error) => {

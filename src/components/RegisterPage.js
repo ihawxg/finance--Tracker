@@ -34,9 +34,8 @@ export default function RegisterPage(){
             email: userData.email,
             birthdate: userData.birthdate,
             startBudget: userData.startBudget,
-            incomes: [],
-            expenses: [],
-            goals: []});
+            accounts: [{name: "main", incomes: [], expenses: [], goals: [], budgets: []}],
+        });
     };
 
     const updateUser = async (id, age) => {
@@ -88,6 +87,7 @@ export default function RegisterPage(){
                 .then(resp => resp.json())
                 .then(data => setCurrency(Object.keys(data[0].currencies)[0]))
         }
+
         fetch("https://spott.p.rapidapi.com/places/ip/me", {
             "method": "GET",
             "headers": {

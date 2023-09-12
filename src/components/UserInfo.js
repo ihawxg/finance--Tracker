@@ -4,12 +4,13 @@ import TextField from '@mui/material/TextField';
 import DatePick from './DatePick';
 import Button from '@mui/material/Button';
 import React from "react";
+import { useSelector } from 'react-redux';
 
 export default function UserInfo(){
 
     const [editable, setEditable] = React.useState(false);
 
-    const [user, setUser] = React.useState({firstName: "Vasil", lastName: "Lyubenov", email: "vasetokaiba@gogo.com"});
+    const [user, setUser] = React.useState(useSelector(state => state.userData.user));
 
     const handleClick = () => {
         setEditable(prev => !prev);
@@ -18,6 +19,8 @@ export default function UserInfo(){
     const handleInput = (ev) => {
         setUser(prev => ({...prev, [ev.target.name]: ev.target.value}))
     }
+
+    console.log(user);
 
     return (
         <div className={styles.boxContainer}>
@@ -35,7 +38,7 @@ export default function UserInfo(){
                     </div>
 
                     <div className={styles.nameContainer}>
-                        <DatePick disabled={!editable} className={styles.date}/>
+                        <DatePick disabled={!editable} value={new Date(user.birthdate)} className={styles.date}/>
                         <Button className="w-200" onClick={handleClick} variant="contained" color={editable ? "success" : "primary"}>{editable ? "Save Info" : "Edit Info"}</Button>
                     </div>
                 </div>

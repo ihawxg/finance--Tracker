@@ -1,7 +1,5 @@
-// import { getAuth } from "firebase/auth";
-// import { collection } from 'firebase';
-// import { db } from '../../firebase';
-// import { query, where } from 'firebase/firestore'
+import { db } from '../../../firebase';
+import { collection, getDocs } from "firebase/firestore";
 
 export const LOGIN = "LOGIN";
 export const LOGOUT = "LOGOUT";
@@ -41,6 +39,17 @@ export const addGoalAction = (goalObject) => {
 export const clearGoalsAction = {
     type : CLEAR_GOALS
 }
+
+export const loginAction = (email) => {
+    return async function(dispatch) {
+        const usersRef = collection(db, "users");
+        const data = await getDocs(usersRef);
+        const emailUser = data.docs.map(doc => ({...doc.data()})).filter(doc => doc.email === email)[0];
+        console.log(emailUser);
+        dispatch({type: LOGIN, payload: emailUser});
+    }
+}
+
 //  export const loginAction = (email, pass) => {
 //     return function(dispatch) {
 
