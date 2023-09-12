@@ -6,10 +6,13 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import { useSelector } from 'react-redux';
 
 export default function AddAccountBTN() {
     const [open, setOpen] = React.useState(false);
     const [accountInfo, setAccountInfo] = React.useState({name: "", amount: ""});
+
+    const user = useSelector(state => state.userData.user);
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -20,7 +23,22 @@ export default function AddAccountBTN() {
     };
 
     const handleAdd = () => {
-        let currentUser = localStorage.getItem("currentUser");
+        const today = new Date();
+        const date = `${(today.getMonth()+1)}/${today.getDate()}/${today.getFullYear()}`;
+        user.accounts.push({name: accountInfo.name,
+            budgets: [],
+            categories: [1,2,3],
+            expenses: [],
+            incomes: [
+                {
+                    date: date,
+                    amount: accountInfo.amount,
+                    category: "Initial Deposit",
+                    description: `Initial "${accountInfo.name}" Deposit`
+                }
+            ],
+            goals: []
+        });
         setAccountInfo({name: "", amount: ""});
         setOpen(false);
     }

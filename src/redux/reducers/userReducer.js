@@ -1,4 +1,4 @@
-import { ADD_EXPENSE, ADD_GOAL, ADD_INCOME, ADD_BUDGET, ADD_CATEGORY_INCOME, ADD_CATEGORY_EXPENSE, CLEAR_GOALS, LOGIN, LOGOUT } from '../actions/userActions';
+import { ADD_EXPENSE, ADD_GOAL, ADD_INCOME, ADD_BUDGET, ADD_CATEGORY_INCOME, ADD_CATEGORY_EXPENSE, CLEAR_GOALS, LOGIN, LOGOUT, EDIT_CATEGORY_EXPENSE, EDIT_CATEGORY_INCOME } from '../actions/userActions';
 import { incomeArr } from '../mock-data/mock-income';
 import { expenseArr } from '../mock-data/mock-expense';
 import { budgetArr } from '../mock-data/mock-budget';
@@ -8,12 +8,12 @@ import {basicIncomeCategories, basicExpenseCategories} from "../../utils/consts"
 const INITIAL_STATE = {
     logged: true,
     user : {
-        email: "ihawxg@gmail.com",
+        email: "vasko47@abv.bg",
+        categories: [],
         accounts: [
             {
                 name: "main",
                 budgets: [],
-                categories: [],
                 expenses: [],
                 incomes: [
                     {
@@ -24,14 +24,42 @@ const INITIAL_STATE = {
                     }
                 ],
                 goals: []
+            },
+            {
+                name: "sub-zero",
+                budgets: [],
+                expenses: [],
+                incomes: [
+                    {
+                        date: "2/18/2022",
+                        amount: "1200",
+                        category: "Initial Deposit",
+                        description: "Initial App Deposit"
+                    }
+                ],
+                goals: []
+            },
+            {
+                name: "schmain",
+                budgets: [],
+                expenses: [],
+                incomes: [
+                    {
+                        date: "2/18/2022",
+                        amount: "10",
+                        category: "Initial Deposit",
+                        description: "Initial App Deposit"
+                    }
+                ],
+                goals: []
             }
         ],
         incomeCategories: basicIncomeCategories,
         expenseCategories: basicExpenseCategories,
         birthdate: "2001-11-09",
-        firstName: "Angel",
-        lastName: "Manchev",
-        id: "tWLn6IPOCs2TlzFObTFA"
+        firstName: "Васил",
+        lastName: "Любенов",
+        id: "38cQLPYsrIzBBkRnpugS"
     }
 }
 
@@ -91,7 +119,8 @@ export const userReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 user : {
                     ...state.user,
-                    incomeCategories: [...state.user.incomeCategories, action.payload]
+                    incomeCategories: [...state.user.incomeCategories, action.payload.name],
+                    categories: [...state.user.categories, action.payload]
                 }
             }
         case ADD_CATEGORY_EXPENSE :
@@ -99,9 +128,30 @@ export const userReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 user : {
                     ...state.user,
-                    expenseCategories: [...state.user.expenseCategories, action.payload]
+                    expenseCategories: [...state.user.expenseCategories, action.payload.name],
+                    categories: [...state.user.categories, action.payload]
                 }
             }
+        case EDIT_CATEGORY_EXPENSE :
+            return {
+                ...state,
+                user : {
+                    ...state.user,
+                    expenseCategories: [action.payload.expenseCategories],
+                    categories: [action.payload.categories]
+                }
+            }
+
+        case EDIT_CATEGORY_INCOME :
+            return {
+                ...state,
+                user : {
+                    ...state.user,
+                    incomeCategories: [action.payload.incomeCategories],
+                    categories: [action.payload.categories]
+                }
+            }
+
         case CLEAR_GOALS :
             return {
                 ...state,

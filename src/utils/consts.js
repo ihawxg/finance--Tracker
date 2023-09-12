@@ -5,7 +5,6 @@ export const basicExpenseCategories = [
     "Rent",
     "Insurance",
     "Health",
-    "Entertainment",
     "Transportation",
     "Knowledge"
 ];

@@ -5,6 +5,7 @@ import DatePick from './DatePick';
 import Button from '@mui/material/Button';
 import React from "react";
 import { useSelector } from 'react-redux';
+import EditButton from './EditButton';
 
 export default function UserInfo(){
 
@@ -39,7 +40,7 @@ export default function UserInfo(){
 
                     <div className={styles.nameContainer}>
                         <DatePick disabled={!editable} value={new Date(user.birthdate)} className={styles.date}/>
-                        <Button className="w-200" onClick={handleClick} variant="contained" color={editable ? "success" : "primary"}>{editable ? "Save Info" : "Edit Info"}</Button>
+                        <EditButton handleClick={handleClick}/>
                     </div>
                 </div>
             </Paper>

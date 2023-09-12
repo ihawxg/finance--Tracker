@@ -31,17 +31,18 @@ export default function RegisterPage(){
     const usersCollectionRef = collection(db, "users");
 
     const createUser = async () => {
-        var today = new Date();
-        var date = `${(today.getMonth()+1)}/${today.getDate()}/${today.getFullYear()}`;
+        const today = new Date();
+        const date = `${(today.getMonth()+1)}/${today.getDate()}/${today.getFullYear()}`;
         //init a new User with his coresponding data
         await addDoc(usersCollectionRef, { firstName: userData.firstName,
             lastName: userData.lastName,
             email: userData.email,
             birthdate: userData.birthdate,
+            categories: [],
             incomeCategories: basicIncomeCategories,
             expenseCategories: basicExpenseCategories,
             accounts: [{name: "main", incomes: [{category: "Initial Deposit", date: date, description: "Initial App Deposit", amount: userData.startBudget}],
-                expenses: [], goals: [], budgets: [], categories: []}],
+                expenses: [], goals: [], budgets: []}],
         });
     };
 
