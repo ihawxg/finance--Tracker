@@ -16,7 +16,7 @@ export default function UserInfo(){
     }
 
     const handleInput = (ev) => {
-        setUser(prev => ({...prev, [ev.target.name]: ev.target.value})) 
+        setUser(prev => ({...prev, [ev.target.name]: ev.target.value}))
     }
 
     return (
@@ -33,11 +33,11 @@ export default function UserInfo(){
                     <div className={styles.nameContainer}>
                         <TextField disabled={!editable} className={styles.mailInput} name="email" id="email" label="Email" variant="outlined" value={user.email} onInput={handleInput}/>
                     </div>
-               
+
                     <div className={styles.nameContainer}>
                         <DatePick disabled={!editable} className={styles.date}/>
                         <Button className="w-200" onClick={handleClick} variant="contained" color={editable ? "success" : "primary"}>{editable ? "Save Info" : "Edit Info"}</Button>
-                    </div> 
+                    </div>
                 </div>
             </Paper>
         </div>

@@ -29,7 +29,7 @@ export default function Header(){
         if(screenSize < 768) {
             setNavStatusOpen(!navStatusOpen);
         }
-        
+
     }
     return (
         <StyledHeader status={navStatusOpen}>
@@ -44,61 +44,61 @@ export default function Header(){
                     {accountText ? "Account" : <AccountCircleIcon fontSize="large" />}
                 </Link>
             </div>
-                
+
             <Link className={styles.btn} to="/">Logout</Link>
         </StyledHeader>
     );
 }
 
 const StyledHeader = styled.header`
-    position: fixed;
-    z-index: 9999;
-    top: 0; left: 0; right: 0;
-    background-color: #fff;
-    height: 60px;
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: flex-start;
-    align-items: center;
-    box-shadow: 0px 7px 25px rgba(0,0,0,.1);
-    border-bottom: 1px solid rgba(0,0,0,.1);
+  position: fixed;
+  z-index: 9999;
+  top: 0; left: 0; right: 0;
+  background-color: #fff;
+  height: 60px;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  align-items: center;
+  box-shadow: 0px 7px 25px rgba(0,0,0,.1);
+  border-bottom: 1px solid rgba(0,0,0,.1);
 
-    @media (max-width: 768px) {
-        overflow: hidden;
-        height: ${props => props.status ? "auto" : "60px"};
-        flex-flow: column;
-        align-items: flex-start;
+  @media (max-width: 768px) {
+    overflow: hidden;
+    height: ${props => props.status ? "auto" : "60px"};
+    flex-flow: column;
+    align-items: flex-start;
 
-    }
+  }
 `;
 
 const Balance = styled.div`
-    font-family: 'Roboto', sans-serif;
-    color: #606060;
-    margin-left: auto;
-    font-weight: 600;
-    margin-right: 20px;
-    transition : color .3s ease;
-    &:hover {
-        color: #176CC0;
-    }
+  font-family: 'Roboto', sans-serif;
+  color: #606060;
+  margin-left: auto;
+  font-weight: 600;
+  margin-right: 20px;
+  transition : color .3s ease;
+  &:hover {
+    color: #176CC0;
+  }
 
-    @media (max-width: 768px) {    
-        position: absolute;
-        right: 0; top: 20px;
-    }
+  @media (max-width: 768px) {
+    position: absolute;
+    right: 0; top: 20px;
+  }
 `;
 
 const Italic = styled.span`
-    font-style: italic;
+  font-style: italic;
 `;
 const Logo = styled.img`
-    margin-left: 20px;
-    width: 40px;
-    height: 40px;
+  margin-left: 20px;
+  width: 40px;
+  height: 40px;
 
-    @media (max-width: 768px) {
-        margin-top: 15px;
-        cursor: pointer;
-    }
+  @media (max-width: 768px) {
+    margin-top: 15px;
+    cursor: pointer;
+  }
 `;

@@ -13,6 +13,7 @@ import { useState, useEffect } from 'react';
 import { addExpenseAction, addGoalAction, addIncomeAction, addBudgetAction } from '../redux/actions/userActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSnackbar } from '../redux/actions/snackbarActions';
+import styles from "./styles/progress_card.module.css";
 
 export default function FormDialog(props) {
 
@@ -83,7 +84,7 @@ export default function FormDialog(props) {
 
   return (
       <div>
-        <Button className="w-200" variant="outlined" onClick={handleClickOpen}>
+        <Button className={styles.btn} variant="outlined" onClick={handleClickOpen}>
           {props.title}
         </Button>
         <Dialog open={open} onClose={handleClose}>

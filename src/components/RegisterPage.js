@@ -56,6 +56,10 @@ export default function RegisterPage(){
             setHasError(true);
             setMessage("Password missmatch!")
         }
+        else if(userData.email.split('@').length !== 2){
+            setHasError(true);
+            setMessage("Incorectly typed email!");
+        }
         else{
             createUserWithEmailAndPassword(auth, userData.email, userData.pass)
                 .then((userCredential) => {
