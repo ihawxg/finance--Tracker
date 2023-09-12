@@ -1,11 +1,12 @@
 .btn{
-    margin-left: 20px;
+    margin-left: 15px;
     text-decoration: none;
     font-family: 'Play', sans-serif;
     color: #707070;
+    width: 80%;
     border-bottom: 2px solid transparent;
     padding: 10px;
-    transition: all .3s ease-in;
+    transition: all .2s ease;
 }
 
 .btn:hover {
@@ -20,7 +21,7 @@
 }
 
 @media (max-width: 768px) {
-   .profileIcon {
-       margin: 10px 40px 20px 0;
-   }
- }
+    .profileIcon {
+        margin: 10px 40px 20px 0;
+    }
+}

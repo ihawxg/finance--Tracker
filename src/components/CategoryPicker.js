@@ -25,7 +25,7 @@ export default function SelectVariants(props) {
                     </MenuItem>
                     {props.name == "account" ?
                         accounts.map(account => (<MenuItem key={account.name} value={account.name}>{account.name}</MenuItem>)) :
-                        selectedAccount ? selectedAccount.categories.map(category => (<MenuItem key={category} value={category}>{category}</MenuItem>)) :
+                        selectedAccount ? selectedAccount.categories.map(category => (<MenuItem key={category.name} value={category.name}>{category.name}</MenuItem>)) :
                             null
                     }
                 </Select>
