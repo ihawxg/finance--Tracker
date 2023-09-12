@@ -39,11 +39,11 @@ export default function AddCategoryBTN(props) {
             }
         }
         else{
-            if(value === "income") {
-                dispatch(editIncomeCategories(user.id, props.position, user.incomeCategories, user.categories, user.categories[props.position], categoryInfo));
+            if(value === "expense") {
+                dispatch(editExpenseCategories(user.id, props.position, user.expenseCategories, user.incomeCategories, user.categories, user.categories[props.position], categoryInfo));
             }
             else {
-                dispatch(editExpenseCategories(user.id, props.position, user.expenseCategories, user.categories, user.categories[props.position], categoryInfo));
+                dispatch(editIncomeCategories(user.id, props.position, user.expenseCategories, user.incomeCategories, user.categories, user.categories[props.position], categoryInfo));
             }
         }
 
@@ -57,6 +57,7 @@ export default function AddCategoryBTN(props) {
 
     const handleRadioChange = (event) => {
         setValue(event.target.value);
+        setCategoryInfo(prevInfo => ({...prevInfo, type: event.target.value}));
     };
 
     return (

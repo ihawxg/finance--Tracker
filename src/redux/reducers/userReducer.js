@@ -1,35 +1,26 @@
-import { ADD_EXPENSE, ADD_GOAL, ADD_INCOME, ADD_BUDGET, ADD_CATEGORY_INCOME, ADD_CATEGORY_EXPENSE, CLEAR_GOALS, LOGIN, LOGOUT } from '../actions/userActions';
-import { basicIncomeCategories, basicExpenseCategories } from "../../utils/consts";
+import { ADD_EXPENSE, ADD_GOAL, ADD_INCOME, ADD_BUDGET, ADD_CATEGORY_INCOME, ADD_CATEGORY_EXPENSE, CLEAR_GOALS, LOGIN, LOGOUT, EDIT_CATEGORY_EXPENSE, EDIT_CATEGORY_INCOME } from '../actions/userActions';
+import { incomeArr } from '../mock-data/mock-income';
+import { expenseArr } from '../mock-data/mock-expense';
+import { budgetArr } from '../mock-data/mock-budget';
+import { account, category } from '../mock-data/mock-accounts-categories';
+import {basicIncomeCategories, basicExpenseCategories} from "../../utils/consts";
 
 const INITIAL_STATE = {
     logged: true,
-    user: {
+    user : {
         email: "vasko47@abv.bg",
+        categories: [],
         accounts: [
             {
                 name: "main",
                 budgets: [],
-                categories: [
-                    {
-                        name : "investments",
-                        type: "expense"
-                    },
-                    {
-                        name : "Commision",
-                        type : "income"
-                    },
-                    {
-                        name : "Transportation",
-                        type : "expense"
-                    }
-                ],
                 expenses: [],
                 incomes: [
                     {
-                        date: "2022-01-01T08:57:43.000Z"                        ,
+                        date: "2/18/2022",
                         amount: "123",
-                        category: { name : "Initial Desposit", type : "income"},
-                        descr: "Initial App Deposit"
+                        category: "Initial Deposit",
+                        description: "Initial App Deposit"
                     }
                 ],
                 goals: []
@@ -37,27 +28,13 @@ const INITIAL_STATE = {
             {
                 name: "sub-zero",
                 budgets: [],
-                categories: [
-                    {
-                        name : "food",
-                        type: "expense"
-                    },
-                    {
-                        name : "crypto",
-                        type : "expense"
-                    },
-                    {
-                        name : "salary",
-                        type : "income"
-                    }
-                ],
                 expenses: [],
                 incomes: [
                     {
-                        date: "2022-03-12T08:57:43.000Z",
+                        date: "2/18/2022",
                         amount: "1200",
-                        category: { name : "Initial Desposit", type : "income"},
-                        descr: "Initial App Deposit"
+                        category: "Initial Deposit",
+                        description: "Initial App Deposit"
                     }
                 ],
                 goals: []
@@ -65,27 +42,13 @@ const INITIAL_STATE = {
             {
                 name: "schmain",
                 budgets: [],
-                categories: [
-                    {
-                        name : "swimming",
-                        type: "expense"
-                    },
-                    {
-                        name : "books",
-                        type : "expense"
-                    },
-                    {
-                        name : "furniture",
-                        type : "expense"
-                    }
-                ],
                 expenses: [],
                 incomes: [
                     {
-                        date: "2022-02-13T08:57:43.000Z",
+                        date: "2/18/2022",
                         amount: "10",
-                        category: { name : "Initial Desposit", type : "income"},
-                        descr: "Initial App Deposit"
+                        category: "Initial Deposit",
+                        description: "Initial App Deposit"
                     }
                 ],
                 goals: []
@@ -96,106 +59,110 @@ const INITIAL_STATE = {
         birthdate: "2001-11-09",
         firstName: "Васил",
         lastName: "Любенов",
-        id: "tWLn6IPOCs2TlzFObTFA"
+        id: "38cQLPYsrIzBBkRnpugS"
     }
 }
 
 export const userReducer = (state = INITIAL_STATE, action) => {
-    switch (action.type) {
-        case LOGIN:
+    switch(action.type) {
+        case LOGIN :
             // add localStorage or sessionStorage token
             return {
                 ...state,
-                logged: true,
-                user: {
+                logged : true,
+                user : {
                     ...action.payload
                 }
             }
-        case LOGOUT:
+        case LOGOUT :
             // localStorage.removeItem("logged");
             return {
                 ...state,
-                logged: false,
-                user: {}
+                logged : false,
+                user : {}
             }
-        case ADD_INCOME: {
-            const currentAccount = state.user.accounts.find(acc =>
-                acc.name === action.payload.account)
-            currentAccount.incomes.unshift(action.payload)
+        case ADD_INCOME :
             return {
                 ...state,
-                user: {
+                user : {
                     ...state.user,
-                    accounts: [
-                        ...state.user.accounts
-                    ]
+                    incomes : [...state.user.incomes, action.payload]
                 }
             }
-        }
-
-        case ADD_EXPENSE: {
-            const currentAccount = state.user.accounts.find(acc =>
-                acc.name === action.payload.account)
-            currentAccount.expenses.unshift(action.payload)
+        case ADD_EXPENSE :
             return {
                 ...state,
-                user: {
+                user : {
                     ...state.user,
-                    accounts: [
-                        ...state.user.accounts
-                    ]
+                    expenses : [...state.user.expenses, action.payload]
                 }
             }
-        }
-
-        case ADD_BUDGET: {
-            const currentAccount = state.user.accounts.find(acc =>
-                acc.name === action.payload.account)
-            currentAccount.budgets.unshift(action.payload)
+        case ADD_BUDGET :
             return {
                 ...state,
-                user: {
+                user : {
                     ...state.user,
-                    accounts: [
-                        ...state.user.accounts
-                    ]
+                    budgets : [...state.user.budgets, action.payload]
                 }
             }
-        }
-
-        case ADD_GOAL: {
-            const currentAccount = state.user.accounts.find(acc =>
-                acc.name === action.payload.account)
-            currentAccount.goals.unshift(action.payload)
+        case ADD_GOAL :
             return {
                 ...state,
-                user: {
+                user : {
                     ...state.user,
-                    accounts: [
-                        ...state.user.accounts
-                    ]
-                }
-            }
-        }
-
-        case ADD_CATEGORY_INCOME:
-            return {
-                ...state,
-                user: {
-                    ...state.user,
-                    incomeCategories: [...state.user.incomeCategories, action.payload]
-                }
-            }
-        case ADD_CATEGORY_EXPENSE:
-            return {
-                ...state,
-                user: {
-                    ...state.user,
-                    expenseCategories: [...state.user.expenseCategories, action.payload]
+                    goals : [...state.user.goals, action.payload]
                 }
             }
 
-        default:
+        case ADD_CATEGORY_INCOME :
+            return {
+                ...state,
+                user : {
+                    ...state.user,
+                    incomeCategories: [...state.user.incomeCategories, action.payload.name],
+                    categories: [...state.user.categories, action.payload]
+                }
+            }
+        case ADD_CATEGORY_EXPENSE :
+            return {
+                ...state,
+                user : {
+                    ...state.user,
+                    expenseCategories: [...state.user.expenseCategories, action.payload.name],
+                    categories: [...state.user.categories, action.payload]
+                }
+            }
+        case EDIT_CATEGORY_EXPENSE :
+            return {
+                ...state,
+                user : {
+                    ...state.user,
+                    expenseCategories: action.payload.expenseCategories,
+                    incomeCategories: action.payload.incomeCategories,
+                    categories: action.payload.categories
+                }
+            }
+
+        case EDIT_CATEGORY_INCOME :
+            return {
+                ...state,
+                user : {
+                    ...state.user,
+                    incomeCategories: action.payload.incomeCategories,
+                    expenseCategories: action.payload.expenseCategories,
+                    categories: action.payload.categories
+                }
+            }
+
+        case CLEAR_GOALS :
+            return {
+                ...state,
+                user : {
+                    ...state.user,
+                    goals : []
+                }
+            }
+        default :
             return state;
     }
 }

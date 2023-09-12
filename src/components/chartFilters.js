@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider'
 import { useSelector } from 'react-redux';
-import delay from '../utils/util';
+import delay from '../util';
 
 export const ChartFromFilter = () => {
     //from a date

@@ -64,9 +64,8 @@ export const addCategoryExpenseAction = (category) => {
 //redux method use to update the current user in firebase
 export const updateUserIncomeCategories = (id, incomeCategories, categories, category) => {
     return async function(dispatch) {
-
         const userRef = doc(db, "users", id);
-        const newIncomeCategories = {incomeCategories: [...incomeCategories, category], categories: [...categories, category]};
+        const newIncomeCategories = {incomeCategories: [...incomeCategories, category.name], categories: [...categories, category]};
         await updateDoc(userRef, newIncomeCategories);
         dispatch({type: ADD_CATEGORY_INCOME, payload: category});
     }
@@ -81,37 +80,71 @@ export const updateUserExpenseCategories = (id, expenseCategories, categories, c
     }
 }
 
-export const editExpenseCategories = (id, position, expenseCategories, categories, prevCategory, category) => {
+export const editExpenseCategories = (id, position, expenseCategories, incomeCategories, categories, prevCategory, category) => {
     return async function(dispatch) {
-
         const userRef = doc(db, "users", id);
-        const newExpenseCategories = expenseCategories.map(el => {
-            if(el === prevCategory){
-                return category.name;
-            }
-            return el;
-        });
+
+        let newExpenseCategories;
+        let newIncomeCategories = [...incomeCategories];
+
+        if(prevCategory.type === "income"){
+            newIncomeCategories = [];
+            incomeCategories.forEach(el => {
+                if(el !== prevCategory.name){
+                    newIncomeCategories.push(el);
+                };
+            });
+            newExpenseCategories = [...expenseCategories, category.name];
+        }
+        else{
+            newExpenseCategories = expenseCategories.map(el => {
+                if(el === prevCategory.name){
+                    return category.name;
+                }
+                return el;
+            });
+        }
+
+
         const newCategories = [...categories];
         newCategories[position] = category;
-        const newFields = {expenseCategories: newExpenseCategories, categories: newCategories};
+
+        const newFields = {expenseCategories: newExpenseCategories, incomeCategories: newIncomeCategories, categories: newCategories};
+
         await updateDoc(userRef, newFields);
         dispatch({type: EDIT_CATEGORY_EXPENSE, payload: newFields});
     }
 }
 
-export const editIncomeCategories = (id, position, incomeCategories, categories, prevCategory, category) => {
+export const editIncomeCategories = (id, position, expenseCategories, incomeCategories, categories, prevCategory, category) => {
     return async function(dispatch) {
 
         const userRef = doc(db, "users", id);
-        const newIncomeCategories = incomeCategories.map(el => {
-            if(el === prevCategory){
-                return category.name;
-            }
-            return el;
-        });
+
+        let newExpenseCategories = [...expenseCategories];
+        let newIncomeCategories;
+
+        if(prevCategory.type === "expense"){
+            newExpenseCategories = [];
+            expenseCategories.forEach(el => {
+                if(el !== prevCategory.name){
+                    newExpenseCategories.push(el);
+                };
+            });
+            newIncomeCategories = [...incomeCategories, category.name];
+        }
+        else{
+            newIncomeCategories = incomeCategories.map(el => {
+                if(el === prevCategory.name){
+                    return category.name;
+                }
+                return el;
+            });
+        }
         const newCategories = [...categories];
         newCategories[position] = category;
-        const newFields = {incomeCategories: newIncomeCategories, categories: newCategories};
+        const newFields = {incomeCategories: newIncomeCategories, expenseCategories: newExpenseCategories, categories: newCategories};
+
         await updateDoc(userRef, newFields);
         dispatch({type: EDIT_CATEGORY_INCOME, payload: newFields});
     }
