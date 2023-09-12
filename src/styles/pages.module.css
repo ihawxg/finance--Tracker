@@ -1,3 +1,9 @@
 .page{
     margin-left: 250px;
 }
+
+.filterAddContainer{
+    display: flex;
+    justify-content: center;
+    column-gap: 50px;
+}

@@ -1,5 +1,6 @@
-import { db } from '../../../firebase';
-import { collection, getDocs } from "firebase/firestore";
+import { db } from '../../firebase';
+import { collection, getDocs, updateDoc, doc } from "firebase/firestore";
+import { useSelector } from 'react-redux';
 
 export const LOGIN = "LOGIN";
 export const LOGOUT = "LOGOUT";
@@ -8,6 +9,9 @@ export const ADD_EXPENSE = "ADD_EXPENSE";
 export const ADD_GOAL = "ADD_GOAL";
 export const CLEAR_GOALS = "CLEAR_GOALS";
 export const ADD_BUDGET = "ADD_BUDGET";
+export const ADD_CATEGORY = "ADD_CATEGORY";
+export const ADD_CATEGORY_INCOME = "ADD_CATEGORY_INCOME";
+export const ADD_CATEGORY_EXPENSE = "ADD_CATEGORY_EXPENSE";
 
 export const logoutAction = {
     type: LOGOUT
@@ -36,36 +40,52 @@ export const addGoalAction = (goalObject) => {
         payload : goalObject
     }
 }
+
 export const clearGoalsAction = {
     type : CLEAR_GOALS
+}
+
+export const addCategoryIncomeAction = (category) => {
+    return {
+        type : ADD_CATEGORY_INCOME,
+        payload : category
+    }
+}
+
+export const addCategoryExpenseAction = (category) => {
+    return {
+        type : ADD_CATEGORY_EXPENSE,
+        payload : category
+    }
+}
+
+//redux method use to update the current user in firebase
+export const updateUserIncomeCategories = (id, incomeCategories, category) => {
+    return async function(dispatch) {
+
+        const userRef = doc(db, "users", id);
+        const newIncomeCategories = {incomeCategories: [...incomeCategories, category]};
+        await updateDoc(userRef, newIncomeCategories);
+        dispatch({type: ADD_CATEGORY_INCOME, payload: category});
+    }
+}
+
+export const updateUserExpenseCategories = (id, expenseCategories, category) => {
+    return async function(dispatch) {
+
+        const userRef = doc(db, "users", id);
+        const newExpenseCategories = {expenseCategories: [...expenseCategories, category]};
+        await updateDoc(userRef, newExpenseCategories);
+        dispatch({type: ADD_CATEGORY_EXPENSE, payload: category});
+    }
 }
 
 export const loginAction = (email) => {
     return async function(dispatch) {
         const usersRef = collection(db, "users");
         const data = await getDocs(usersRef);
-        const emailUser = data.docs.map(doc => ({...doc.data()})).filter(doc => doc.email === email)[0];
+        const emailUser = data.docs.map(doc => ({...doc.data(), id: doc.id})).filter(doc => doc.email === email)[0];
         console.log(emailUser);
         dispatch({type: LOGIN, payload: emailUser});
     }
 }
-
-//  export const loginAction = (email, pass) => {
-//     return function(dispatch) {
-
-//         const auth = getAuth();
-//         const user = auth.currentUser;
-//         if (user !== null) {
-
-//           const firstName = user.firstName;
-//           const lastName = user.lastName;
-//           const email = user.email;
-//           const avatar = user.avatar;
-//           const emailVerified = user.emailVerified;
-//           const id = user.id
-//         }
-
-//         const usersRef = collection(db, 'users');
-//         const q = query(usersRef, where('email' == email && 'password' == pass));
-//     }
-// }

@@ -2,7 +2,7 @@ import React from "react";
 import DatePick from "./DatePick";
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "./styles/reg_log.module.css";
 import Card from '@mui/material/Card';
 import { useState } from 'react';
@@ -13,9 +13,12 @@ import { db } from "../firebase";
 import { getDocs, addDoc, updateDoc, deleteDoc, doc, collection } from "firebase/firestore";
 import { useDispatch } from 'react-redux';
 import { setSnackbar } from '../redux/actions/snackbarActions';
+import { basicIncomeCategories, basicExpenseCategories } from "../utils/consts";
 
 export default function RegisterPage(){
     const dispatch = useDispatch();
+
+    const navigate = useNavigate();
 
     const [userData, setUserData] = useState({firstName: "", lastName: "", email: "", pass: "", confirm: "", birthdate: "", startBudget: ""});
 
@@ -28,13 +31,17 @@ export default function RegisterPage(){
     const usersCollectionRef = collection(db, "users");
 
     const createUser = async () => {
+        var today = new Date();
+        var date = `${(today.getMonth()+1)}/${today.getDate()}/${today.getFullYear()}`;
         //init a new User with his coresponding data
         await addDoc(usersCollectionRef, { firstName: userData.firstName,
             lastName: userData.lastName,
             email: userData.email,
             birthdate: userData.birthdate,
-            startBudget: userData.startBudget,
-            accounts: [{name: "main", incomes: [], expenses: [], goals: [], budgets: []}],
+            incomeCategories: basicIncomeCategories,
+            expenseCategories: basicExpenseCategories,
+            accounts: [{name: "main", incomes: [{category: "Initial Deposit", date: date, description: "Initial App Deposit", amount: userData.startBudget}],
+                expenses: [], goals: [], budgets: [], categories: []}],
         });
     };
 
@@ -65,6 +72,7 @@ export default function RegisterPage(){
                     try{
                         const user = userCredential.user;
                         createUser();
+                        navigate("/home");
                         dispatch(setSnackbar(true, "success", "Registration successfull!"))
                     }
                     catch(err){

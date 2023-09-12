@@ -13,7 +13,7 @@ export default function Home() {
                 <Chart />
                 <AsideWrapper>
                     <AddButtons />
-                    <ChartRangeFilter />
+                    {/*<ChartRangeFilter />*/}
                     <Filters/>
                     <PieChart />
                 </AsideWrapper>
