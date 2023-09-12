@@ -9,7 +9,7 @@ import BasicDatePicker from './DatePicker';
 import { StyledEngineProvider } from '@mui/material/styles';
 import CategoryPicker from "./CategoryPicker";
 import styled from 'styled-components';
-import { useState, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { addExpenseAction, addGoalAction, addIncomeAction, addBudgetAction } from '../redux/actions/userActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSnackbar } from '../redux/actions/snackbarActions';
@@ -26,7 +26,6 @@ export default function FormDialog(props) {
   const [category, setCategory] = useState("");
   const [account, setAccount] = useState("");
   const dispatch = useDispatch();
-
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -125,8 +124,9 @@ export default function FormDialog(props) {
                       <BasicDatePicker label="To..." value={toDate} selected={toDate} onChange={date => setToDate(date)} />
                     </>
                 ) : ( <BasicDatePicker label="Choose date" value={selectedDate} selected={selectedDate} onChange={date => setSelectedDate(date)} />)}
-                <CategoryPicker name="category" value={category} onChange={e => setCategory(e.target.value)} />
-                <CategoryPicker name="account" value={account} onChange={e => setAccount(e.target.value)} />
+                <CategoryPicker name="account" value={account} onChange={e => setAccount(e.target.value)} required/>
+                <CategoryPicker name="category" value={category} list={account} disabled={account ? false : true} onChange={e => setCategory(e.target.value)} />
+
               </StyledEngineProvider>
             </Pickers>
 
