@@ -31,7 +31,8 @@ const INITIAL_STATE = {
                         date: "2/18/2022",
                         amount: "123",
                         category: "Initial Deposit",
-                        description: "Initial App Deposit"
+                        description: "Initial App Deposit",
+                        id: 1
                     }
                 ],
                 goals: []
@@ -45,7 +46,8 @@ const INITIAL_STATE = {
                         date: "2/18/2022",
                         amount: "1200",
                         category: "Initial Deposit",
-                        description: "Initial App Deposit"
+                        description: "Initial App Deposit",
+                        id: 2
                     }
                 ],
                 goals: []
@@ -59,7 +61,8 @@ const INITIAL_STATE = {
                         date: "2/18/2022",
                         amount: "10",
                         category: "Initial Deposit",
-                        description: "Initial App Deposit"
+                        description: "Initial App Deposit",
+                        id: 3
                     }
                 ],
                 goals: []

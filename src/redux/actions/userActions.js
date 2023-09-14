@@ -234,12 +234,16 @@ export const addExpense = (user, details) => {
         const userRef = doc(db, "users", user.id);
         const newField = user.accounts;
         let br = 0;
+
+        const id = new Date().valueOf();
+
         newField.forEach(acc => {
             if(acc.name === details.account){
                 const newExpenses = [...acc.expenses, {date: details.date,
                                 amount: details.amount,
                                 category: details.category,
-                                description: details.descr
+                                description: details.descr,
+                                id: id
                 }];
                 newField[br] = {...newField[br], expenses: newExpenses};
             }
@@ -256,12 +260,16 @@ export const addIncome = (user, details) => {
         const userRef = doc(db, "users", user.id);
         const newField = user.accounts;
         let br = 0;
+
+        const id = new Date().valueOf();
+
         newField.forEach(acc => {
             if(acc.name === details.account){
                 const newIncomes = [...acc.incomes, {date: details.date,
                                 amount: details.amount,
                                 category: details.category,
-                                description: details.descr
+                                description: details.descr,
+                                id: id
                 }];
                 newField[br] = {...newField[br], incomes: newIncomes};
             }
@@ -273,24 +281,129 @@ export const addIncome = (user, details) => {
     }
 } 
 
-export const editIncome = (user, details) => {
-    // todo()!;
+export const editIncome = (user, details, prevAccountName, incomeID) => {
     return async function(dispatch) {
-        // const userRef = doc(db, "users", user.id);
-        // const newField = user.accounts;
-    
-        // await updateDoc(userRef, {accounts: newField});
-        // dispatch({type: EDIT_INCOME, payload: newField});
+        const userRef = doc(db, "users", user.id);
+        const newField = user.accounts;
+
+        if(prevAccountName === details.account){
+            let counterAcc = 0;
+            newField.forEach(acc => {
+                if(acc.name === prevAccountName){
+                    let counterIncomes = 0;
+                    acc.incomes.forEach(income => {
+                        if(income.id === incomeID){
+                            newField[counterAcc].incomes[counterIncomes] = {date: details.date,
+                                amount: details.amount,
+                                category: details.category,
+                                description: details.descr,
+                                id: income.id
+                            }
+                        }
+                        counterIncomes++;
+                    })
+                }
+                counterAcc++;
+            })
+        }
+        else{
+            dispatch(removeIncomeExpense(user, incomeID, prevAccountName, false));
+            let counterAcc = 0;
+            newField.forEach(acc => {
+               if(acc.name === details.account){
+                newField[counterAcc].incomes.push({date: details.date,
+                    amount: details.amount,
+                    category: details.category,
+                    description: details.descr,
+                    id: incomeID
+                })
+               }
+               counterAcc++;
+            })
+        }
+        
+        await updateDoc(userRef, {accounts: newField});
+        dispatch({type: UPDATE_ACCOUNTS, payload: newField});
     }
 } 
 
-export const editExpenses = (user, details) => {
-    // todo()!;
+export const editExpense = (user, details, prevAccountName, expenseID) => {
     return async function(dispatch) {
-        // const userRef = doc(db, "users", user.id);
-        // const newField = user.accounts;
-    
-        // await updateDoc(userRef, {accounts: newField});
-        // dispatch({type: EDIT_EXPENSE, payload: newField});
+        const userRef = doc(db, "users", user.id);
+        const newField = user.accounts;
+
+        if(prevAccountName === details.account){
+            let counterAcc = 0;
+            newField.forEach(acc => {
+                if(acc.name === prevAccountName){
+                    let counterExpenses = 0;
+                    acc.expenses.forEach(expense => {
+                        if(expense.id === expenseID){
+                            newField[counterAcc].expenses[counterExpenses] = {date: details.date,
+                                amount: details.amount,
+                                category: details.category,
+                                description: details.descr,
+                                id: expense.id
+                            }
+                        }
+                        counterExpenses++;
+                    })
+                }
+                counterAcc++;
+            })
+        }
+        else{
+            dispatch(removeIncomeExpense(user, expenseID, prevAccountName, true));
+            let counterAcc = 0;
+            newField.forEach(acc => {
+               if(acc.name === details.account){
+                newField[counterAcc].expenses.push({date: details.date,
+                    amount: details.amount,
+                    category: details.category,
+                    description: details.descr,
+                    id: expenseID
+                })
+               }
+               counterAcc++;
+            })
+        }
+        
+        await updateDoc(userRef, {accounts: newField});
+        dispatch({type: UPDATE_ACCOUNTS, payload: newField});
+    }
+} 
+
+export const removeIncomeExpense = (user, id, accountName, isExpense) => {
+    return async function(dispatch) {
+        const userRef = doc(db, "users", user.id);
+        const newField = user.accounts;
+        
+        let counterAcc = 0;
+        newField.forEach(acc => {
+            if(acc.name === accountName){
+                let counter = 0;
+                if(isExpense){
+                    acc.expenses.forEach(expense => {
+                        if(expense.id === id){
+                            newField[counterAcc].expenses.splice(counter, 1);
+                        }
+                        
+                    })
+                }
+                else{
+                    acc.incomes.forEach(income => {
+                        if(income.id === id){
+                            newField[counterAcc].incomes.splice(counter, 1);
+                        }
+            
+                    })
+                }
+                counter++;
+            }
+            counterAcc++;
+        })
+        
+        await updateDoc(userRef, {accounts: newField});
+        dispatch({type: UPDATE_ACCOUNTS, payload: newField});
     }
 } 

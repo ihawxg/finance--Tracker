@@ -41,7 +41,7 @@ export default function RegisterPage(){
                                             categories: [],
                                             incomeCategories: basicIncomeCategories,
                                             expenseCategories: basicExpenseCategories,
-                                            accounts: [{name: "main", incomes: [{category: "Initial Deposit", date: date, description: "Initial App Deposit", amount: userData.startBudget}],
+                                            accounts: [{name: "main", incomes: [{category: "Initial Deposit", date: date, description: "Initial App Deposit", amount: userData.startBudget, id: 1}],
                                             expenses: [], goals: [], budgets: []}],
                                             });
     };
