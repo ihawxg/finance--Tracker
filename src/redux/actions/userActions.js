@@ -20,6 +20,8 @@ export const EDIT_CATEGORY_INCOME = "EDIT_CATEGORY_INCOME";
 export const UPDATE_ACCOUNTS = "UPDATE_ACCOUNTS";
 export const EDIT_ACCOUNT = "EDIT_ACCOUNT";
 export const REMOVE_ACCOUNT = "REMOVE_ACCOUNT";
+export const EDIT_INCOME = "EDIT_INCOME";
+export const EDIT_EXPENSE = "EDIT_EXPENSE";
 
 export const logoutAction = {
     type: LOGOUT
@@ -191,7 +193,7 @@ export const editAccountAction = (id, prevName, newName, accounts) => {
     return async function(dispatch) {
         const userRef = doc(db, "users", id);
 
-         const newAccounts = accounts.map(el => {
+        const newAccounts = accounts.map(el => {
             if(el.name === prevName){
                 return {
                     ...el,
@@ -243,7 +245,7 @@ export const addExpense = (user, details) => {
             }
             br++;
         });
-        console.log(newField);
+
         await updateDoc(userRef, {accounts: newField});
         dispatch({type: ADD_EXPENSE, payload: newField});
     }
@@ -253,7 +255,6 @@ export const addIncome = (user, details) => {
     return async function(dispatch) {
         const userRef = doc(db, "users", user.id);
         const newField = user.accounts;
-        console.log(details.account);
         let br = 0;
         newField.forEach(acc => {
             if(acc.name === details.account){
@@ -266,8 +267,30 @@ export const addIncome = (user, details) => {
             }
             br++;
         });
-        console.log(newField);
+
         await updateDoc(userRef, {accounts: newField});
         dispatch({type: ADD_INCOME, payload: newField});
+    }
+} 
+
+export const editIncome = (user, details) => {
+    // todo()!;
+    return async function(dispatch) {
+        // const userRef = doc(db, "users", user.id);
+        // const newField = user.accounts;
+    
+        // await updateDoc(userRef, {accounts: newField});
+        // dispatch({type: EDIT_INCOME, payload: newField});
+    }
+} 
+
+export const editExpenses = (user, details) => {
+    // todo()!;
+    return async function(dispatch) {
+        // const userRef = doc(db, "users", user.id);
+        // const newField = user.accounts;
+    
+        // await updateDoc(userRef, {accounts: newField});
+        // dispatch({type: EDIT_EXPENSE, payload: newField});
     }
 } 

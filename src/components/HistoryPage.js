@@ -1,68 +1,56 @@
-import styles from "./styles/pages.module.css";
-import { useSelector } from 'react-redux';
-import React from 'react';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import styled from 'styled-components';
+import AddButtons from "./AddButtons";
+import styles from "./styles/pages.module.css"
+import { useSelector } from "react-redux";
+import SelectInput from "./SelectInput";
+import React from "react";
 
-export default function HistoryPage() {
+export default function HistoryPage(){
+    const user = useSelector(state => state.userData.user);
+    const [currentAccounts, setCurrenctAccount] = React.useState([]); 
 
-    const accounts = useSelector(state => state.userData.user.accounts);
-    const allCategories = accounts.map(account => account.categories);
-    const allIncomes = accounts.map(account => account.incomes);
-    const allExpenses = accounts.map(account => account.expenses);
-    const allBudgets = accounts.map(account => account.budgets);
-    const allGoals = accounts.map(account => account.goals);
-    const allTransactions = allIncomes.concat(allExpenses, allBudgets, allGoals);
-
-    const getTime = (timeStamp) => {
-        const dateTime = JSON.stringify(timeStamp);
-        let dateArr = dateTime.split("T");
-        let date = dateArr[0].slice(1);
-        let time = dateArr[1].slice(0, 5);
-        return `${date} / ${time}`;
+    const handleChange = (accountNames) => {
+        setCurrenctAccount(accountNames); 
     }
-    const handleChange = () => {
 
-    }
-    const handleDelete = () => {
+    let accounts = [];
+    currentAccounts.forEach(accName => {
+        user.accounts.forEach(acc => {
+            if(acc.name === accName){
+                accounts.push(acc);
+            }
+        });
+    })
 
-    }
     return (
-
         <div className={styles.page}>
-            <h1>HistoryPage</h1>
-            <table>
+         <h1>HistoryPage</h1>
+         <AddButtons operation="edit"/>
 
-                <tr>
-                    <th>Amount</th>
-                    <th>Type</th>
-                    <th>Category</th>
-                    <th>Description</th>
-                    <th>Date/Time</th>
-                </tr>
-                {allTransactions.map(transaction => {
-                    return transaction.length > 0 ? transaction.map(item => {
-                        return (
-                            <tr key={item.date}>
-                                <td>{item.amount}</td>
-                                <td>{item.category.type}</td>
-                                <td>{item.category.name}</td>
-                                <td><StyledInput value={item.descr} onChange={handleChange} /></td>
-                                <td>{getTime(item.date)}</td>
-                                <td><DeleteForeverIcon onClick={() => handleDelete()}/></td>
-                            </tr>
-                        )
-                    }) : null
-                })}
-            </table>
-        </div >
+         <SelectInput handleChange={handleChange} accounts={user.accounts}/>
+         <div>
+             {accounts.map(acc => {
+                return acc.expenses.map(exp => {
+                     return (
+                        <>
+                            <h1>Expense: {exp.description} {exp.amount}</h1>
+                        </>
+                     ); 
+                 })
+                 
+             })}
+
+            {accounts.map(acc => {
+                return acc.incomes.map(inc => {
+                    return (
+                        <>
+                            <h1>Incomes: {inc.description} {inc.amount}</h1>
+                            <button> Remove </button>
+                        </>
+                    );
+                })
+             })}
+
+         </div>
+        </div>
     );
 }
-
-
-const StyledInput = styled.input`
-    border : none;
-    outline : none;
-    background-color: transparent;
-    width: 400px;
-`

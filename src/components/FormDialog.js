@@ -53,11 +53,7 @@ export default function FormDialog(props) {
 
     switch(value) {
         case "Expense" :
-          try{
-            dispatch(addExpense(user, details))
-          }catch(err){
-            console.log(err);
-          }
+          dispatch(addExpense(user, details))
           break;
         case "Savings": 
           dispatch(addGoalAction(user, details))

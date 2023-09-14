@@ -10,7 +10,9 @@ import { ADD_EXPENSE,
     EDIT_CATEGORY_EXPENSE,
     EDIT_CATEGORY_INCOME,
     UPDATE_ACCOUNTS,
-    EDIT_ACCOUNT
+    EDIT_ACCOUNT,
+    EDIT_INCOME,
+    EDIT_EXPENSE
 } from '../actions/userActions';
 import {basicIncomeCategories, basicExpenseCategories} from "../../utils/consts";
 
@@ -90,15 +92,18 @@ export const userReducer = (state = INITIAL_STATE, action) => {
                 logged : false,
                 user : {}
             }
-        case ADD_INCOME : 
+        case ADD_INCOME :
+            // console.log([...action.payload]); 
             return {
                 ...state,
                 user : {
                     ...state.user,
                     accounts : [...action.payload]
                 }
+    
             }    
-        case ADD_EXPENSE : 
+        case ADD_EXPENSE :
+            // console.log([...action.payload]); 
             return {
                 ...state,
                 user : {
@@ -108,6 +113,7 @@ export const userReducer = (state = INITIAL_STATE, action) => {
             }   
         case ADD_BUDGET : 
             return {
+                
                 ...state,
                 user : {
                     ...state.user,
