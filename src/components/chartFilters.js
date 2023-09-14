@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider'
 import { useDispatch, useSelector } from 'react-redux';
-import delay from './../util';
+import delay from '../util';
 import { applyAccountFilter, applyCategoryFilter, applyFromDateFilter, applyRangeFilter, applyToDateFilter } from '../redux/actions/filtersActions';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';

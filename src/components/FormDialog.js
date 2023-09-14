@@ -16,7 +16,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setSnackbar } from '../redux/actions/snackbarActions';
 import styles from "./styles/progress_card.module.css";
 import { getFormatedDate } from '../util';
-
 export default function FormDialog(props) {
 
   const [open, setOpen] = useState(false);
@@ -98,7 +97,7 @@ export default function FormDialog(props) {
       account
     }
 
-    switch(value) {
+    switch(props.value) {
         case "Expense" :
           dispatch(editExpense(user, detail, props.prevAccountName, props.expenseID))
           break;
@@ -116,8 +115,16 @@ export default function FormDialog(props) {
             amount, 
             category,
             account,
-            from: getFormatedDate(fromDate), 
-            to: getFormatedDate(toDate)
+            from: fromDate, 
+            to: toDate
+          }
+          try{
+            // dispatch(editBudgetAction(details))
+          }
+          catch(err){
+            console.log(err);
+            // from: getFormatedDate(fromDate), 
+            // to: getFormatedDate(toDate)
           }
         
           dispatch(editBudget(user, details));

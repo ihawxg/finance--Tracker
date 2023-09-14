@@ -4,14 +4,16 @@ export const expenseArr = [
         "descr" : "Manolo Blanks Sandals",
         "category" : "clothes",
         "date": "2022-02-17T14:55:56.813Z",
-        "account" : "DSK Bank Credit"
+        "account" : "DSK Bank Credit",
+        "id" : Math.random()*1349578384
     },
     {
         "amount": "44",
         "descr" : "food, sweets, dog treats, shampoo, fruits, veggies",
         "category" : "groceries",
         "date": "2022-02-10T12:20:36.813Z",
-        "account" : "Pocket money"
+        "account" : "Pocket money",
+        "id" : Math.random()*1349578384
     },
     {
         "amount": "89",

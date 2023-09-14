@@ -72,7 +72,7 @@ const StyledHeader = styled.header`
 `;
 
 const Logo = styled.img`
-    position: absolute;
+    position: fixed;
     top:20px;right:20px;
     width: 40px;
     height: 40px;

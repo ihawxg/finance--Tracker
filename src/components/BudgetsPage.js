@@ -10,7 +10,7 @@ export default function BudgetsPage(){
 
     const handleClick = (category) => {
         dispatch(removeBudget(user, category));
-    }   
+    }
 
     return (
         <div className={styles.page}>
