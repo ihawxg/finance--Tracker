@@ -28,15 +28,15 @@ export const applyRangeFilter = (x, y) => {
         payload : [x, y] 
     }
 }
-export const applyCategoryFilter = (...categories) => {
+export const applyCategoryFilter = (category) => {
     return {
         type : ADD_CATEGORY_FILTER,
-        payload :  [...categories]
+        payload :  category
     }
 }
-export const applyAccountFilter = (...accounts) => {
+export const applyAccountFilter = (account) => {
     return {
         type : ADD_ACCOUNT_FILTER,
-        payload : [...accounts]
+        payload : account
     }
 }

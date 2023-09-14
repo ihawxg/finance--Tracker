@@ -1,5 +1,4 @@
-import { ADD_ACCOUNT_FILTER, ADD_CATEGORY_FILTER, ADD_FROM_DATE_FILTER, ADD_RANGE_FILTER, ADD_TO_DATE_FILTER, CLEAR_FILTERS } from "../actions/filtersActions"
-
+import { ADD_ACCOUNT_FILTER, ADD_CATEGORY_FILTER, ADD_FROM_DATE_FILTER, ADD_RANGE_FILTER, ADD_TO_DATE_FILTER, CLEAR_FILTERS } from "../actions/filtersActions";
 const INITIAL_STATE = {
     from_date : null,
     to_date : null,
