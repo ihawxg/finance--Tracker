@@ -29,18 +29,13 @@ export default function LoginPage(){
         if(e.target.name === "loginEmail") {
             setEmail( e.target.value);
             setTimeout(() => {
-                // console.log(email)
+                    // console.log(email)
             }, 2000);
         } else if(e.target.name === "loginPass") {
             setPass(e.target.value);
             // console.log(pass)
-        }
-    }
-
-    const handleLogin = () => {
-
-
-    }
+        } 
+    }  
 
     const handleChange = () => {
         setRememberMe(prev => !prev);
@@ -48,20 +43,21 @@ export default function LoginPage(){
 
     const handleClick = () => {
         signInWithEmailAndPassword(auth, email, pass)
-            .then((userCredential) => {
-                // const user = userCredential.user;
-                if(rememberMe){
-                    localStorage.setItem("currentUser", email);
-                }
+        .then((userCredential) => {
+            // const user = userCredential.user;
+            if(rememberMe){
+                localStorage.setItem("currentUser", email);
+            }
+            sessionStorage.setItem("currentUser", email);
 
-                //setRedux user
-                let currentUser = localStorage.getItem("currentUser");
-                dispatch(loginAction(currentUser));
-                navigate("/home");
-            })
-            .catch((error) => {
-                setHasError(true)
-            });
+            //setRedux user
+            // let currentUser = localStorage.getItem("currentUser");
+            dispatch(loginAction(email));
+            navigate("/home");
+        })
+        .catch((error) => {
+            setHasError(true)
+        });
     }
 
     return (
@@ -69,30 +65,33 @@ export default function LoginPage(){
             <Card className={styles.loginCard}>
                 <div className={styles.Regform}>
                     <h3 className={styles.formText}>Login</h3>
-                    <div className={styles.input_container}>
-                        <TextField
-                            fullWidth
-                            id="outlined-basic"
-                            label="Email"
-                            name="loginEmail"
-                            variant="outlined"
+                    <form className={styles.input_container}>
+                        <TextField 
+                            fullWidth 
+                            id="outlined-basic" 
+                            label="Email" 
+                            name="loginEmail" 
+                            variant="outlined" 
+                            autoComplete="current-email"
                             onInput={(e) => handleInput(e)}/>
-                        <TextField
-                            fullWidth
-                            id="outlined-password-input"
-                            label="Password"
-                            name="loginPass"
-                            type="password"
+                            
+                        <TextField 
+                            fullWidth 
+                            id="outlined-password-input" 
+                            label="Password" 
+                            name="loginPass" 
+                            type="password" 
                             autoComplete="current-password"
                             onInput={(e) => handleInput(e)}/>
-                    </div>
+                            
+                    </form>
                     <div className={styles.btnCheckContainer}>
                         <FormControlLabel control={<Checkbox checked={rememberMe} onChange={handleChange}/>} label="Remember me" />
                         <Button variant="contained" disabled={(email && pass) ? false : true} onClick={handleClick}>Sign in</Button>
                     </div>
                     <span> Need an account? </span> <Link to="/register"> Sign up</Link>
                     { hasError && <Alert severity="error">You have entered wrong credentials! Please try again</Alert> }
-                </div>
+                </div>    
             </Card>
         </div>
     );

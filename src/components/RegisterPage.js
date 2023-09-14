@@ -14,7 +14,7 @@ import { addDoc, collection } from "firebase/firestore";
 import { useDispatch } from 'react-redux';
 import { setSnackbar } from '../redux/actions/snackbarActions';
 import { basicIncomeCategories, basicExpenseCategories } from "../utils/consts";
-import getCurrentDate from "../util";
+import { getDate } from "../util";
 
 export default function RegisterPage(){
     const dispatch = useDispatch();
@@ -32,7 +32,7 @@ export default function RegisterPage(){
     const usersCollectionRef = collection(db, "users");
 
     const createUser = async () => {
-        const date = getCurrentDate();
+        const date = getDate();
         //init a new User with his coresponding data
         await addDoc(usersCollectionRef, { firstName: userData.firstName,
                                             lastName: userData.lastName,
@@ -41,8 +41,14 @@ export default function RegisterPage(){
                                             categories: [],
                                             incomeCategories: basicIncomeCategories,
                                             expenseCategories: basicExpenseCategories,
-                                            accounts: [{name: "main", incomes: [{category: "Initial Deposit", date: date, description: "Initial App Deposit", amount: userData.startBudget, id: 1}],
-                                            expenses: [], goals: [], budgets: []}],
+                                            accounts: [{
+                                                        name: "main",
+                                                        incomes: [{category: "Initial Deposit", date: date, description: "Initial App Deposit", amount: userData.startBudget, id: 1}
+                                                      ],
+                                                      expenses: [],
+                                                      goals: []
+                                                }],
+                                            budgets: []
                                             });
     };
 
@@ -66,7 +72,7 @@ export default function RegisterPage(){
             .then((userCredential) => {
                 try{
                     createUser();
-                    navigate("/home");
+                    navigate("/login");
                     dispatch(setSnackbar(true, "success", "Registration successfull!"))
                 }
                 catch(err){
@@ -118,13 +124,13 @@ export default function RegisterPage(){
                 
                 <div className={styles.Regform}>
                 <h3 className={styles.formText}>Registration</h3>
-                    <div className={styles.input_container}>
-                        <TextField fullWidth name="firstName" id="fname" label="First Name" variant="outlined" value={userData.firstName} onInput={e => handleInput(e)} />
-                        <TextField fullWidth name="lastName" id="lname" label="Last Name" variant="outlined" value={userData.lastName} onInput={e => handleInput(e)}/>
-                        <TextField fullWidth name="email" id="email" label="Email" variant="outlined" value={userData.email} onInput={e => handleInput(e)}/>
+                    <form className={styles.input_container}>
+                        <TextField fullWidth name="firstName" id="fname" label="First Name" variant="outlined" autoComplete="current-first-name" value={userData.firstName} onInput={e => handleInput(e)} />
+                        <TextField fullWidth name="lastName" id="lname" label="Last Name" variant="outlined" autoComplete="current-last-name" value={userData.lastName} onInput={e => handleInput(e)}/>
+                        <TextField fullWidth name="email" id="email" label="Email" variant="outlined" value={userData.email} autoComplete="current-email" onInput={e => handleInput(e)}/>
                         <TextField fullWidth name="pass" id="pass" label="Password" type="password" value={userData.pass} autoComplete="current-password" onInput={e => handleInput(e)}/>
                         <TextField fullWidth name="confirm" id="pass-rep" label="Repeat Password" type="password" value={userData.confirm} autoComplete="current-password" onInput={e => handleInput(e)}/>
-                    </div>
+                    </form>
                     <div className={styles.dateCurrencyContainer}>
                         <DatePick name="birthDate" handleDateChange={setUserData}/>
                         <TextField className={styles.startBudget} name="startBudget" id="budget" label="Start Budget" variant="outlined" onInput={e => handleInput(e)} />

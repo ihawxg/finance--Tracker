@@ -76,7 +76,6 @@ const INITIAL_STATE = {
 export const userReducer = (state = INITIAL_STATE, action) => {
     switch(action.type) {
         case LOGIN : 
-        // add localStorage or sessionStorage token 
             return {
                 ...state,
                 logged : true,
@@ -85,7 +84,8 @@ export const userReducer = (state = INITIAL_STATE, action) => {
                 }
             }
         case LOGOUT : 
-            // localStorage.removeItem("logged");
+            localStorage.removeItem("currentUser");
+            sessionStorage.removeItem("currentUser");
             return {
                 ...state,
                 logged : false,
