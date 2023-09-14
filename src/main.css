@@ -9,4 +9,20 @@ body {
 }
 .mt-minus {
     margin-top: -20px;
+
+}
+table, tr, td, th{
+    border: 1px solid black;
+    border-collapse: collapse;
+    padding: 5px 10px;
+}
+th {
+    background-color: #a1a1ff;
+}
+td:last-child {
+    text-align:center;
+    cursor : pointer;
+}
+td > input:focus {
+    background-color: #a1a1ff5b;
 }
