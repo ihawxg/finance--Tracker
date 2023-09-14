@@ -9,7 +9,7 @@ export default function AddButtons() {
             <StyledEngineProvider injectFirst>
                 <FormDialog value="Expense" title="Add an expense"/>
                 <FormDialog value="Income" title="Add an income" />
-                <FormDialog value="Budget" title="Add Budget"/>
+                
             </StyledEngineProvider>
         </ButtonsWrapper>
 
