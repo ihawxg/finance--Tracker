@@ -12,14 +12,14 @@ export default function DatePick(props){
             <DatePicker
                 disableFuture
                 disabled={isDisabled}
-                label="Birthdate"
+                label={props.label}
                 openTo="year"
                 views={['year', 'month', 'day']}
-                value={props.value ? props.value:value}
+                value={props.value ? props.value : value}
                 onChange={(newValue) => {
                     const data = JSON.stringify(newValue["_d"]).slice(1,11);
                     setValue(newValue);
-                    props.handleDateChange(prev => ({...prev, birthdate: data}));
+                    props.isFromTo ? props.handleDateChange(data) : props.handleDateChange(prev => ({...prev, birthdate: data}));
                 }}
                 renderInput={(params) => <TextField {...params} />}
             />

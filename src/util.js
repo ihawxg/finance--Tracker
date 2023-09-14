@@ -13,6 +13,9 @@ export function getDate(){
 }
 
 export function getFormatedDate(date){
+    if(typeof date == "string"){
+        date = new Date(date);
+    }
     const formattedDate = `${(date.getMonth()+1)}/${date.getDate()}/${date.getFullYear()}`;
     return formattedDate;
 }

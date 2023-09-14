@@ -11,8 +11,9 @@ export const ADD_INCOME = "ADD_INCOME";
 export const ADD_EXPENSE = "ADD_EXPENSE";
 export const ADD_GOAL = "ADD_GOAL";
 export const CLEAR_GOALS = "CLEAR_GOALS";
-export const ADD_BUDGET = "ADD_BUDGET";
+export const UPDATE_BUDGET = "UPDATE_BUDGET";
 export const ADD_CATEGORY = "ADD_CATEGORY";
+export const ADD_BUDGET = "ADD_CATEGORY";
 export const ADD_CATEGORY_INCOME = "ADD_CATEGORY_INCOME";
 export const ADD_CATEGORY_EXPENSE = "ADD_CATEGORY_EXPENSE";
 export const EDIT_CATEGORY_EXPENSE = "EDIT_CATEGORY_EXPENSE";
@@ -405,5 +406,87 @@ export const removeIncomeExpense = (user, id, accountName, isExpense) => {
         
         await updateDoc(userRef, {accounts: newField});
         dispatch({type: UPDATE_ACCOUNTS, payload: newField});
+    }
+} 
+
+const isWithinDate = (date, from, to) => {
+    const timeFrom = new Date(from).getTime();
+    const timeDate = new Date(date).getTime();
+    const timeTo = new Date(to).getTime();
+    return (timeFrom < timeDate && timeDate < timeTo);
+}
+
+const getAmount = (user, from, to, category) => {
+    let amount = 0;
+    user.accounts.forEach(acc => {
+        acc.expenses.forEach(exp => {
+            if(exp.category === category && isWithinDate(exp.date, from, to)){
+                amount += Number(exp.amount);
+            }
+        })
+    })
+    return amount;
+}
+
+export const addBudget = (user, details) => {
+    return async function(dispatch) {
+        const userRef = doc(db, "users", user.id);
+        const newField = user.budgets;
+
+        const amount = getAmount(user, details.from, details.to, details.category);
+        //in case we already have the same budget category we re-write it
+        if(newField.some(budget => budget.category === details.category)){
+            newField[newField.findIndex(budget => budget.category === details.category)] = {
+                category: details.category,
+                amount: amount,
+                max: details.amount,
+                from: details.from,
+                to: details.to,
+            }
+        }
+        else{
+            newField.push({
+                category: details.category,
+                amount: amount,
+                max: details.amount,
+                from: details.from,
+                to: details.to,
+            });
+        }
+        
+        await updateDoc(userRef, {budgets: newField});
+        dispatch({type: UPDATE_BUDGET, payload: newField});
+    }
+} 
+
+export const editBudget = (user, details, prevCategory) => {
+    return async function(dispatch) {
+        const userRef = doc(db, "users", user.id);
+        const newField = user.budgets;
+
+        //in case we already have the same budget category we re-write it
+        if(prevCategory === details.category){
+            dispatch(addBudget(user, details));
+        }
+        else{
+            dispatch(removeBudget(user, prevCategory));
+            dispatch(addBudget(user, details));
+        }
+        
+        await updateDoc(userRef, {budgets: newField});
+        dispatch({type: UPDATE_BUDGET, payload: newField});
+    }
+} 
+
+export const removeBudget = (user, category) => {
+    return async function(dispatch) {
+        const userRef = doc(db, "users", user.id);
+        const newField = user.budgets;
+
+        const ind = newField.findIndex(budget => budget.category === category);
+        newField.splice(ind, 1);
+        
+        await updateDoc(userRef, {budgets: newField});
+        dispatch({type: UPDATE_BUDGET, payload: newField});
     }
 } 

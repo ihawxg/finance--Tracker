@@ -10,6 +10,7 @@ export default function SelectVariants(props) {
   const user = useSelector(state => state.userData.user);
   const categories = props.type === "Income" ? user.incomeCategories : user.expenseCategories;
   const selectedAccount = useSelector(state => state.userData.user.accounts.find(e => e.name === props.list))
+
   return (
     <div>
       <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
@@ -25,8 +26,7 @@ export default function SelectVariants(props) {
           {
             props.name === "account" ? 
             accounts.map(account => (<MenuItem key={account.name} value={account.name}>{account.name}</MenuItem>)) :
-            selectedAccount ? categories.map(category => (<MenuItem key={category} value={category}>{category}</MenuItem>)) :
-            null
+            categories.map(category => (<MenuItem key={category} value={category}>{category}</MenuItem>))
           }
         </Select>
       </FormControl>

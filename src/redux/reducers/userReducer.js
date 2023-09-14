@@ -1,7 +1,7 @@
 import { ADD_EXPENSE,
     ADD_GOAL,
     ADD_INCOME,
-    ADD_BUDGET,
+    UPDATE_BUDGET,
     ADD_CATEGORY_INCOME,
     ADD_CATEGORY_EXPENSE,
     CLEAR_GOALS,
@@ -11,8 +11,6 @@ import { ADD_EXPENSE,
     EDIT_CATEGORY_INCOME,
     UPDATE_ACCOUNTS,
     EDIT_ACCOUNT,
-    EDIT_INCOME,
-    EDIT_EXPENSE
 } from '../actions/userActions';
 import {basicIncomeCategories, basicExpenseCategories} from "../../utils/consts";
 
@@ -24,7 +22,6 @@ const INITIAL_STATE = {
         accounts: [
             {
                 name: "main",
-                budgets: [],
                 expenses: [],
                 incomes: [
                     {
@@ -39,7 +36,6 @@ const INITIAL_STATE = {
             },
             {
                 name: "sub-zero",
-                budgets: [],
                 expenses: [],
                 incomes: [
                     {
@@ -54,7 +50,6 @@ const INITIAL_STATE = {
             },
             {
                 name: "schmain",
-                budgets: [],
                 expenses: [],
                 incomes: [
                     {
@@ -68,6 +63,7 @@ const INITIAL_STATE = {
                 goals: []
             }
         ],
+        budgets: [],
         incomeCategories: basicIncomeCategories,
         expenseCategories: basicExpenseCategories,
         birthdate: "2001-11-09",
@@ -96,7 +92,6 @@ export const userReducer = (state = INITIAL_STATE, action) => {
                 user : {}
             }
         case ADD_INCOME :
-            // console.log([...action.payload]); 
             return {
                 ...state,
                 user : {
@@ -105,8 +100,7 @@ export const userReducer = (state = INITIAL_STATE, action) => {
                 }
     
             }    
-        case ADD_EXPENSE :
-            // console.log([...action.payload]); 
+        case ADD_EXPENSE : 
             return {
                 ...state,
                 user : {
@@ -114,13 +108,13 @@ export const userReducer = (state = INITIAL_STATE, action) => {
                     accounts : [...action.payload]
                 }
             }   
-        case ADD_BUDGET : 
+        case UPDATE_BUDGET : 
             return {
                 
                 ...state,
                 user : {
                     ...state.user,
-                    budgets : [...state.user.budgets, action.payload]
+                    budgets : [...action.payload]
                 }
             }    
         case ADD_GOAL : 
