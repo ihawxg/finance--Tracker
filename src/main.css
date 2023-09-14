@@ -26,3 +26,6 @@ td:last-child {
 td > input:focus {
     background-color: #a1a1ff5b;
 }
+h6 {
+    color :#8a8888;
+}

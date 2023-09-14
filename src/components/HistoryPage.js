@@ -4,35 +4,44 @@ import React, { useEffect, useState } from 'react';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import styled from 'styled-components';
 import CheckIcon from '@mui/icons-material/Check';
-import { ChartRangeFilter, ChartCategoryFilter, ChartAccountFilter, ChartDateRangeFilter } from "./chartFilters";
+import { RangeFilter, CategoryFilter, AccountFilter, DateRangeFilter } from "./ChartFilters";
+import AddButtons from "./AddButtons";
+import SelectInput from "./SelectInput";
+import { clearFilters } from "../redux/actions/filtersActions";
 
 export default function HistoryPage() {
+    const [isFiltered, setIsFiltered] = useState(false);
+    const [selectedAccounts, setSelectedAccounts] = useState([]);
+    const userAccounts = useSelector(state => state.userData.user.accounts);
+    const dispatch = useDispatch();
+    const allIncomes = userAccounts.map(account => account.incomes).flat();
+    const allExpenses = userAccounts.map(account => account.expenses).flat();
 
-    const accounts = useSelector(state => state.userData.user.accounts);
-   
-
-    const allIncomes = accounts.map(account => account.incomes);
-    const allExpenses = accounts.map(account => account.expenses);
-    // const allBudgets = accounts.map(account => account.budgets);
-    // const allGoals = accounts.map(account => account.goals);
-
-    const allTransactions = allIncomes.concat(allExpenses).flat();
-    console.log(allTransactions)
+    const allTransactions = [...allIncomes, ...allExpenses];
     const rangeFilter = useSelector(state => state.filters.range);
     const startDateFilter = useSelector(state => state.filters.from_date);
     const endDateFilter = useSelector(state => state.filters.to_date);
-    const categoryFilter = useSelector(state => state.filters.category[0]);
+    const categoryFiltered = useSelector(state => state.filters.category);
     const accountFilter = useSelector(state => state.filters.account);
 
-    const filtered = allTransactions.filter(e => Number(e.amount) >= rangeFilter[0] && Number(e.amount) <= rangeFilter[1])
-        .filter(e => categoryFilter.indexOf(e.category) > -1)
-        .filter(e => accountFilter.indexOf(e.account) > -1)
+    useEffect(() => {
+        let selected = userAccounts.filter(acc => accountFilter.indexOf(acc.name) > -1)
+        setSelectedAccounts([...selected])
+    }, [accountFilter])
+    const categoryFilter = categoryFiltered.map(e => e.toLowerCase());
+    let filteredSelected = selectedAccounts.map(acc => acc.expenses.concat(acc.incomes)).flat()
+    let filtered = (selectedAccounts.length > 0 ?
+        filteredSelected : allTransactions)
+        .filter(e => categoryFilter.indexOf(e.category.toLowerCase()) > -1)
+        .filter(e => Number(e.amount) >= rangeFilter[0] && Number(e.amount) <= rangeFilter[1])
         .filter(item => {
-            let date = new Date(item.date);
-            return date >= startDateFilter && date <= endDateFilter
+            const start = (new Date(startDateFilter)).getTime()
+            const end = (new Date(endDateFilter)).getTime()
+            const current = (new Date(item.date)).getTime()
+            if (start && end) return current >= start && current <= end;
+            else return current >= start && current <= (new Date()).getTime();
         });
-    
-
+//console.log(filtered)
     const getTime = (timeStamp) => {
         const dateTime = JSON.stringify(timeStamp);
         const dateArr = dateTime.split("T");
@@ -41,7 +50,7 @@ export default function HistoryPage() {
         return `${date} / ${time}`;
     }
     const [description, setDescription] = useState("");
-    const [isFiltered, setIsFiltered] = useState(false);
+
     const confirmChange = (date, descr) => {
         // dispatch(updateItem(description))
         console.log(date, descr)
@@ -51,56 +60,167 @@ export default function HistoryPage() {
         // dispatch(deleteItem(ident))
         console.log(ident)
     }
-    return (
+    const user = useSelector(state => state.userData.user);
+    const [currentAccounts, setCurrenctAccounts] = React.useState([]);
 
-        <div className={styles.page}>
-            <ChartRangeFilter/>
-            <ChartCategoryFilter />
-            <ChartAccountFilter/>
-            <ChartDateRangeFilter />
-            <button onClick={() => setIsFiltered(true)}>Filter</button>
-            <button onClick={() => setIsFiltered(false)}>ClearFilter</button>
-            <h1>HistoryPage</h1>
-            <table>
-            <thead>
-                <tr>
-                    <th>Amount</th>
-                    <th>Type</th>
-                    <th>Category</th>
-                    <th>Description</th>
-                    <th>Date/Time</th>
-                    <th>Delete</th>
-                </tr>
-            </thead>
-            <tbody>
-                {(isFiltered ? filtered : allTransactions).map((item,i) => {
-                        return (
-                            <tr key={i}>
-                                <td>{item.amount}</td>
-                                <td>{item.category.type}</td>
-                                <td>{item.category.name}</td>
-                                <td><StyledInput 
-                                        name="description"
-                                        defaultValue={item.descr} 
-                                        onKeyDown={(e) => {
-                                            if(e.key === 'Enter') {
-                                                confirmChange(item.date, description)
-                                            }
-                                        }}
-                                        onChange={(e) => setDescription(e.target.value)} />
-                                </td>
-                                <td>{getTime(item.date)}</td>
-                                <td><DeleteForeverIcon onClick={() => console.log(item.date)}/></td>
-                            </tr>
-                        )            
-                    }) 
-                    }
-                     </tbody>    
+    const handleChange = (accountNames) => {
+        setCurrenctAccounts(accountNames);
+    }
+
+    let accounts = [];
+    currentAccounts.forEach(accName => {
+        user.accounts.forEach(acc => {
+            if (acc.name === accName) {
+                userAccounts.push(acc);
+            }
+        });
+    })
+
+    return (
+        <StyledPage>
+            <h2>Transaction history</h2>
+
+            <div>
+                <StyledFilters>
+                   <h6>Set amount range: </h6>
+                    <RangeFilter />
+                    
+                    <Row>
+                        <Column>
+                            <CategoryFilter />
+                            <AccountFilter />
+                            <StyledButton onClick={() => {
+                                setIsFiltered(true)
+                            }}>Filter List
+                            </StyledButton>
+                        </Column>
+                        <Column >
+                            <DateRangeFilter />
+                            <StyledButton onClick={() => {
+                                setIsFiltered(false)
+                                dispatch(clearFilters)
+                            }}>Clear Filters
+                            </StyledButton>
+                        </Column>                    
+                    </Row>
+    
+                </StyledFilters>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Amount</th>
+                            <th>Type</th>
+                            <th>Category</th>
+                            <th>Description</th>
+                            <th>Date/Time</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        {(selectedAccounts.length > 0 ? selectedAccounts : userAccounts).map(account => {
+                            return (
+                                <>
+                                    <tr className={styles.accountName}><td colSpan="6">{account.name}</td></tr>
+                                    {(isFiltered ? filtered : account.incomes.concat(account.expenses)).map((item, i) => {
+                                        return (
+                                            <tr key={i}>
+                                                <td>{item.amount}</td>
+                                                <td>{allIncomes.findIndex(inc => inc.descr === item.descr) > -1 ? "Income" : "Expense"}</td>
+                                                <td>{item.category}</td>
+                                                <td><StyledInput
+                                                    name="description"
+                                                    defaultValue={item.descr}
+                                                    onKeyDown={(e) => {
+                                                        if (e.key === 'Enter') {
+                                                            confirmChange(item.date, description)
+                                                        }
+                                                    }}
+                                                    onChange={(e) => setDescription(e.target.value)} />
+                                                </td>
+                                                <td>{getTime(item.date)}</td>
+                                                <td><DeleteForeverIcon onClick={() => console.log(item.date)} /></td>
+                                            </tr>
+                                        )
+                                    })}
+
+                                </>
+                            )
+                        })}
+                    </tbody>
                 </table>
-        </div >
+            </div >
+
+            {/* <h1>HistoryPage</h1>
+                <AddButtons operation="edit" />
+
+                <SelectInput handleChange={handleChange} accounts={user.accounts} />
+                <div>
+                    {userAccounts.map(acc => {
+                        return acc.expenses.map(exp => {
+                            return (
+                                <>
+                                    <h1>Expense: {exp.description} {exp.amount}</h1>
+                                </>
+                            );
+                        })
+
+                    })}
+
+                    {userAccounts.map(acc => {
+                        return acc.incomes.map(inc => {
+                            return (
+                                <>
+                                    <h1>Incomes: {inc.description} {inc.amount}</h1>
+                                    <button> Remove </button>
+                                </>
+                            );
+                        })
+                    })}
+
+                </div> */}
+
+        </StyledPage>
     );
 }
+const StyledPage = styled.div`
+    width: 70%;
+    margin: -60px auto 30px ;
+    text-align: center;
+`
+const Column = styled.div`
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: space-between;
+`
+const Row = styled.div`
+    display: flex;
+    flex-flow : row wrap;
+    justify-content : space-between;
+    gap: 20px;
+`
+const StyledFilters = styled.div`
+    margin-top: 40px;
+    display: flex;
+    flex-flow : column wrap;
+    justify-content: space-evenely;
+    align-items: center;    
+`   
 
+const StyledButton = styled.button`
+    width: 100%;
+    margin: 10px;
+    border-radius: 5px;
+    box-sizing: border-box;
+    padding: 10px 0;
+    color: #0267CD;
+    background-color : white;
+    border: 1px solid #0267CD;
+    &:hover {
+        background-color : #0268cd10;
+    }
+`
 
 const StyledInput = styled.input`
     border : none;

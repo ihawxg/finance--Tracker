@@ -12,26 +12,28 @@ import ListItemText from '@mui/material/ListItemText';
 import Select from '@mui/material/Select';
 import Checkbox from '@mui/material/Checkbox';
 import BasicDatePicker from './DatePicker';
-
-export const ChartDateRangeFilter = () => {
+import styled from 'styled-components';
+export const DateRangeFilter = () => {
 
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
     const dispatch = useDispatch();
     return (
-        <>
+        <Pickers>
             <BasicDatePicker label="From... " value={startDate} selected={startDate} 
                 onChange={date => {
+                    setStartDate(date)
                     dispatch(applyFromDateFilter(date))
                 }} />
             <BasicDatePicker label="To..." value={endDate} selected={endDate} 
                 onChange={date => {
+                    setEndDate(date)
                     dispatch(applyToDateFilter(date))
                 }} />
-        </>
+        </Pickers>
     )
 }
-export const ChartAccountFilter = () => {
+export const AccountFilter = () => {
     const ITEM_HEIGHT = 48;
     const ITEM_PADDING_TOP = 8;
     const MenuProps = {
@@ -52,16 +54,16 @@ export const ChartAccountFilter = () => {
             target: { value },
         } = event;
         setSelectedAccount(
-            // On autofill we get a stringified value.
             typeof value === 'string' ? value.split(',') : value,
         );
-        dispatch(applyAccountFilter(selectedAccount));
+        let result = typeof value === 'string' ? value.split(',') : value;
+        dispatch(applyAccountFilter(result));
     };
 
     return (
         <div>
             <FormControl sx={{ m: 1, width: 300 }}>
-                <InputLabel id="demo-multiple-checkbox-label">Filter by Account</InputLabel>
+                <InputLabel id="demo-multiple-checkbox-label">Account</InputLabel>
                 <Select
                     labelId="demo-multiple-checkbox-label"
                     id="demo-multiple-checkbox"
@@ -84,8 +86,8 @@ export const ChartAccountFilter = () => {
     );
 
 }
-export const ChartCategoryFilter = () => {
-    //multiple categories possibl
+export const CategoryFilter = () => {
+    //multiple categories possible
     const ITEM_HEIGHT = 48;
     const ITEM_PADDING_TOP = 8;
     const MenuProps = {
@@ -101,6 +103,7 @@ export const ChartCategoryFilter = () => {
     const dispatch = useDispatch();
     const incomeCategories = useSelector(state => state.userData.user.incomeCategories)
     const expenseCategories = useSelector(state => state.userData.user.expenseCategories);
+    const categoriesFilter = useSelector(state => state.filters.category);
     const allCategories = [...incomeCategories, ...expenseCategories];
 
     const handleChange = (event) => {
@@ -108,16 +111,17 @@ export const ChartCategoryFilter = () => {
             target: { value },
         } = event;
         setSelectedCategory(
-            // On autofill we get a stringified value.
             typeof value === 'string' ? value.split(',') : value,
         );
-        dispatch(applyCategoryFilter(selectedCategory));
+        let result = typeof value === 'string' ? value.split(',') : value;
+        dispatch(applyCategoryFilter(result))
+        
     };
 
     return (
         <div>
             <FormControl sx={{ m: 1, width: 300 }}>
-                <InputLabel id="demo-multiple-checkbox-label">Filter By Category</InputLabel>
+                <InputLabel id="demo-multiple-checkbox-label">Category</InputLabel>
                 <Select
                     labelId="demo-multiple-checkbox-label"
                     id="demo-multiple-checkbox"
@@ -138,11 +142,9 @@ export const ChartCategoryFilter = () => {
             </FormControl>
         </div>
     );
-
-
 }
 
-export const ChartRangeFilter = () => {
+export const RangeFilter = () => {
     //set a range of min-max expense/income
 
     const [filteredIncomes, setFilteredIncomes] = useState([]);
@@ -169,17 +171,23 @@ export const ChartRangeFilter = () => {
         setFilteredIncomes([...tempArr])
         dispatch(applyRangeFilter(newValue[0], newValue[1]));
     }
-    const delayedChange = delay(handleChange, 500);
     return (
         <Box sx={{ width: 300 }}>
             <Slider
                 getAriaLabel={() => 'Amount range'}
                 value={value}
-                onChange={delayedChange}
+                onChange={handleChange}
                 valueLabelDisplay="auto"
                 max={max}
                 getAriaValueText={valuetext}
+                valueLabelDisplay="on"
             />
         </Box>
     );
 }
+
+const Pickers = styled.div`
+    display: flex;
+    flex-flow : column wrap;
+    gap: 8px;
+`

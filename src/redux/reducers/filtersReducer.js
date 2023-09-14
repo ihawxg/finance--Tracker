@@ -20,14 +20,15 @@ export const filtersReducer = (state = INITIAL_STATE, action) => {
                 to_date : action.payload
             }
         case ADD_CATEGORY_FILTER:
+            
             return {
                 ...state,
-                category : [...state.category, action.payload]
+                category : [ ...action.payload]
             }
         case ADD_ACCOUNT_FILTER:
             return {
                 ...state,
-                account : [...state.account, action.payload]
+                account : [...action.payload]
             }
         case ADD_RANGE_FILTER:
             return {
