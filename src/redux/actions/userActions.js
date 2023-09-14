@@ -1,6 +1,8 @@
 import { db } from '../../firebase';
 import { collection, getDocs, updateDoc, doc } from "firebase/firestore"; 
 import { getDate } from "../../util";
+import { useReducer } from 'react';
+import { accordionDetailsClasses } from '@mui/material';
 
 
 export const LOGIN = "LOGIN";
@@ -211,7 +213,7 @@ export const removeAccountAction = (id, prevName, accounts) => {
         const userRef = doc(db, "users", id);
 
         const newAccounts = [];
-        
+
         accounts.forEach(el => {
             if(el.name !== prevName){
                 newAccounts.push(el);
@@ -222,5 +224,50 @@ export const removeAccountAction = (id, prevName, accounts) => {
     
         await updateDoc(userRef, newFields);
         dispatch({type: EDIT_ACCOUNT, payload: newFields.accounts});
+    }
+} 
+
+export const addExpense = (user, details) => {
+    return async function(dispatch) {
+        const userRef = doc(db, "users", user.id);
+        const newField = user.accounts;
+        let br = 0;
+        newField.forEach(acc => {
+            if(acc.name === details.account){
+                const newExpenses = [...acc.expenses, {date: details.date,
+                                amount: details.amount,
+                                category: details.category,
+                                description: details.descr
+                }];
+                newField[br] = {...newField[br], expenses: newExpenses};
+            }
+            br++;
+        });
+        console.log(newField);
+        await updateDoc(userRef, {accounts: newField});
+        dispatch({type: ADD_EXPENSE, payload: newField});
+    }
+} 
+
+export const addIncome = (user, details) => {
+    return async function(dispatch) {
+        const userRef = doc(db, "users", user.id);
+        const newField = user.accounts;
+        console.log(details.account);
+        let br = 0;
+        newField.forEach(acc => {
+            if(acc.name === details.account){
+                const newIncomes = [...acc.incomes, {date: details.date,
+                                amount: details.amount,
+                                category: details.category,
+                                description: details.descr
+                }];
+                newField[br] = {...newField[br], incomes: newIncomes};
+            }
+            br++;
+        });
+        console.log(newField);
+        await updateDoc(userRef, {accounts: newField});
+        dispatch({type: ADD_INCOME, payload: newField});
     }
 } 

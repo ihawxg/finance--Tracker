@@ -9,11 +9,12 @@ import BasicDatePicker from './DatePicker';
 import { StyledEngineProvider } from '@mui/material/styles';
 import CategoryPicker from "./CategoryPicker";
 import styled from 'styled-components';
-import { useState, useRef } from 'react';
-import { addExpenseAction, addGoalAction, addIncomeAction, addBudgetAction } from '../redux/actions/userActions';
+import { useState} from 'react';
+import { addGoalAction, addBudgetAction, addIncome, addExpense } from '../redux/actions/userActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSnackbar } from '../redux/actions/snackbarActions';
 import styles from "./styles/progress_card.module.css";
+import { getFormatedDate } from '../util';
 
 export default function FormDialog(props) {
 
@@ -26,6 +27,7 @@ export default function FormDialog(props) {
   const [category, setCategory] = useState("");
   const [account, setAccount] = useState("");
   const dispatch = useDispatch();
+  const user = useSelector(state => state.userData.user);
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -41,35 +43,49 @@ export default function FormDialog(props) {
   };
   const handleAdd = (value) => {
     dispatch(setSnackbar(true, "success", "Transaction added!"))
-    let obj = {
+    let details = {
       amount,
       descr,
       category,
-      date: selectedDate,
+      date: getFormatedDate(selectedDate),
       account
     }
 
     switch(value) {
         case "Expense" :
-          dispatch(addExpenseAction(obj))
+          try{
+            dispatch(addExpense(user, details))
+          }catch(err){
+            console.log(err);
+          }
           break;
         case "Savings": 
-          dispatch(addGoalAction(obj))
+          dispatch(addGoalAction(user, details))
           break;
         case "Income" : 
-          dispatch(addIncomeAction(obj))
+          dispatch(addIncome(user, details))
           break;
         case "Budget" : {
-          let obj = {
+          let details = {
             amount, 
             category,
             account,
             from: fromDate, 
             to: toDate
           }
-          dispatch(addBudgetAction(obj))
+          try{
+            dispatch(addBudgetAction(details))
+          }
+          catch(err){
+            console.log(err);
+          }
+        }
+        break;
+        default: {
+          return;
         }
     }
+    handleClose();
   };
 
   const handleInput = (ev) => {
@@ -80,6 +96,9 @@ export default function FormDialog(props) {
       case "description": 
           setDescr(ev.target.value);
           break;
+      default: {
+        return;
+      }
     }
   }
 

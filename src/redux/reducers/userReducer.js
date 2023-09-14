@@ -95,7 +95,7 @@ export const userReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 user : {
                     ...state.user,
-                    incomes : [...state.user.incomes, action.payload]
+                    accounts : [...action.payload]
                 }
             }    
         case ADD_EXPENSE : 
@@ -103,7 +103,7 @@ export const userReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 user : {
                     ...state.user,
-                    expenses : [...state.user.expenses, action.payload]
+                    accounts : [...action.payload]
                 }
             }   
         case ADD_BUDGET : 

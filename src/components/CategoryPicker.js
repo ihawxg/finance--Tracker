@@ -13,17 +13,17 @@ export default function SelectVariants(props) {
   return (
     <div>
       <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
-        <InputLabel id="demo-simple-select-standard-label">{props.name == "account" ? "Account" : "Category"}</InputLabel>
+        <InputLabel id="demo-simple-select-standard-label">{props.name === "account" ? "Account" : "Category"}</InputLabel>
         <Select
           disabled={props.disabled}
           labelId="demo-simple-select-standard-label"
           id="demo-simple-select-standard"
           value={props.value}
           onChange={props.onChange}
-          label={props.name == "account" ? "Account" : "Category"}
+          label={props.name === "account" ? "Account" : "Category"}
         >
           {
-            props.name == "account" ? 
+            props.name === "account" ? 
             accounts.map(account => (<MenuItem key={account.name} value={account.name}>{account.name}</MenuItem>)) :
             selectedAccount ? categories.map(category => (<MenuItem key={category} value={category}>{category}</MenuItem>)) :
             null

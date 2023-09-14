@@ -11,3 +11,8 @@ export function getDate(){
     const date = `${(today.getMonth()+1)}/${today.getDate()}/${today.getFullYear()}`;
     return date;
 }
+
+export function getFormatedDate(date){
+    const formattedDate = `${(date.getMonth()+1)}/${date.getDate()}/${date.getFullYear()}`;
+    return formattedDate;
+}
