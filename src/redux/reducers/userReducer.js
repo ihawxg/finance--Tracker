@@ -1,8 +1,17 @@
-import { ADD_EXPENSE, ADD_GOAL, ADD_INCOME, ADD_BUDGET, ADD_CATEGORY_INCOME, ADD_CATEGORY_EXPENSE, CLEAR_GOALS, LOGIN, LOGOUT, EDIT_CATEGORY_EXPENSE, EDIT_CATEGORY_INCOME } from '../actions/userActions';
-import { incomeArr } from '../mock-data/mock-income';
-import { expenseArr } from '../mock-data/mock-expense';
-import { budgetArr } from '../mock-data/mock-budget';
-import { account, category } from '../mock-data/mock-accounts-categories';
+import { ADD_EXPENSE,
+    ADD_GOAL,
+    ADD_INCOME,
+    ADD_BUDGET,
+    ADD_CATEGORY_INCOME,
+    ADD_CATEGORY_EXPENSE,
+    CLEAR_GOALS,
+    LOGIN,
+    LOGOUT,
+    EDIT_CATEGORY_EXPENSE,
+    EDIT_CATEGORY_INCOME,
+    UPDATE_ACCOUNTS,
+    EDIT_ACCOUNT
+} from '../actions/userActions';
 import {basicIncomeCategories, basicExpenseCategories} from "../../utils/consts";
 
 const INITIAL_STATE = {
@@ -65,8 +74,8 @@ const INITIAL_STATE = {
 
 export const userReducer = (state = INITIAL_STATE, action) => {
     switch(action.type) {
-        case LOGIN :
-            // add localStorage or sessionStorage token
+        case LOGIN : 
+        // add localStorage or sessionStorage token 
             return {
                 ...state,
                 logged : true,
@@ -74,38 +83,38 @@ export const userReducer = (state = INITIAL_STATE, action) => {
                     ...action.payload
                 }
             }
-        case LOGOUT :
+        case LOGOUT : 
             // localStorage.removeItem("logged");
             return {
                 ...state,
                 logged : false,
                 user : {}
             }
-        case ADD_INCOME :
+        case ADD_INCOME : 
             return {
                 ...state,
                 user : {
                     ...state.user,
                     incomes : [...state.user.incomes, action.payload]
                 }
-            }
-        case ADD_EXPENSE :
+            }    
+        case ADD_EXPENSE : 
             return {
                 ...state,
                 user : {
                     ...state.user,
                     expenses : [...state.user.expenses, action.payload]
                 }
-            }
-        case ADD_BUDGET :
+            }   
+        case ADD_BUDGET : 
             return {
                 ...state,
                 user : {
                     ...state.user,
                     budgets : [...state.user.budgets, action.payload]
                 }
-            }
-        case ADD_GOAL :
+            }    
+        case ADD_GOAL : 
             return {
                 ...state,
                 user : {
@@ -114,7 +123,7 @@ export const userReducer = (state = INITIAL_STATE, action) => {
                 }
             }
 
-        case ADD_CATEGORY_INCOME :
+        case ADD_CATEGORY_INCOME : 
             return {
                 ...state,
                 user : {
@@ -123,7 +132,7 @@ export const userReducer = (state = INITIAL_STATE, action) => {
                     categories: [...state.user.categories, action.payload]
                 }
             }
-        case ADD_CATEGORY_EXPENSE :
+        case ADD_CATEGORY_EXPENSE : 
             return {
                 ...state,
                 user : {
@@ -131,8 +140,8 @@ export const userReducer = (state = INITIAL_STATE, action) => {
                     expenseCategories: [...state.user.expenseCategories, action.payload.name],
                     categories: [...state.user.categories, action.payload]
                 }
-            }
-        case EDIT_CATEGORY_EXPENSE :
+            }   
+        case EDIT_CATEGORY_EXPENSE : 
             return {
                 ...state,
                 user : {
@@ -141,9 +150,9 @@ export const userReducer = (state = INITIAL_STATE, action) => {
                     incomeCategories: action.payload.incomeCategories,
                     categories: action.payload.categories
                 }
-            }
+            } 
 
-        case EDIT_CATEGORY_INCOME :
+        case EDIT_CATEGORY_INCOME : 
             return {
                 ...state,
                 user : {
@@ -152,17 +161,34 @@ export const userReducer = (state = INITIAL_STATE, action) => {
                     expenseCategories: action.payload.expenseCategories,
                     categories: action.payload.categories
                 }
+            } 
+        case UPDATE_ACCOUNTS : 
+            return {
+                ...state,
+                user : {
+                    ...state.user,
+                    accounts: [...action.payload]
+                }
+            } 
+
+        case EDIT_ACCOUNT:
+            return {
+                ...state,
+                user : {
+                    ...state.user,
+                    accounts: [...action.payload]
+                }
             }
 
-        case CLEAR_GOALS :
+        case CLEAR_GOALS : 
             return {
                 ...state,
                 user : {
                     ...state.user,
                     goals : []
                 }
-            }
-        default :
+            }    
+        default : 
             return state;
     }
 }

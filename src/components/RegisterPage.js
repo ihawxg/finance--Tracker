@@ -10,16 +10,17 @@ import Alert from '@mui/material/Alert';
 import { auth } from "../firebase";
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { db } from "../firebase";
-import { getDocs, addDoc, updateDoc, deleteDoc, doc, collection } from "firebase/firestore";
+import { addDoc, collection } from "firebase/firestore";
 import { useDispatch } from 'react-redux';
 import { setSnackbar } from '../redux/actions/snackbarActions';
 import { basicIncomeCategories, basicExpenseCategories } from "../utils/consts";
+import getCurrentDate from "../util";
 
 export default function RegisterPage(){
     const dispatch = useDispatch();
 
     const navigate = useNavigate();
-
+    
     const [userData, setUserData] = useState({firstName: "", lastName: "", email: "", pass: "", confirm: "", birthdate: "", startBudget: ""});
 
     const [currency, setCurrency] = useState("");
@@ -31,25 +32,18 @@ export default function RegisterPage(){
     const usersCollectionRef = collection(db, "users");
 
     const createUser = async () => {
-        const today = new Date();
-        const date = `${(today.getMonth()+1)}/${today.getDate()}/${today.getFullYear()}`;
+        const date = getCurrentDate();
         //init a new User with his coresponding data
         await addDoc(usersCollectionRef, { firstName: userData.firstName,
-            lastName: userData.lastName,
-            email: userData.email,
-            birthdate: userData.birthdate,
-            categories: [],
-            incomeCategories: basicIncomeCategories,
-            expenseCategories: basicExpenseCategories,
-            accounts: [{name: "main", incomes: [{category: "Initial Deposit", date: date, description: "Initial App Deposit", amount: userData.startBudget}],
-                expenses: [], goals: [], budgets: []}],
-        });
-    };
-
-    const updateUser = async (id, age) => {
-        // const userDoc = doc(db, "users", id);
-        // const newFields = { age: age + 1 };
-        // await updateDoc(userDoc, newFields);
+                                            lastName: userData.lastName,
+                                            email: userData.email, 
+                                            birthdate: userData.birthdate,
+                                            categories: [],
+                                            incomeCategories: basicIncomeCategories,
+                                            expenseCategories: basicExpenseCategories,
+                                            accounts: [{name: "main", incomes: [{category: "Initial Deposit", date: date, description: "Initial App Deposit", amount: userData.startBudget}],
+                                            expenses: [], goals: [], budgets: []}],
+                                            });
     };
 
     const handleInput = e => {
@@ -69,22 +63,21 @@ export default function RegisterPage(){
         }
         else{
             createUserWithEmailAndPassword(auth, userData.email, userData.pass)
-                .then((userCredential) => {
-                    try{
-                        const user = userCredential.user;
-                        createUser();
-                        navigate("/home");
-                        dispatch(setSnackbar(true, "success", "Registration successfull!"))
-                    }
-                    catch(err){
-                        setHasError(true);
-                        setMessage("Unable to create an account");
-                    }
-                })
-                .catch((error) => {
+            .then((userCredential) => {
+                try{
+                    createUser();
+                    navigate("/home");
+                    dispatch(setSnackbar(true, "success", "Registration successfull!"))
+                }
+                catch(err){
                     setHasError(true);
-                    setMessage("Account with the same email already exists!");
-                });
+                    setMessage("Unable to create an account");
+                }
+            })
+            .catch((error) => {
+                setHasError(true);
+                setMessage("Account with the same email already exists!");
+            });
         }
     }
 
@@ -93,8 +86,8 @@ export default function RegisterPage(){
     React.useEffect( () => {
         function getCurrency(country){
             fetch(`https://restcountries.com/v3.1/name/${country}?fullText=true`)
-                .then(resp => resp.json())
-                .then(data => setCurrency(Object.keys(data[0].currencies)[0]))
+            .then(resp => resp.json())
+            .then(data => setCurrency(Object.keys(data[0].currencies)[0]))
         }
 
         fetch("https://spott.p.rapidapi.com/places/ip/me", {
@@ -104,27 +97,27 @@ export default function RegisterPage(){
                 "x-rapidapi-key": "c53e90f3c9msh82b20dd55873607p113bc7jsnf803978e85bc"
             }
         })
-            .then(resp => resp.json())
-            .then(data => {
-                if(typeof data.country != "undefined"){
-                    getCurrency(data.country.name);
-                }
-                else{
-                    getCurrency(data.name);
-                }
-            })
+        .then(resp => resp.json())
+        .then(data => {
+            if(typeof data.country != "undefined"){
+                getCurrency(data.country.name);
+            }
+            else{
+                getCurrency(data.name);
+            }
+        })
     }, []);
 
     const isFilled = () => {
-        return (userData.firstName && userData.lastName && userData.email && userData.pass && userData.confirm && userData.birthdate && userData.startBudget && userData.startBudget != 0);
+        return (userData.firstName && userData.lastName && userData.email && userData.pass && userData.confirm && userData.birthdate && userData.startBudget && userData.startBudget !== "0");
     }
 
     return (
         <div className={styles.formContainer}>
             <Card className={styles.regCard}>
-
+                
                 <div className={styles.Regform}>
-                    <h3 className={styles.formText}>Registration</h3>
+                <h3 className={styles.formText}>Registration</h3>
                     <div className={styles.input_container}>
                         <TextField fullWidth name="firstName" id="fname" label="First Name" variant="outlined" value={userData.firstName} onInput={e => handleInput(e)} />
                         <TextField fullWidth name="lastName" id="lname" label="Last Name" variant="outlined" value={userData.lastName} onInput={e => handleInput(e)}/>
@@ -137,9 +130,9 @@ export default function RegisterPage(){
                         <TextField className={styles.startBudget} name="startBudget" id="budget" label="Start Budget" variant="outlined" onInput={e => handleInput(e)} />
                         <TextField className={styles.currency} disabled id="currency" label="Currency" value={currency} variant="filled" />
                     </div>
-
+                    
                     <Button variant="contained" disabled={!isFilled()} onClick={handleClick}>Sign up</Button>
-
+                
                     <div>
                         <span> You already have account? </span> <Link to="/login"> Sign in</Link>
                     </div>

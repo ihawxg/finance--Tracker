@@ -1,6 +1,7 @@
 import { db } from '../../firebase';
 import { collection, getDocs, updateDoc, doc } from "firebase/firestore"; 
-import { useSelector } from 'react-redux';
+import { getDate } from "../../util";
+
 
 export const LOGIN = "LOGIN";
 export const LOGOUT = "LOGOUT";
@@ -14,6 +15,9 @@ export const ADD_CATEGORY_INCOME = "ADD_CATEGORY_INCOME";
 export const ADD_CATEGORY_EXPENSE = "ADD_CATEGORY_EXPENSE";
 export const EDIT_CATEGORY_EXPENSE = "EDIT_CATEGORY_EXPENSE";
 export const EDIT_CATEGORY_INCOME = "EDIT_CATEGORY_INCOME";
+export const UPDATE_ACCOUNTS = "UPDATE_ACCOUNTS";
+export const EDIT_ACCOUNT = "EDIT_ACCOUNT";
+export const REMOVE_ACCOUNT = "REMOVE_ACCOUNT";
 
 export const logoutAction = {
     type: LOGOUT
@@ -160,5 +164,63 @@ export const loginAction = (email) => {
         const data = await getDocs(usersRef);
         const emailUser = data.docs.map(doc => ({...doc.data(), id: doc.id})).filter(doc => doc.email === email)[0];
         dispatch({type: LOGIN, payload: emailUser});
+    }
+} 
+
+export const addAccountAction = (id, name, amount, accounts) => {
+    const date = getDate();
+    return async function(dispatch) {
+        const userRef = doc(db, "users", id);
+        const newFields = {accounts: [...accounts,
+            {
+                name: name,
+                incomes: [{category: "Initial Deposit", date: date, description: "Initial Account Deposit", amount: amount}],
+                budgets: [],
+                expenses: [],
+                goals: []
+            }]}
+
+        await updateDoc(userRef, newFields);
+        dispatch({type: UPDATE_ACCOUNTS, payload: newFields.accounts});
+    }
+} 
+
+export const editAccountAction = (id, prevName, newName, accounts) => {
+    return async function(dispatch) {
+        const userRef = doc(db, "users", id);
+
+         const newAccounts = accounts.map(el => {
+            if(el.name === prevName){
+                return {
+                    ...el,
+                    name: newName
+                }
+            }
+            return el;
+        })
+
+        const newFields = {accounts: newAccounts};
+    
+        await updateDoc(userRef, newFields);
+        dispatch({type: EDIT_ACCOUNT, payload: newFields.accounts});
+    }
+} 
+
+export const removeAccountAction = (id, prevName, accounts) => {
+    return async function(dispatch) {
+        const userRef = doc(db, "users", id);
+
+        const newAccounts = [];
+        
+        accounts.forEach(el => {
+            if(el.name !== prevName){
+                newAccounts.push(el);
+            }
+        });
+
+        const newFields = {accounts: newAccounts};
+    
+        await updateDoc(userRef, newFields);
+        dispatch({type: EDIT_ACCOUNT, payload: newFields.accounts});
     }
 } 
