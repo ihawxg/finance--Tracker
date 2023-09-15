@@ -1,3 +1,5 @@
+import { basicExpenseCategories, basicIncomeCategories } from '../../utils/consts';
+
 import { ADD_EXPENSE,
     ADD_GOAL,
     ADD_INCOME,
@@ -12,65 +14,28 @@ import { ADD_EXPENSE,
     UPDATE_ACCOUNTS,
     EDIT_ACCOUNT,
 } from '../actions/userActions';
-import {basicIncomeCategories, basicExpenseCategories} from "../../utils/consts";
 
 const INITIAL_STATE = {
-    logged: true,
-    user : {
-        email: "vasko47@abv.bg",
-        categories: [],
+    logged: false,
+    user: {
+        email: "guest@guest.com",
+        categories : [],
         accounts: [
             {
                 name: "main",
                 expenses: [],
-                incomes: [
-                    {
-                        date: "2/18/2022",
-                        amount: "123",
-                        category: "Initial Deposit",
-                        description: "Initial App Deposit",
-                        id: 1
-                    }
-                ],
+                incomes: [],
                 goals: []
             },
-            {
-                name: "sub-zero",
-                expenses: [],
-                incomes: [
-                    {
-                        date: "2/18/2022",
-                        amount: "1200",
-                        category: "Initial Deposit",
-                        description: "Initial App Deposit",
-                        id: 2
-                    }
-                ],
-                goals: []
-            },
-            {
-                name: "schmain",
-                expenses: [],
-                incomes: [
-                    {
-                        date: "2/18/2022",
-                        amount: "10",
-                        category: "Initial Deposit",
-                        description: "Initial App Deposit",
-                        id: 3
-                    }
-                ],
-                goals: []
-            }
+
         ],
         budgets: [],
         incomeCategories: basicIncomeCategories,
         expenseCategories: basicExpenseCategories,
-        birthdate: "2001-11-09",
-        firstName: "Васил",
-        lastName: "Любенов",
-        id: "38cQLPYsrIzBBkRnpugS"
-    }
+        birthdate: "2021-12-16T14:00:51.813Z",
+        firstName: "Guest",
+        lastName: "Guest",
+    }   
 }
 
 export const userReducer = (state = INITIAL_STATE, action) => {
@@ -78,8 +43,8 @@ export const userReducer = (state = INITIAL_STATE, action) => {
         case LOGIN : 
             return {
                 ...state,
-                logged : true,
-                user : {
+                logged: true,
+                user: {
                     ...action.payload
                 }
             }
@@ -88,13 +53,30 @@ export const userReducer = (state = INITIAL_STATE, action) => {
             sessionStorage.removeItem("currentUser");
             return {
                 ...state,
-                logged : false,
-                user : {}
+                logged: false,
+                user: {
+                    email: "guest@guest.com",
+                    categories : [],
+                    accounts: [
+                        {
+                            name: "main",
+                            expenses: [],
+                            incomes: [],
+                            goals: []
+                        },
+            
+                    ],
+                    budgets: [],
+                    incomeCategories: basicIncomeCategories,
+                    expenseCategories: basicExpenseCategories,
+                    birthdate: "2021-12-16T14:00:51.813Z",
+                    firstName: "Guest",
+                    lastName: "Guest",}
             }
         case ADD_INCOME :
             return {
                 ...state,
-                user : {
+                user: {
                     ...state.user,
                     accounts : [...action.payload]
                 }
@@ -125,20 +107,19 @@ export const userReducer = (state = INITIAL_STATE, action) => {
                     goals : [...state.user.goals, action.payload]
                 }
             }
-
-        case ADD_CATEGORY_INCOME : 
+        case ADD_CATEGORY_INCOME:
             return {
                 ...state,
-                user : {
+                user: {
                     ...state.user,
                     incomeCategories: [...state.user.incomeCategories, action.payload.name],
                     categories: [...state.user.categories, action.payload]
                 }
             }
-        case ADD_CATEGORY_EXPENSE : 
+        case ADD_CATEGORY_EXPENSE:
             return {
                 ...state,
-                user : {
+                user: {
                     ...state.user,
                     expenseCategories: [...state.user.expenseCategories, action.payload.name],
                     categories: [...state.user.categories, action.payload]
@@ -154,7 +135,6 @@ export const userReducer = (state = INITIAL_STATE, action) => {
                     categories: action.payload.categories
                 }
             } 
-
         case EDIT_CATEGORY_INCOME : 
             return {
                 ...state,
@@ -190,7 +170,8 @@ export const userReducer = (state = INITIAL_STATE, action) => {
                     ...state.user,
                     goals : []
                 }
-            }    
+            }
+       
         default : 
             return state;
     }

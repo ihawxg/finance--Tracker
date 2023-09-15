@@ -121,13 +121,12 @@ export default function HistoryPage() {
 
                 <table>
                     <thead>
-                        <tr>
-                            <th>Amount</th>
-                            <th>Type</th>
-                            <th>Category</th>
-                            <th>Description</th>
-                            <th>Date/Time</th>
-                            <th>Delete</th>
+                        <tr key="thead">
+                            <th key='amount'>Amount</th>
+                            <th key='type'>Type</th>
+                            <th key='category'>Category</th>
+                            <th key='descr'>Description</th>
+                            <th key='date'>Date/Time</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -170,10 +169,10 @@ export default function HistoryPage() {
                                     (isFiltered ? filteredIncomes : account.incomes).map(item => {
                                     return (
                                         <tr key={item.id}>
-                                            <td>{item.amount}</td>
-                                            <td>Income</td>
-                                            <td>{item.category}</td>
-                                            <td><StyledInput
+                                            <td key={item.amount+item.id}>{item.amount}</td>
+                                            <td key={item.id+"income"}>Income</td>
+                                            <td key={item.category+item.id}>{item.category}</td>
+                                            <td key={item.description+item.id}><StyledInput
                                                 name="description"
                                                 defaultValue={item.description}
                                                 onKeyDown={(e) => {
@@ -183,7 +182,7 @@ export default function HistoryPage() {
                                                 }}
                                                 onChange={(e) => setDescription(e.target.value)} />
                                             </td>
-                                            <td>{item.date}</td>
+                                            <td key={item.date+item.id}>{item.date}</td>
                                         </tr>
                                     )
                                 })
@@ -192,10 +191,10 @@ export default function HistoryPage() {
                                  (isFiltered ? filteredExpenses : account.expenses).map(item => {
                                     return (
                                         <tr key={item.id}>
-                                            <td>{item.amount}</td>
-                                            <td>Expense</td>
-                                            <td>{item.category}</td>
-                                            <td><StyledInput
+                                            <td key={item.amount+item.id}>{item.amount}</td>
+                                            <td key={item.id+"expense"}>Expense</td>
+                                            <td key={item.category+item.id}>{item.category}</td>
+                                            <td key={item.description+item.id}><StyledInput
                                                 name="description"
                                                 defaultValue={item.description}
                                                 onKeyDown={(e) => {
@@ -205,12 +204,11 @@ export default function HistoryPage() {
                                                 }}
                                                 onChange={(e) => setDescription(e.target.value)} />
                                             </td>
-                                            <td>{item.date}</td>
+                                            <td key={item.date+item.id}>{item.date}</td>
                                         </tr>
                                     )
                                 })   
                                 }
-
                             </>
                         )
                     })}

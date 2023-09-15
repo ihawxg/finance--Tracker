@@ -21,4 +21,5 @@ const ButtonsWrapper = styled.div`
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
+    margin-top: 50px;
 `;

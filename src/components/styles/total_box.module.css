@@ -9,6 +9,7 @@
     align-items: center;
     flex-direction: column;
     min-width: 320px;
+    border: 1px solid rgba(0, 0, 0, 1);
 }
 
 .totalExpenses{
@@ -23,6 +24,7 @@
     flex-direction: column;
     min-width: 320px;
     margin-left: 20px;
+    border: 1px solid rgba(0, 0, 0, 1);
 }
 
 .totalIncomes{
@@ -37,6 +39,7 @@
     flex-direction: column;
     min-width: 320px;
     margin-left: 20px;
+    border: 1px solid rgba(0, 0, 0, 1);
 }
 
 .totalTransactions{
@@ -51,6 +54,7 @@
     flex-direction: column;
     min-width: 320px;
     margin-left: 20px;
+    border: 1px solid rgba(0, 0, 0, 1);
 }
 
 .detailsText{
@@ -71,7 +75,27 @@
     display: flex;
 }
 
-@media (max-width: 1350px) {
+ .pieContainer{ 
+    margin-top: 50px;
+    display: flex;
+    width: 100vw;
+    justify-content: space-evenly;
+ }
+
+ .pie{
+    width: 30vw;
+    height: 30vh;
+ }
+
+ .legendContainer{
+     display: flex;
+     margin-top: 180px;
+     flex-direction: column;
+     justify-content: end;
+     align-items: flex-start;
+ }
+
+ @media (max-width: 1350px) {
     .containerBoxTwo{
      flex-direction: column;
     } 
@@ -90,7 +114,21 @@
         margin-top: 20px;
         width: 40vw;
     }
- }
+
+    .pie{
+        width: 80vw;
+    }
+
+    .pieContainer{
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .legendContainer{
+        margin-top: 250px;
+    }
+
+}
 
 @media (max-width: 650px) {
     .containerBoxTwo{
