@@ -57,23 +57,23 @@ export default function FormDialog(props) {
 
     switch(value) {
         case "Expense" :
-          dispatch(addExpense(user, {...detail, date: getFormatedDate(selectedDate)}))
+          dispatch(addExpense(user, {...detail, date: JSON.stringify(selectedDate)}))
           break;
 
         case "Savings": 
-          dispatch(addGoalAction(user, {...detail, date: getFormatedDate(selectedDate)}))
+          dispatch(addGoalAction(user, {...detail, date: JSON.stringify(selectedDate)}))
           break;
 
         case "Income" : 
-          dispatch(addIncome(user, {...detail, date: getFormatedDate(selectedDate)}))
+          dispatch(addIncome(user, {...detail, date: JSON.stringify(selectedDate)}))
           break;
 
         case "Budget" : 
           const details = {
             amount, 
             category,
-            from: getFormatedDate(fromDate), 
-            to: getFormatedDate(toDate)
+            from: JSON.stringify(new Date(fromDate)), 
+            to: JSON.stringify(new Date(toDate))
           }
 
           dispatch(addBudget(user, details));
@@ -115,16 +115,8 @@ export default function FormDialog(props) {
             amount, 
             category,
             account,
-            from: fromDate, 
-            to: toDate
-          }
-          try{
-            // dispatch(editBudgetAction(details))
-          }
-          catch(err){
-            console.log(err);
-            // from: getFormatedDate(fromDate), 
-            // to: getFormatedDate(toDate)
+            from: JSON.stringify(new Date(fromDate)), 
+            to: JSON.stringify(new Date(toDate))
           }
         
           dispatch(editBudget(user, details));
@@ -172,7 +164,7 @@ export default function FormDialog(props) {
             onChange={handleInput}
           />
           
-            {(props.value == "Income" || props.value == "Expense") && <TextField
+            {(props.value === "Income" || props.value === "Expense") && <TextField
             margin="dense"
             id="name"
             label="Description"
@@ -194,7 +186,7 @@ export default function FormDialog(props) {
                 </>
               ) : ( <BasicDatePicker label="Choose date" value={selectedDate} selected={selectedDate} onChange={date => setSelectedDate(date)} />)}
               {props.value !== "Budget" && <CategoryPicker name="account" value={account} onChange={e => setAccount(e.target.value)} required/>}
-              <CategoryPicker type="Expense" name="category" value={category} list={account} disabled={!((account && props.value !== "Budget") || props.value === "Budget")} onChange={e => setCategory(e.target.value)} />
+              <CategoryPicker type={props.value} name="category" value={category} list={account} disabled={!((account && props.value !== "Budget") || props.value === "Budget")} onChange={e => setCategory(e.target.value)} />
               
             </StyledEngineProvider>
           </Pickers>

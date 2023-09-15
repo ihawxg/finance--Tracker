@@ -14,7 +14,6 @@ import { addDoc, collection } from "firebase/firestore";
 import { useDispatch } from 'react-redux';
 import { setSnackbar } from '../redux/actions/snackbarActions';
 import { basicIncomeCategories, basicExpenseCategories } from "../utils/consts";
-import { getDate } from "../util";
 
 export default function RegisterPage(){
     const dispatch = useDispatch();
@@ -32,12 +31,12 @@ export default function RegisterPage(){
     const usersCollectionRef = collection(db, "users");
 
     const createUser = async () => {
-        const date = getDate();
+        const date = JSON.stringify(new Date());
         //init a new User with his coresponding data
         await addDoc(usersCollectionRef, { firstName: userData.firstName,
                                             lastName: userData.lastName,
                                             email: userData.email, 
-                                            birthdate: userData.birthdate,
+                                            birthdate: JSON.stringify(new Date(userData.birthdate)),
                                             categories: [],
                                             incomeCategories: basicIncomeCategories,
                                             expenseCategories: basicExpenseCategories,
@@ -46,7 +45,8 @@ export default function RegisterPage(){
                                                         incomes: [{category: "Initial Deposit", date: date, description: "Initial App Deposit", amount: userData.startBudget, id: 1}
                                                       ],
                                                       expenses: [],
-                                                      goals: []
+                                                      goals: [],
+                                                      total: userData.startBudget
                                                 }],
                                             budgets: []
                                             });
@@ -132,7 +132,7 @@ export default function RegisterPage(){
                         <TextField fullWidth name="confirm" id="pass-rep" label="Repeat Password" type="password" value={userData.confirm} autoComplete="current-password" onInput={e => handleInput(e)}/>
                     </form>
                     <div className={styles.dateCurrencyContainer}>
-                        <DatePick name="birthDate" handleDateChange={setUserData}/>
+                        <DatePick name="birthDate" label="Birthdate" handleDateChange={setUserData}/>
                         <TextField className={styles.startBudget} name="startBudget" id="budget" label="Start Budget" variant="outlined" onInput={e => handleInput(e)} />
                         <TextField className={styles.currency} disabled id="currency" label="Currency" value={currency} variant="filled" />
                     </div>

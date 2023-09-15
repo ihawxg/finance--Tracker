@@ -1,30 +1,35 @@
 import React from "react";
 import AddButtons from "./AddButtons";
-import { Chart } from './Chart';
-// import{ PieChart } from './PieChart';
 import styled from 'styled-components';
-import Filters from './Filters';
-import EnhancedTable from './EntriesHistory';
+import styles from './styles/total_box.module.css';
+import TotalBox from "./TotalBox";
+
 export default function Home() {
     return (
         <HomePage>
-            <UpperPageWrapper>
-                <Chart />
-                <AsideWrapper>
-                    <AddButtons />
-                    <Filters/>
-                  
-                </AsideWrapper>
-            </UpperPageWrapper>
-            <TransactionHistoryWrapper>
-                <EnhancedTable/>
-            </TransactionHistoryWrapper>
+            <AddButtons/>
+            <div className={styles.overAllContainer}>
+                <div className={styles.containerBoxAll}>
+                    <div className={styles.containerBoxTwo}>
+                        <TotalBox name="balance"/>
+                        <TotalBox name="transactions"/>               
+                    </div>
+                    <div className={styles.containerBoxTwo}>
+                        <TotalBox name="incomes"/>
+                        <TotalBox name="expenses"/>
+                    </div>
+                </div>
+            </div>
+        
         </HomePage>
 
     )
 }
 const HomePage = styled.div`
     margin: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 `
 const UpperPageWrapper = styled.div`
     display : flex;

@@ -7,10 +7,10 @@ import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import { useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth, db } from '../firebase';
+import { auth } from '../firebase';
 import { Alert } from '@mui/material';
 import { useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { loginAction } from '../redux/actions/userActions';
 
 
@@ -44,14 +44,11 @@ export default function LoginPage(){
     const handleClick = () => {
         signInWithEmailAndPassword(auth, email, pass)
         .then((userCredential) => {
-            // const user = userCredential.user;
             if(rememberMe){
                 localStorage.setItem("currentUser", email);
             }
             sessionStorage.setItem("currentUser", email);
 
-            //setRedux user
-            // let currentUser = localStorage.getItem("currentUser");
             dispatch(loginAction(email));
             navigate("/home");
         })

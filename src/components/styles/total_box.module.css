@@ -1,0 +1,117 @@
+.totalBalance{
+    background: #373B44;
+    background: -webkit-linear-gradient(to right, #4286f4, #373B44);
+    background: linear-gradient(to right, #4286f4, #373B44);
+    width: 22vw;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-width: 320px;
+}
+
+.totalExpenses{
+    background: #200122;
+    background: -webkit-linear-gradient(to right, #6f0000, #200122);
+    background: linear-gradient(to right, #6f0000, #200122);
+    width: 22vw;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-width: 320px;
+    margin-left: 20px;
+}
+
+.totalIncomes{
+    background: #004200; 
+    background: -webkit-linear-gradient(to right, #0f9b0f, #004200); 
+    background: linear-gradient(to right, #0f9b0f, #004200);
+    width: 22vw;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-width: 320px;
+    margin-left: 20px;
+}
+
+.totalTransactions{
+    background: #F3904F;
+    background: -webkit-linear-gradient(to right, #3B4371, #F3904F);
+    background: linear-gradient(to right, #3B4371, #F3904F);  
+    width: 22vw;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-width: 320px;
+    margin-left: 20px;
+}
+
+.detailsText{
+    color: white;
+}
+
+.containerBoxAll{
+    display: flex;
+    width: 100%;
+}
+
+.containerBoxTwo{
+    display: flex;
+    width: 100%;
+}
+
+.overAllContainer{
+    display: flex;
+}
+
+@media (max-width: 1350px) {
+    .containerBoxTwo{
+     flex-direction: column;
+    } 
+    .totalTransactions{
+        width: 40vw;
+        margin-left: 0;
+        margin-top: 20px;
+    }
+    .totalBalance{
+        width: 40vw;
+    }
+    .totalIncomes{
+        width: 40vw;
+    }
+    .totalExpenses{
+        margin-top: 20px;
+        width: 40vw;
+    }
+ }
+
+@media (max-width: 650px) {
+    .containerBoxTwo{
+        flex-direction: column;
+    } 
+    .containerBoxAll{
+        flex-direction: column;
+    }
+    .totalTransactions{
+        width: 90vw;
+    }
+    .totalBalance{
+        width: 90vw;
+    }
+    .totalIncomes{
+        margin-top: 20px;
+        margin-left: 0;
+        width: 90vw;
+    }
+    .totalExpenses{
+        margin-left: 0;
+        width: 90vw;
+    }
+ }

@@ -36,7 +36,7 @@ export default function UserInfo(){
                     </div>
                
                     <div className={styles.nameContainer}>
-                        <DatePick label="Birthdate" disabled={!editable} value={new Date(user.birthdate)} className={styles.date}/>
+                        <DatePick label="Birthdate" disabled={!editable} value={new Date(user.birthdate.slice(1,11))} className={styles.date}/>
                         <EditButton handleClick={handleClick}/>
                     </div> 
                 </div>

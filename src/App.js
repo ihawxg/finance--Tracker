@@ -20,29 +20,31 @@ function App() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  window.addEventListener("load", () => {
+  const log = () => {
     if(sessionStorage.getItem("currentUser")){
       dispatch(loginAction(sessionStorage.getItem("currentUser")));
     }
     else if(localStorage.getItem("currentUser")){
-      dispatch(loginAction(sessionStorage.getItem("currentUser")));
+      dispatch(loginAction(localStorage.getItem("currentUser")));
     }
     else{
-      dispatch(logoutAction);
-      navigate("/register");
+      navigate("/login");
+      dispatch(logoutAction); 
     }
-  })
+  }
+
+  window.addEventListener("load", log);
 
   return (
     <>
         <Header />
         <Snackbar />
         <Routes>
-            <Route path="/home" element={<HomePage />}/>
             <Route path="/login" element={<LoginPage />}/>
             <Route path="/register" element={<RegisterPage />}/>
             <Route path="/about" element={<AboutUsPage />}/>
             <Route path="/" element={<AboutUsPage />}/>
+            <Route path="/home" element={<HomePage />}/>
             <Route path="/profile" element={<ProfilePage/>}/>
             <Route path="/categories" element={<CategoriesPage/>}/>
             <Route path="/accounts" element={<AccountsPage/>}/>
