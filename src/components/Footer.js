@@ -64,7 +64,6 @@ const StyledFooter = styled.footer`
         flex-direction : column;
         background-color :#2F40A2;
     }
-
 `
 const Column = styled.div`
     display: flex;

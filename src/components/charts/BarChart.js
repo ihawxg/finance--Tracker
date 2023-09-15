@@ -1,7 +1,6 @@
 import { Bar } from 'react-chartjs-2';
 import styled from 'styled-components'
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -21,16 +20,13 @@ ChartJS.register(
   );
 
 export const BarChart = (props) => {
-    const [incomes, setIncomes] = useState([]);
-    const [expenses, setExpenses] = useState([]);
-    
-    useEffect(() => {
-      setIncomes(props.data[0])
-      setExpenses(props.data[1])
-    }, [props.data])
-  
-const months = [...incomes, ...expenses].map(item => (new Date(item.date)).getMonth())
-const labels = months.map(item => {
+  const incomes = props.data.filter(item => item.type == 'income');
+  const expenses = props.data.filter(item => item.type == 'expense');
+  const incomeAmount = incomes.map(item => Number(item.amount))
+  const expenseAmount = expenses.map(item => Number(item.amount))
+
+  const months = [...incomes, ...expenses].map(item => (new Date(item.date)).getMonth())
+  const labels = months.map(item => {
     switch(item) {
         case 0 : return "January";
         case 1 : return "February";
@@ -51,12 +47,12 @@ const data = {
   datasets: [
     {
       label: 'Incomes',
-      data: incomes.map(item => item.amount),
+      data: incomeAmount,
       backgroundColor: 'rgba(39, 173, 86, .8)',
     },
     {
         label: 'Expenses',
-        data: expenses.map(item => item.amount),
+        data: expenseAmount,
         backgroundColor: 'rgba(219, 30, 30, .8)',
     }
   ],

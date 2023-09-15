@@ -24,7 +24,6 @@ export default function AccountsPage(){
                         <button onClick={() => handleRemove(acc.name)}>Remove</button>
                       </>  
                     );
-
                 })}
             </div>
         </div>

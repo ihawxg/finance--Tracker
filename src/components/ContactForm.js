@@ -37,57 +37,57 @@ export default function FormDialog() {
     setMessage("");
   };
   return (
-      <div>
-        <Button variant="contained" fullWidth color="primary" onClick={handleOpen}>
-          CONTACT US NOW
-        </Button>
+    <div>
+      <Button variant="contained" fullWidth color="primary" onClick={handleOpen}>
+         CONTACT US NOW
+      </Button>
+  
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>Leave us a message</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Please enter your email address here. You will hear back from us within the next 24 hours. We
+            will send you notifications on our updates occasionally. 
+          </DialogContentText>
+          <TextField
+            autoFocus
+            required
+            autoComplete='off'
+            name="email"
+            margin="dense"
+            id="name"
+            label="Email Address"
+            type="email"
+            fullWidth
+            variant="standard"
+            value={email}
+            onChange={handleInput}
+          />
 
-        <Dialog open={open} onClose={handleClose}>
-          <DialogTitle>Leave us a message</DialogTitle>
-          <DialogContent>
-            <DialogContentText>
-              Please enter your email address here. You will hear back from us within the next 24 hours. We
-              will send you notifications on our updates occasionally.
-            </DialogContentText>
-            <TextField
-                autoFocus
-                required
-                autoComplete='off'
-                name="email"
-                margin="dense"
-                id="name"
-                label="Email Address"
-                type="email"
-                fullWidth
-                variant="standard"
-                value={email}
-                onChange={handleInput}
-            />
-
-            <TextField
-                autoFocus
-                required
-                autoComplete='off'
-                name='message'
-                margin="dense"
-                id="name"
-                label="Your Message"
-                type="text"
-                fullWidth
-                multiline
-                variant="standard"
-                value={message}
-                onChange={handleInput}
-            />
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose}>Cancel</Button>
-            <Button variant="contained" onClick={handleSend} disabled={ (email && message) ? false : true } endIcon={<SendIcon />}>
+          <TextField
+            autoFocus
+            required
+            autoComplete='off'
+            name='message'
+            margin="dense"
+            id="name"
+            label="Your Message"
+            type="text"
+            fullWidth
+            multiline
+            variant="standard"
+            value={message}
+            onChange={handleInput}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button variant="contained" onClick={handleSend} disabled={ (email && message) ? false : true } endIcon={<SendIcon />}>
               Send
-            </Button>
-          </DialogActions>
-        </Dialog>
-      </div>
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </div>
   );
 }
 const Success = styled.div`

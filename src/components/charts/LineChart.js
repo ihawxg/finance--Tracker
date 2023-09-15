@@ -23,14 +23,6 @@ ChartJS.register(
 );
 
 export const LineChart = (props) => {
-    const [incomes, setIncomes] = useState([]);
-    const [expenses, setExpenses] = useState([]);
-
-    useEffect(() => {
-        setIncomes(props.data[0])
-        setExpenses(props.data[1])
-    }, [props.data])
-
     const options = {
         responsive: true,
         plugins: {
@@ -40,20 +32,8 @@ export const LineChart = (props) => {
             },
         },
     };
-    const markedIncomes = incomes.map(income => {
-        return {
-            ...income,
-            type: "income"
-        }
-    })
-    const markedExpenses = expenses.map(expense => {
-        return {
-            ...expense,
-            type: "expense"
-        }
-    })
-
-    const months = [...incomes, ...expenses].map(item => (new Date(item.date)).getMonth())
+   
+    const months = props.data.map(item => (new Date(item.date)).getMonth())
     const labels = months.map(item => {
         switch (item) {
             case 0: return "January";
@@ -71,24 +51,24 @@ export const LineChart = (props) => {
         }
     });
    
-    const sortedTransactions = [...markedIncomes, ...markedExpenses].sort((a,b) => {
-        return new Date(a.date).getTime() - new Date(b.date).getTime();
+    const sortedTransactions = props.data.sort((a,b) => {
+        return (new Date(JSON.parse(a.date))) - (new Date(JSON.parse(b.date)));
     })
+  
     const timeline = sortedTransactions.map(item => {
         if(item.type === "income")
         return Number(item.amount)
             else return item.amount*(-1);
     })
-
-
+console.log(timeline)
    let result = []
 
-   let accumulator = props.data[2];
+   let accumulator = 0;
    for(let i = 0; i < timeline.length; i++) {
         accumulator += timeline[i];  
         result.push(accumulator);
    }
-
+console.log(result)
     const data = {
         labels,
         datasets: [

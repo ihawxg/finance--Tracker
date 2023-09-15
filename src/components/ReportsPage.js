@@ -1,101 +1,78 @@
-import styles from "./styles/pages.module.css"
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { StyledPage, StyledFilters, StyledButton, Column, Row } from './HistoryPage';
-import { RangeFilter, CategoryFilter, AccountFilter, DateRangeFilter } from "./chartFilters";
-import { clearFilters } from "../redux/actions/filtersActions";
-import { useDispatch, useSelector } from 'react-redux';
-import React, { useEffect, useState } from 'react';
 import { PieChart } from './charts/PieChart';
 import { BarChart } from "./charts/BarChart";
 import { LineChart } from "./charts/LineChart";
+import GetMaxAmount from './filters/GetMaxAmount';
+import { AccountFilter } from "./filters/AccountFilter";
+import { AmountRangeFilter } from './filters/AmountRangeFilter';
+import { DateRangeFilter } from './filters/DateRangeFilter';
 
 
 export default function ReportsPage() {
-
-    const dispatch = useDispatch();
-    const [isFiltered, setIsFiltered] = useState(false);
+    const max = GetMaxAmount();
+    const [transactions, setTransactions] = useState([]);
     const [selectedAccounts, setSelectedAccounts] = useState([]);
-    const userAccounts = useSelector(state => state.userData.user.accounts);
-    const allIncomes = userAccounts.map(account => account.incomes).flat();
-    const allExpenses = userAccounts.map(account => account.expenses).flat();
-    const allTransactions = [...allIncomes, ...allExpenses];
-    const rangeFilter = useSelector(state => state.filters.range);
-    const startDateFilter = useSelector(state => state.filters.from_date);
-    const endDateFilter = useSelector(state => state.filters.to_date);
-    const categoryFiltered = useSelector(state => state.filters.category);
-    const accountFilter = useSelector(state => state.filters.account);
+    const [amountRange, setAmountRange] = useState([0, max]);
+    const [dateRange, setDateRange] = useState([null, null]);
+   
+    const [description, setDescription] = useState("");
+    const user = useSelector(state => state.userData.user)
 
-    useEffect(() => {
-        let selected = userAccounts.filter(acc => accountFilter.indexOf(acc.name) > -1)
-        setSelectedAccounts([...selected])
-    }, [accountFilter])
-    
-    // const categoryFilter = categoryFiltered.map(e => e.toLowerCase());
+   const filterTransactions = (accounts, amount, date) => {
+        let filtered = user.transactions.filter(transaction => {
+                return accounts.length ? accounts.indexOf(transaction.account) > -1 : transaction;
+         }).filter(transaction => {
+                let current = new Date(JSON.parse(transaction.date)).getTime();
+                if(date[0]) {
+                    let start = date[0].getTime(); 
+                    let end = (date[1] || new Date()).getTime();
+                    return (current >= start && current <= end);  
+                } else return transaction;    
+         }).filter(transaction => {
+                return (Number(transaction.amount) >= amount[0]) && (Number(transaction.amount) <= amount[1]);
+         })
+        setTransactions(filtered)
+   }
 
-    let filteredIncomesArr = selectedAccounts.map(acc => acc.incomes).flat();
-    let filteredExpensesArr = selectedAccounts.map(acc => acc.expenses).flat();
-    const initialBalanceIncomes = (selectedAccounts.length > 0 ? filteredIncomesArr : allIncomes).filter(e => (new Date(e.date)) < (new Date(startDateFilter ? startDateFilter : new Date())))
-    const initialBalanceExpenses = (selectedAccounts.length > 0 ? filteredExpensesArr : allExpenses).filter(e => (new Date(e.date).getTime()) < (new Date(startDateFilter ? startDateFilter : new Date())))
-    const initialBalance = initialBalanceIncomes.reduce((acc, curr) => acc + Number(curr.amount), 0) - initialBalanceExpenses.reduce((acc, curr) => acc + Number(curr.amount), 0)
-    // const filtered = filterAll(selectedAccounts.length > 0 ? filteredSelected : allTransactions).filter(e => categoryFilter.indexOf(e.category.toLowerCase()) > -1)    
-
-    const filteredIncomes = filterAll(selectedAccounts.length > 0 ? filteredIncomesArr : allIncomes)
-    const filteredExpenses = filterAll(selectedAccounts.length > 0 ? filteredExpensesArr : allExpenses)
-    //filter by amount and time range 
-    function filterAll(array) {
-        return array
-            .filter(e => (Number(e.amount) >= rangeFilter[0] && Number(e.amount) <= rangeFilter[1]))
-            .filter(item => {
-                if (startDateFilter) {
-                    const start = (new Date(startDateFilter)).getTime()
-                    const end = (new Date(endDateFilter)).getTime()
-                    const current = (new Date(item.date)).getTime()
-                    if (start && end) return current >= start && current <= end;
-                    else return current >= start && current <= (new Date()).getTime();
-                } else return item;
-            });
-    }
-
+   const clearFilters = () => {
+    setSelectedAccounts([]);
+    setAmountRange([0, max])
+    setDateRange([null, null])
+    filterTransactions(selectedAccounts, amountRange, dateRange)
+   }
+   console.log(transactions)
     return (
         <StyledPage>
             <h1>Reports</h1>
             <StyledFilters>
-                <h6>Set amount range: </h6>
-                <RangeFilter />
+                    <Row>
+                        
+                    <AccountFilter value={selectedAccounts} onChange={(e) => { setSelectedAccounts(e.target.value); filterTransactions(e.target.value, amountRange, dateRange)} } />
+                    <AmountRangeFilter value={amountRange} max={max} onChange={ (e) => { setAmountRange(e.target.value); filterTransactions(selectedAccounts, e.target.value, dateRange) }} />
+                    <DateRangeFilter value={dateRange} onChange={ (e) => { setDateRange(e); filterTransactions(selectedAccounts, amountRange, e)} } />
+                    <StyledButton onClick={clearFilters}>Clear Filters</StyledButton>
+                        
+                    </Row>
 
-                <Row>
-                    <Column>
-                        <CategoryFilter disabled={true} />
-                        <AccountFilter />
-                        <StyledButton onClick={() => {
-                            setIsFiltered(true)
-                        }}>Filter List
-                        </StyledButton>
-                    </Column>
-                    <Column >
-                        <DateRangeFilter />
-                        <StyledButton onClick={() => {
-                            setIsFiltered(false)
-                            dispatch(clearFilters)
-                            
-                        }}>Clear Filters
-                        </StyledButton>
-                    </Column>
-                </Row>
-            </StyledFilters>
-            <PieCharts>
+                </StyledFilters>
+
+                <PieCharts>
                 <Column>
+                
                     <h6>Incomes</h6>
-                    <PieChart purpose="Incomes" data={filteredIncomes} />
+                    <PieChart purpose="Incomes" data={transactions.filter(item => item.type == 'income')} />
                 </Column>
                 <Column>
                     <h6>Expenses</h6>
-                    <PieChart puprose="Expenses" data={filteredExpenses} />
+                    <PieChart puprose="Expenses" data={transactions.filter(item => item.type == 'expense')} />
                 </Column>
             </PieCharts>
 
-            <LineChart data={[filteredIncomes, filteredExpenses, (startDateFilter ? initialBalance : 0)]} />
-            <BarChart data={[filteredIncomes, filteredExpenses]} />
+            <LineChart data={transactions} />
+            <BarChart data={transactions} />
 
         </StyledPage>
     );

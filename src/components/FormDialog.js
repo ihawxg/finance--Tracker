@@ -15,7 +15,7 @@ import { addGoalAction, addBudget, addIncome, addExpense, editExpense, editIncom
 import { useDispatch, useSelector } from 'react-redux';
 import { setSnackbar } from '../redux/actions/snackbarActions';
 import styles from "./styles/progress_card.module.css";
-import { getFormatedDate } from '../util';
+import { getFormatedDate } from '../utils/util'
 export default function FormDialog(props) {
 
   const [open, setOpen] = useState(false);

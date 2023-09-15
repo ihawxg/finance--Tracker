@@ -21,7 +21,7 @@
 }
 
 @media (max-width: 768px) {
-    .profileIcon {
-        margin: 10px 40px 20px 0;
-    }
-}
+   .profileIcon {
+       margin: 10px 40px 20px 0;
+   }
+ }

@@ -11,14 +11,11 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Radio from '@mui/material/Radio';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateUserIncomeCategories, updateUserExpenseCategories, editExpenseCategories, editIncomeCategories } from '../redux/actions/userActions'; 
-import { HexColorPicker } from "react-colorful";
-import styles from "./styles/pages.module.css";
 
 export default function AddCategoryBTN(props) {
   const [open, setOpen] = React.useState(false);
   const [categoryInfo, setCategoryInfo] = React.useState({name: "", type: "expense"});
   const [value, setValue] = React.useState('expense');
-  const [color, setColor] = React.useState("#fff");
 
   const dispatch = useDispatch();
 
@@ -35,23 +32,22 @@ export default function AddCategoryBTN(props) {
   const handleAdd = () => {
     if(props.operation !== "edit"){
       if(value === "income") {
-          dispatch(updateUserIncomeCategories(user.id, user.incomeCategories, user.categories, categoryInfo, color));
-      } 
+          dispatch(updateUserIncomeCategories(user.id, user.incomeCategories, user.categories, categoryInfo));
+      }
       else {
-          dispatch(updateUserExpenseCategories(user.id, user.expenseCategories, user.categories, categoryInfo, color));
+          dispatch(updateUserExpenseCategories(user.id, user.expenseCategories, user.categories, categoryInfo));
       }
     }
     else{
       if(value === "expense") {
-        dispatch(editExpenseCategories(user.id, props.position, user.expenseCategories, user.incomeCategories, user.categories, user.categories[props.position], categoryInfo, false, color));
+        dispatch(editExpenseCategories(user.id, props.position, user.expenseCategories, user.incomeCategories, user.categories, user.categories[props.position], categoryInfo, false));
       }
       else {
-        dispatch(editIncomeCategories(user.id, props.position, user.expenseCategories, user.incomeCategories, user.categories, user.categories[props.position], categoryInfo, false, color));
+        dispatch(editIncomeCategories(user.id, props.position, user.expenseCategories, user.incomeCategories, user.categories, user.categories[props.position], categoryInfo, false));
       }
     }
 
     setCategoryInfo({name: "", type: "expense"});
-    setColor("#fff");
     setOpen(false);
   }
 
@@ -88,18 +84,15 @@ export default function AddCategoryBTN(props) {
             onChange={handleChangeText}
           />
     
-        <div className={styles.categoryContainer}>
-          <RadioGroup
-            aria-labelledby="category-type"
-            name="type"
-            value={value}
-            onChange={handleRadioChange}>
-              <FormControlLabel value="income" control={<Radio />} label="Income" />
-              <FormControlLabel value="expense" control={<Radio />} label="Expense" />
-          </RadioGroup>
-          
-          <HexColorPicker color={color} onChange={setColor}/>
-        </div>
+         <RadioGroup
+          aria-labelledby="category-type"
+          name="type"
+          value={value}
+          onChange={handleRadioChange}>
+            <FormControlLabel value="income" control={<Radio />} label="Income" />
+            <FormControlLabel value="expense" control={<Radio />} label="Expense" />
+        </RadioGroup>
+
 
         </DialogContent>
         <DialogActions>

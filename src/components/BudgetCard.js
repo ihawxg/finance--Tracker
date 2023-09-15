@@ -32,7 +32,7 @@ export default function BudgetCard(){
                 </div>
                 <div className={styles.card}>
                     <ProgressBar now={goal.amount} className={`${styles.progress} rounded-pill`} min={goal.min} max={goal.max} variant={getProgressBarVariant(goal.amount, goal.max)}/>
-
+                    
                 </div>
                 <div className={styles.btnContainer}>
                     <FormDialog className={styles.btn} clickAction={(amount) => setGoal(prev => ({...prev, amount: prev.amount + amount}))} value="Savings" title="Add savings"/>
@@ -43,7 +43,6 @@ export default function BudgetCard(){
             {!hasGoal && <AddGoalButton title="Add Goal" setGoal={setGoal} setHasGoal={setHasGoal}/>}
         </div>
     );
-
+    
 }
-
 
