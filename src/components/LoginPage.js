@@ -29,11 +29,9 @@ export default function LoginPage(){
         if(e.target.name === "loginEmail") {
             setEmail( e.target.value);
             setTimeout(() => {
-                    // console.log(email)
             }, 2000);
         } else if(e.target.name === "loginPass") {
             setPass(e.target.value);
-            // console.log(pass)
         } 
     }  
 
@@ -41,25 +39,30 @@ export default function LoginPage(){
         setRememberMe(prev => !prev);
     }
 
-    const handleClick = () => {
-        signInWithEmailAndPassword(auth, email, pass)
-        .then((userCredential) => {
-            if(rememberMe){
-                localStorage.setItem("currentUser", email);
-            }
-            sessionStorage.setItem("currentUser", email);
-
-            dispatch(loginAction(email));
-            navigate("/home");
-        })
-        .catch((error) => {
-            setHasError(true)
-        });
-    }
+    const handleClick = async () => {
+        try{
+            await signInWithEmailAndPassword(auth, email, pass)
+            .then(() => {
+                if(rememberMe){
+                    localStorage.setItem("currentUser", email);
+                }
+                sessionStorage.setItem("currentUser", email);
+    
+                dispatch(loginAction(email));
+                navigate("/home");
+            })
+            .catch((error) => {
+                setHasError(true);
+            });
+        }
+        catch(err){
+            setHasError(true);
+        }
+    } 
 
     return (
         <div className={styles.formContainer}>
-            <Card className={styles.loginCard}>
+            <Card className={styles.loginCard} style={ {height: hasError ? "440px" : "370px"}}>
                 <div className={styles.Regform}>
                     <h3 className={styles.formText}>Login</h3>
                     <form className={styles.input_container}>
