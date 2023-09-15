@@ -69,21 +69,21 @@ export const addCategoryExpenseAction = (category) => {
 }
 
 //redux method use to update the current user in firebase
-export const updateUserIncomeCategories = (id, incomeCategories, categories, category) => {
+export const updateUserIncomeCategories = (id, incomeCategories, categories, category, color) => {
     return async function(dispatch) {
         const userRef = doc(db, "users", id);
-        const newIncomeCategories = {incomeCategories: [...incomeCategories, category.name], categories: [...categories, category]};
+        const newIncomeCategories = {incomeCategories: [...incomeCategories, {name: category.name, color}], categories: [...categories, {...category, color}]};
         await updateDoc(userRef, newIncomeCategories);
-        dispatch({type: ADD_CATEGORY_INCOME, payload: category});
+        dispatch({type: ADD_CATEGORY_INCOME, payload: {name: category.name, color}});
     }
 } 
 
-export const updateUserExpenseCategories = (id, expenseCategories, categories, category) => {
+export const updateUserExpenseCategories = (id, expenseCategories, categories, category, color) => {
     return async function(dispatch) {
         const userRef = doc(db, "users", id);
-        const newExpenseCategories = {expenseCategories: [...expenseCategories, category.name], categories: [...categories, category]};
+        const newExpenseCategories = {expenseCategories: [...expenseCategories, {name: category.name, color}], categories: [...categories, {...category, color}]};
         await updateDoc(userRef, newExpenseCategories);
-        dispatch({type: ADD_CATEGORY_EXPENSE, payload: category});
+        dispatch({type: ADD_CATEGORY_EXPENSE, payload: {name: category.name, color}});
     }
 } 
 
@@ -177,9 +177,10 @@ export const addAccountAction = (id, name, amount, accounts) => {
         const newFields = {accounts: [...accounts,
             {
                 name: name,
-                incomes: [{category: "Initial Deposit", date: date, description: "Initial Account Deposit", amount: amount}],
+                incomes: [{category: {name: "Initial Deposit", color: "#404a0d"}, date: date, description: "Initial Account Deposit", amount: amount}],
                 budgets: [],
                 expenses: [],
+                transactions: [],
                 goals: []
             }]}
 
@@ -233,6 +234,8 @@ export const addExpense = (user, details) => {
         const userRef = doc(db, "users", user.id);
         const newField = user.accounts;
         let newTransactions = [];
+        let color = user.expenseCategories[user.expenseCategories.findIndex(exp => exp.name === details.category)].color;
+        
         let br = 0;
         
         const id = new Date().valueOf();
@@ -256,7 +259,7 @@ export const addExpense = (user, details) => {
 
                     const newExpenses = [...acc.expenses, {date: details.date,
                         amount: details.amount,
-                        category: details.category,
+                        category: {name: details.category, color},
                         description: details.descr,
                         id: id
                     }];
@@ -284,6 +287,7 @@ export const addIncome = (user, details) => {
         const newField = user.accounts;
         let br = 0;
         let newTransactions = [];
+        let color = user.incomeCategories[user.incomeCategories.findIndex(inc => inc.name === details.category)].color;
 
         const id = new Date().valueOf();
 
@@ -291,7 +295,7 @@ export const addIncome = (user, details) => {
             if(acc.name === details.account){
                 const newIncomes = [...acc.incomes, {date: details.date,
                                 amount: details.amount,
-                                category: details.category,
+                                category: {name: details.category, color},
                                 description: details.descr,
                                 id: id
                 }];

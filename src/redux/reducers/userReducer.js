@@ -116,7 +116,7 @@ export const userReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 user: {
                     ...state.user,
-                    incomeCategories: [...state.user.incomeCategories, action.payload.name],
+                    incomeCategories: [...state.user.incomeCategories, action.payload],
                     categories: [...state.user.categories, action.payload]
                 }
             }
@@ -125,7 +125,7 @@ export const userReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 user: {
                     ...state.user,
-                    expenseCategories: [...state.user.expenseCategories, action.payload.name],
+                    expenseCategories: [...state.user.expenseCategories, action.payload],
                     categories: [...state.user.categories, action.payload]
                 }
             }   
