@@ -20,6 +20,7 @@ const INITIAL_STATE = {
     user: {
         email: "guest@guest.com",
         categories : [],
+        transactions: [],
         accounts: [
             {
                 name: "main",
@@ -67,6 +68,7 @@ export const userReducer = (state = INITIAL_STATE, action) => {
             
                     ],
                     budgets: [],
+                    transactions: [],
                     incomeCategories: basicIncomeCategories,
                     expenseCategories: basicExpenseCategories,
                     birthdate: "2021-12-16T14:00:51.813Z",
@@ -78,7 +80,8 @@ export const userReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 user: {
                     ...state.user,
-                    accounts : [...action.payload]
+                    accounts : [...action.payload.accounts],
+                    transactions: [...action.payload.transactions]
                 }
     
             }    
@@ -87,7 +90,8 @@ export const userReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 user : {
                     ...state.user,
-                    accounts : [...action.payload]
+                    accounts : [...action.payload.accounts],
+                    transactions: [...action.payload.transactions]
                 }
             }   
         case UPDATE_BUDGET : 

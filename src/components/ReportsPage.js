@@ -65,7 +65,7 @@ export default function ReportsPage() {
 
                 <Row>
                     <Column>
-                        <CategoryFilter disabled="true" />
+                        <CategoryFilter disabled={true} />
                         <AccountFilter />
                         <StyledButton onClick={() => {
                             setIsFiltered(true)

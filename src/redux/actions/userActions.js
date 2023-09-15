@@ -232,8 +232,9 @@ export const addExpense = (user, details) => {
     return async function(dispatch) {
         const userRef = doc(db, "users", user.id);
         const newField = user.accounts;
+        let newTransactions = [];
         let br = 0;
-
+        
         const id = new Date().valueOf();
 
         newField.forEach(acc => {
@@ -243,6 +244,16 @@ export const addExpense = (user, details) => {
                     return;
                 }
                 else{
+                    newTransactions = [...user.transactions, {
+                        type: "expense",
+                        date: details.date,
+                        amount: details.amount,
+                        category: details.category,
+                        description: details.descr,
+                        id: id,
+                        account: acc.name
+                    }];
+
                     const newExpenses = [...acc.expenses, {date: details.date,
                         amount: details.amount,
                         category: details.category,
@@ -262,8 +273,8 @@ export const addExpense = (user, details) => {
             dispatch(addBudget(user, prevBudget));
         }
 
-        await updateDoc(userRef, {accounts: newField});
-        dispatch({type: ADD_EXPENSE, payload: newField});
+        await updateDoc(userRef, {transactions: newTransactions, accounts: newField});
+        dispatch({type: ADD_EXPENSE, payload: {transactions: newTransactions, accounts: newField}});
     }
 } 
 
@@ -272,6 +283,7 @@ export const addIncome = (user, details) => {
         const userRef = doc(db, "users", user.id);
         const newField = user.accounts;
         let br = 0;
+        let newTransactions = [];
 
         const id = new Date().valueOf();
 
@@ -284,12 +296,22 @@ export const addIncome = (user, details) => {
                                 id: id
                 }];
                 newField[br] = {...newField[br], incomes: newIncomes, total: (Number(newField[br].total) + Number(details.amount)).toString()};
+
+                newTransactions = [...user.transactions, {
+                    type: "income",
+                    date: details.date,
+                    amount: details.amount,
+                    category: details.category,
+                    description: details.descr,
+                    id: id,
+                    account: acc.name
+                }];
             }
             br++;
         });
 
-        await updateDoc(userRef, {accounts: newField});
-        dispatch({type: ADD_INCOME, payload: newField});
+        await updateDoc(userRef, {transactions: newTransactions, accounts: newField});
+        dispatch({type: ADD_INCOME, payload: {transactions: newTransactions, accounts: newField}});
     }
 } 
 
