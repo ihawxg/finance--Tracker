@@ -132,7 +132,7 @@ export default function RegisterPage(){
                         <TextField fullWidth name="confirm" id="pass-rep" label="Repeat Password" type="password" value={userData.confirm} autoComplete="current-password" onInput={e => handleInput(e)}/>
                     </form>
                     <div className={styles.dateCurrencyContainer}>
-                        <DatePick name="birthDate" label="Birthdate" handleDateChange={setUserData}/>
+                        <DatePick name="birthDate" handleDateChange={setUserData}/>
                         <TextField className={styles.startBudget} name="startBudget" id="budget" label="Start Budget" variant="outlined" onInput={e => handleInput(e)} />
                         <TextField className={styles.currency} disabled id="currency" label="Currency" value={currency} variant="filled" />
                     </div>
