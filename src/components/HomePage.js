@@ -27,11 +27,11 @@ export default function Home() {
         //in case of incomes
         user.accounts.forEach(acc => {
             acc.incomes.forEach(inc => {
-                if(dataMap.has(inc.category)){
-                    dataMap.set(inc.category, dataMap.get(inc.category) + Number(inc.amount))
+                if(dataMap.has(inc.category.name)){
+                    dataMap.set(inc.category.name, {amount: dataMap.get(inc.category.name) + Number(inc.amount), color: inc.category.color})
                 }
                 else{
-                    dataMap.set(inc.category, Number(inc.amount));
+                    dataMap.set(inc.category.name, {amount: Number(inc.amount), color: inc.category.color});
                 }
             })
         })
@@ -40,19 +40,20 @@ export default function Home() {
         //in case of expenses
         user.accounts.forEach(acc => {
             acc.expenses.forEach(exp => {
-                if(dataMap.has(exp.category)){
-                    dataMap.set(exp.category, dataMap.get(exp.category) + Number(exp.amount))
+                if(dataMap.has(exp.category.name)){
+                    dataMap.set(exp.category, {amount: dataMap.get(exp.category.name) + Number(exp.amount), color: exp.category.color});
                 }
                 else{
-                    dataMap.set(exp.category, Number(exp.amount));
+                    dataMap.set(exp.category.name, {amount: Number(exp.amount), color: exp.category.color});
                 }
             })
         })
     }
 
-    const labels = Array.from(dataMap.keys());
-    const data = Array.from(dataMap.values())
-    const colors = Array.from(data.values()).map(el => randomColor());
+    let labels = Array.from(dataMap.keys());
+    let data = Array.from(dataMap.values()).map(data => data.amount);
+    let colors = Array.from(dataMap.values()).map(data => data.color);;
+    
 
     const metaData = {
         labels,
