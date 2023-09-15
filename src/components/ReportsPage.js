@@ -10,7 +10,7 @@ import { BarChart } from "./charts/BarChart";
 import { LineChart } from "./charts/LineChart";
 
 
-export default function ReportsPage(){
+export default function ReportsPage() {
 
     const dispatch = useDispatch();
     const [isFiltered, setIsFiltered] = useState(false);
@@ -29,70 +29,74 @@ export default function ReportsPage(){
         let selected = userAccounts.filter(acc => accountFilter.indexOf(acc.name) > -1)
         setSelectedAccounts([...selected])
     }, [accountFilter])
-   
-    const categoryFilter = categoryFiltered.map(e => e.toLowerCase());
-    let filteredSelected = selectedAccounts.map(acc => acc.expenses.concat(acc.incomes)).flat()
+    
+    // const categoryFilter = categoryFiltered.map(e => e.toLowerCase());
+
     let filteredIncomesArr = selectedAccounts.map(acc => acc.incomes).flat();
     let filteredExpensesArr = selectedAccounts.map(acc => acc.expenses).flat();
-   
-    const filtered = filterAll(selectedAccounts.length > 0 ? filteredSelected : allTransactions).filter(e => categoryFilter.indexOf(e.category.toLowerCase()) > -1)    
-   
+    const initialBalanceIncomes = (selectedAccounts.length > 0 ? filteredIncomesArr : allIncomes).filter(e => (new Date(e.date)) < (new Date(startDateFilter ? startDateFilter : new Date())))
+    const initialBalanceExpenses = (selectedAccounts.length > 0 ? filteredExpensesArr : allExpenses).filter(e => (new Date(e.date).getTime()) < (new Date(startDateFilter ? startDateFilter : new Date())))
+    const initialBalance = initialBalanceIncomes.reduce((acc, curr) => acc + Number(curr.amount), 0) - initialBalanceExpenses.reduce((acc, curr) => acc + Number(curr.amount), 0)
+    // const filtered = filterAll(selectedAccounts.length > 0 ? filteredSelected : allTransactions).filter(e => categoryFilter.indexOf(e.category.toLowerCase()) > -1)    
+
     const filteredIncomes = filterAll(selectedAccounts.length > 0 ? filteredIncomesArr : allIncomes)
     const filteredExpenses = filterAll(selectedAccounts.length > 0 ? filteredExpensesArr : allExpenses)
-
-        function filterAll(array) {
-            return array
-            .filter(e => Number(e.amount) >= rangeFilter[0] && Number(e.amount) <= rangeFilter[1])
+    //filter by amount and time range 
+    function filterAll(array) {
+        return array
+            .filter(e => (Number(e.amount) >= rangeFilter[0] && Number(e.amount) <= rangeFilter[1]))
             .filter(item => {
-                const start = (new Date(startDateFilter)).getTime()
-                const end = (new Date(endDateFilter)).getTime()
-                const current = (new Date(item.date)).getTime()
-                if (start && end) return current >= start && current <= end;
-                else return current >= start && current <= (new Date()).getTime();
+                if (startDateFilter) {
+                    const start = (new Date(startDateFilter)).getTime()
+                    const end = (new Date(endDateFilter)).getTime()
+                    const current = (new Date(item.date)).getTime()
+                    if (start && end) return current >= start && current <= end;
+                    else return current >= start && current <= (new Date()).getTime();
+                } else return item;
             });
-        }       
+    }
 
     return (
         <StyledPage>
             <h1>Reports</h1>
             <StyledFilters>
-                    <h6>Set amount range: </h6>
-                    <RangeFilter />
+                <h6>Set amount range: </h6>
+                <RangeFilter />
 
-                    <Row>
-                        <Column>
-                            <CategoryFilter />
-                            <AccountFilter />
-                            <StyledButton onClick={() => {
-                                setIsFiltered(true)
-                            }}>Filter List
-                            </StyledButton>
-                        </Column>
-                        <Column >
-                            <DateRangeFilter />
-                            <StyledButton onClick={() => {
-                                setIsFiltered(false)
-                                dispatch(clearFilters)
-                            }}>Clear Filters
-                            </StyledButton>
-                        </Column>
-                    </Row>
-                </StyledFilters>
+                <Row>
+                    <Column>
+                        <CategoryFilter disabled="true" />
+                        <AccountFilter />
+                        <StyledButton onClick={() => {
+                            setIsFiltered(true)
+                        }}>Filter List
+                        </StyledButton>
+                    </Column>
+                    <Column >
+                        <DateRangeFilter />
+                        <StyledButton onClick={() => {
+                            setIsFiltered(false)
+                            dispatch(clearFilters)
+                            
+                        }}>Clear Filters
+                        </StyledButton>
+                    </Column>
+                </Row>
+            </StyledFilters>
             <PieCharts>
                 <Column>
-                    <h6>Incomes</h6>                
-                    <PieChart purpose="Incomes" data={isFiltered ? filteredIncomes : allIncomes}/>
+                    <h6>Incomes</h6>
+                    <PieChart purpose="Incomes" data={filteredIncomes} />
                 </Column>
                 <Column>
                     <h6>Expenses</h6>
-                    <PieChart puprose="Expenses" data={isFiltered ? filteredExpenses : allExpenses}/>
+                    <PieChart puprose="Expenses" data={filteredExpenses} />
                 </Column>
-            </PieCharts>    
-           
-            <LineChart data={isFiltered ? [filteredIncomes, filteredExpenses] : [allIncomes, allExpenses]}/>
-            <BarChart data={isFiltered ? [filteredIncomes, filteredExpenses] : [allIncomes, allExpenses]} />
+            </PieCharts>
 
-           
+            <LineChart data={[filteredIncomes, filteredExpenses, (startDateFilter ? initialBalance : 0)]} />
+            <BarChart data={[filteredIncomes, filteredExpenses]} />
+
         </StyledPage>
     );
 }

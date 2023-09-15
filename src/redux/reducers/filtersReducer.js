@@ -1,10 +1,13 @@
-import { ADD_ACCOUNT_FILTER, ADD_CATEGORY_FILTER, ADD_FROM_DATE_FILTER, ADD_RANGE_FILTER, ADD_TO_DATE_FILTER, CLEAR_FILTERS } from "../actions/filtersActions";
+import { ADD_TYPE_FILTER, ADD_ACCOUNT_FILTER, ADD_CATEGORY_FILTER, ADD_FROM_DATE_FILTER, ADD_RANGE_FILTER, ADD_TO_DATE_FILTER, CLEAR_FILTERS } from "../actions/filtersActions";
+
+
 const INITIAL_STATE = {
     from_date : null,
     to_date : null,
     category : [],
     account : [],
-    range : []
+    range : [],
+    type : ['Income', 'Expense']
 }
 
 export const filtersReducer = (state = INITIAL_STATE, action) => {
@@ -35,13 +38,19 @@ export const filtersReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 range : action.payload
             }
+        case ADD_TYPE_FILTER: 
+            return {
+                ...state,
+                type : action.payload
+            }    
         case CLEAR_FILTERS : 
             return {
                 from_date : null,
                 to_date : null,
                 category : [],
                 account : [],
-                range : []
+                range : [],
+                type : ["Income", "Expense"]
             }
         default : 
             return state;

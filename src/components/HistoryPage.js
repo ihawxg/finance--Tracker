@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import styled from 'styled-components';
 import CheckIcon from '@mui/icons-material/Check';
-import { RangeFilter, CategoryFilter, AccountFilter, DateRangeFilter } from "./chartFilters";
+import { RangeFilter, CategoryFilter, AccountFilter, DateRangeFilter, TypeFilter } from "./chartFilters";
 import AddButtons from "./AddButtons";
 import { clearFilters } from "../redux/actions/filtersActions";
 import SelectInput from "./SelectInput";
@@ -16,6 +16,7 @@ export default function HistoryPage() {
     const dispatch = useDispatch();
     const [isFiltered, setIsFiltered] = useState(false);
     const [selectedAccounts, setSelectedAccounts] = useState([]);
+
     const userAccounts = useSelector(state => state.userData.user.accounts);
     const allIncomes = userAccounts.map(account => account.incomes).flat();
     const allExpenses = userAccounts.map(account => account.expenses).flat();
@@ -25,25 +26,29 @@ export default function HistoryPage() {
     const endDateFilter = useSelector(state => state.filters.to_date);
     const categoryFiltered = useSelector(state => state.filters.category);
     const accountFilter = useSelector(state => state.filters.account);
-
+    const typeFilter = useSelector(state => state.filters.type);
+    const categoryFilter = categoryFiltered.map(e => e.toLowerCase());
     useEffect(() => {
         let selected = userAccounts.filter(acc => accountFilter.indexOf(acc.name) > -1)
         setSelectedAccounts([...selected])
     }, [accountFilter])
-
-    const categoryFilter = categoryFiltered.map(e => e.toLowerCase());
-    let filteredSelected = selectedAccounts.map(acc => acc.expenses.concat(acc.incomes)).flat()
-    let filtered = (selectedAccounts.length > 0 ?
-        filteredSelected : allTransactions)
-        .filter(e => categoryFilter.indexOf(e.category.toLowerCase()) > -1)
+    function filterAll(array) {
+        return array.filter(e => categoryFilter.length > 0 ? (categoryFiltered.indexOf(e.category) > -1) : e)
         .filter(e => Number(e.amount) >= rangeFilter[0] && Number(e.amount) <= rangeFilter[1])
         .filter(item => {
+            if (startDateFilter) {
             const start = (new Date(startDateFilter)).getTime()
             const end = (new Date(endDateFilter)).getTime()
             const current = (new Date(item.date)).getTime()
             if (start && end) return current >= start && current <= end;
-            else return current >= start && current <= (new Date()).getTime();
+            else return current >= start && current <= (new Date()).getTime();  
+        } else return item
         });
+    }
+   
+
+    const filteredIncomes = filterAll(selectedAccounts.length > 0 ? selectedAccounts.map(acc => acc.incomes) : allIncomes)
+    const filteredExpenses = filterAll(selectedAccounts.length > 0 ? selectedAccounts.map(acc => acc.expenses) : allExpenses)
     //console.log(filtered)
     const getTimeString = (timeStamp) => {
         const dateTime = JSON.stringify(timeStamp);
@@ -59,10 +64,10 @@ export default function HistoryPage() {
         console.log(date, descr)
         setDescription("")
     }
-    const handleDelete = (ident) => {
-        // dispatch(deleteItem(ident))
-        console.log(ident)
-    }
+    // const handleDelete = (ident) => {
+    //     // dispatch(deleteItem(ident))
+    //     console.log(ident)
+    // }
     const user = useSelector(state => state.userData.user);
     const [currentAccounts, setCurrenctAccounts] = React.useState([]);
 
@@ -94,7 +99,8 @@ export default function HistoryPage() {
 
                     <Row>
                         <Column>
-                            <CategoryFilter />
+                            <CategoryFilter disabled={false} />
+                            <TypeFilter />
                             <AccountFilter />
                             <StyledButton onClick={() => {
                                 setIsFiltered(true)
@@ -160,11 +166,12 @@ export default function HistoryPage() {
                         return (
                             <>
                                 <tr key={account.name} className={styles.accountName}><td colSpan="6">{account.name}</td></tr>
-                                {(isFiltered ? filtered : account.incomes.concat(account.expenses)).map(item => {
+                                {(typeFilter.indexOf("Income") > -1) &&
+                                    (isFiltered ? filteredIncomes : account.incomes).map(item => {
                                     return (
                                         <tr key={item.id}>
                                             <td>{item.amount}</td>
-                                            <td>{allIncomes.findIndex(inc => inc.description === item.description) > -1 ? "Income" : "Expense"}</td>
+                                            <td>Income</td>
                                             <td>{item.category}</td>
                                             <td><StyledInput
                                                 name="description"
@@ -177,10 +184,32 @@ export default function HistoryPage() {
                                                 onChange={(e) => setDescription(e.target.value)} />
                                             </td>
                                             <td>{item.date}</td>
-                                            <td><DeleteForeverIcon onClick={() => () => handleClick(item.id, account.name, false)} /></td>
                                         </tr>
                                     )
-                                })}
+                                })
+                                } 
+                                {(typeFilter.indexOf("Expense") > -1) &&
+                                 (isFiltered ? filteredExpenses : account.expenses).map(item => {
+                                    return (
+                                        <tr key={item.id}>
+                                            <td>{item.amount}</td>
+                                            <td>Expense</td>
+                                            <td>{item.category}</td>
+                                            <td><StyledInput
+                                                name="description"
+                                                defaultValue={item.description}
+                                                onKeyDown={(e) => {
+                                                    if (e.key === 'Enter') {
+                                                        confirmChange(item.date, description)
+                                                    }
+                                                }}
+                                                onChange={(e) => setDescription(e.target.value)} />
+                                            </td>
+                                            <td>{item.date}</td>
+                                        </tr>
+                                    )
+                                })   
+                                }
 
                             </>
                         )

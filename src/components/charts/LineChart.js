@@ -10,6 +10,7 @@ import {
     Legend,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
+import styled from 'styled-components';
 
 ChartJS.register(
     CategoryScale,
@@ -69,7 +70,7 @@ export const LineChart = (props) => {
             case 11: return "December";
         }
     });
-
+   
     const sortedTransactions = [...markedIncomes, ...markedExpenses].sort((a,b) => {
         return new Date(a.date).getTime() - new Date(b.date).getTime();
     })
@@ -79,11 +80,13 @@ export const LineChart = (props) => {
             else return item.amount*(-1);
     })
 
+
    let result = []
-   let accumulator = timeline[0];
-   for(let i = 1; i < timeline.length; i++) {
-    result.push(accumulator);
-    accumulator += timeline[i];    
+
+   let accumulator = props.data[2];
+   for(let i = 0; i < timeline.length; i++) {
+        accumulator += timeline[i];  
+        result.push(accumulator);
    }
 
     const data = {

@@ -4,10 +4,16 @@ export const ADD_RANGE_FILTER = "ADD_RANGE_FILTER";
 export const ADD_CATEGORY_FILTER = "ADD_CATEGORY_FILTER";
 export const ADD_ACCOUNT_FILTER = "ADD_ACCOUNT_FILTER";
 export const CLEAR_FILTERS = "CLEAR_FILTERS";
-
+export const ADD_TYPE_FILTER = "ADD_TYPE_FILTER";
 export const clearFilters = () => {
     return {
         type : CLEAR_FILTERS
+    }
+}
+export const applyTypeFilter = (type) => {
+    return {
+        type : ADD_TYPE_FILTER,
+        payload : type
     }
 }
 export const applyFromDateFilter = (date) => {

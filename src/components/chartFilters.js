@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider'
 import { useDispatch, useSelector } from 'react-redux';
 import delay from './../util';
-import { applyAccountFilter, applyCategoryFilter, applyFromDateFilter, applyRangeFilter, applyToDateFilter } from '../redux/actions/filtersActions';
+import { applyAccountFilter, applyCategoryFilter, applyFromDateFilter, applyRangeFilter, applyToDateFilter, applyTypeFilter } from '../redux/actions/filtersActions';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -86,7 +86,62 @@ export const AccountFilter = () => {
     );
 
 }
-export const CategoryFilter = () => {
+export const TypeFilter = () => {
+    const ITEM_HEIGHT = 48;
+    const ITEM_PADDING_TOP = 8;
+    const MenuProps = {
+        PaperProps: {
+            style: {
+                maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+                width: 250,
+            },
+        },
+    };
+
+    const [selectedType, setSelectedType] = useState([]);
+    const dispatch = useDispatch();
+   
+    const handleChange = (event) => {
+        const {
+            target: { value },
+        } = event;
+        setSelectedType(
+            typeof value === 'string' ? value.split(',') : value,
+        );
+        let result = typeof value === 'string' ? value.split(',') : value;
+        dispatch(applyTypeFilter(result))
+        
+    };
+
+    return (
+        <div>
+            <FormControl sx={{ m: 1, width: 300 }}>
+                <InputLabel id="demo-multiple-checkbox-label">Type</InputLabel>
+                <Select
+                    labelId="demo-multiple-checkbox-label"
+                    id="demo-multiple-checkbox"
+                    multiple
+                    value={selectedType}
+                    onChange={handleChange}
+                    input={<OutlinedInput label="Tag" />}
+                    renderValue={(selected) => selected.join(', ')}
+                    MenuProps={MenuProps}
+                >
+                    
+                    <MenuItem key="Income" value="Income">
+                        <Checkbox checked={selectedType.indexOf("Income") > -1} />
+                        <ListItemText primary="Income" />
+                    </MenuItem>
+                    <MenuItem key="Expense" value="Expense">
+                        <Checkbox checked={selectedType.indexOf("Expense") > -1} />
+                        <ListItemText primary="Expense" />
+                    </MenuItem>
+                </Select>
+            </FormControl>
+        </div>
+    );
+} 
+export const CategoryFilter = (props) => {
     //multiple categories possible
     const ITEM_HEIGHT = 48;
     const ITEM_PADDING_TOP = 8;
@@ -105,7 +160,8 @@ export const CategoryFilter = () => {
     const expenseCategories = useSelector(state => state.userData.user.expenseCategories);
     const categoriesFilter = useSelector(state => state.filters.category);
     const allCategories = [...incomeCategories, ...expenseCategories];
-
+    const categories = useSelector(state => state.userData.user.accounts).map(acc => acc.category)
+   
     const handleChange = (event) => {
         const {
             target: { value },
@@ -121,7 +177,7 @@ export const CategoryFilter = () => {
     return (
         <div>
             <FormControl sx={{ m: 1, width: 300 }}>
-                <InputLabel id="demo-multiple-checkbox-label">Category</InputLabel>
+                <InputLabel id="demo-multiple-checkbox-label">Categories</InputLabel>
                 <Select
                     labelId="demo-multiple-checkbox-label"
                     id="demo-multiple-checkbox"
@@ -131,6 +187,7 @@ export const CategoryFilter = () => {
                     input={<OutlinedInput label="Tag" />}
                     renderValue={(selected) => selected.join(', ')}
                     MenuProps={MenuProps}
+                    disabled={props.disabled}
                 >
                     {allCategories.map((category) => (
                         <MenuItem key={category} value={category}>
@@ -146,9 +203,6 @@ export const CategoryFilter = () => {
 
 export const RangeFilter = () => {
     //set a range of min-max expense/income
-
-    const [filteredIncomes, setFilteredIncomes] = useState([]);
-    const [filteredExpenses, setFilteredExpenses] = useState([]);
     const dispatch = useDispatch();
    
     function valuetext(value) {
@@ -162,16 +216,12 @@ export const RangeFilter = () => {
     const maxE = Math.max(...amountsExpense);
     let max = Math.max(maxI, maxE);
     useEffect(() => {
-         dispatch(applyRangeFilter(0,max))
-    }, []);
+         dispatch(applyRangeFilter(0, max))
+    }, [max]);
    
     const [value, setValue] = useState([0, max]);
-    //a step behing in console log? to be fixed
     const handleChange = (event, newValue) => {
         setValue(newValue);
-        let tempArr = incomes.filter(obj => obj.amount >= newValue[0] && obj.amount <= newValue[1]);
-        console.log(newValue[0], newValue[1])
-        setFilteredIncomes([...tempArr])
         dispatch(applyRangeFilter(newValue[0], newValue[1]));
     }
     return (
