@@ -160,7 +160,7 @@ export default function HistoryPage() {
                         return (
                             <>
                                 <tr key={account.name} className={styles.accountName}><td colSpan="6">{account.name}</td></tr>
-                                {(isFiltered ? filtered : account.incomes.concat(account.expenses)).map((item, i) => {
+                                {(isFiltered ? filtered : account.incomes.concat(account.expenses)).map(item => {
                                     return (
                                         <tr key={item.id}>
                                             <td>{item.amount}</td>
@@ -177,7 +177,7 @@ export default function HistoryPage() {
                                                 onChange={(e) => setDescription(e.target.value)} />
                                             </td>
                                             <td>{item.date}</td>
-                                            <td><DeleteForeverIcon onClick={() => console.log(item.id)} /></td>
+                                            <td><DeleteForeverIcon onClick={() => () => handleClick(item.id, account.name, false)} /></td>
                                         </tr>
                                     )
                                 })}
@@ -191,23 +191,23 @@ export default function HistoryPage() {
         </StyledPage>
     );
 }
-const StyledPage = styled.div`
+export const StyledPage = styled.div`
     width: 70%;
     margin: -60px auto 30px ;
     text-align: center;
 `
-const Column = styled.div`
+export const Column = styled.div`
     display: flex;
     flex-flow: column wrap;
     justify-content: space-between;
 `
-const Row = styled.div`
+export const Row = styled.div`
     display: flex;
     flex-flow : row wrap;
     justify-content : space-between;
     gap: 20px;
 `
-const StyledFilters = styled.div`
+export const StyledFilters = styled.div`
     margin-top: 40px;
     display: flex;
     flex-flow : column wrap;
@@ -215,7 +215,7 @@ const StyledFilters = styled.div`
     align-items: center;    
 `
 
-const StyledButton = styled.button`
+export const StyledButton = styled.button`
     width: 100%;
     margin: 10px;
     border-radius: 5px;
