@@ -11,7 +11,6 @@ export const DateRangeFilter = (props) => {
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <DateRangePicker
-        label="Outlined secondary" 
         color="secondary"
         startText="Start date"
         endText="End date"

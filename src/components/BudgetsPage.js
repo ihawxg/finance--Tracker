@@ -42,7 +42,7 @@ export default function BudgetsPage() {
     );
 }
 
-const StyledButton = styled.div` 
+export const StyledButton = styled.div` 
     position: fixed;
     top: 20px; right: 20px;
 `

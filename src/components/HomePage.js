@@ -32,7 +32,7 @@ export default function Home() {
                     dataMap.set(inc.category, {...dataMap.get(inc.category), amount: dataMap.get(inc.category) + Number(inc.amount)});
                 }
                 else{
-                    dataMap.set(inc.category, {amount: Number(inc.amount), color: getColor(user, inc.category, "Income")});
+                    dataMap.set(inc.category, {amount: Number(inc.amount), color: getColor(user, inc.category, "income")});
                 }
             })
         })
@@ -45,7 +45,7 @@ export default function Home() {
                     dataMap.set(exp.category, {...dataMap.get(exp.category), amount: dataMap.get(exp.category) + Number(exp.amount)});
                 }
                 else{
-                    dataMap.set(exp.category, {amount: Number(exp.amount), color: getColor(user, exp.category, "Expense")});
+                    dataMap.set(exp.category, {amount: Number(exp.amount), color: getColor(user, exp.category, "expense")});
                 }
             })
         })

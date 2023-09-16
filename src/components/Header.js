@@ -61,7 +61,9 @@ const StyledHeader = styled.header`
     position: fixed;
     z-index: 9999;
     top: 0; left: 0; 
-    background-color: rgb(8, 20, 91);
+    background: #ad5389;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #3c1053, #ad5389);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #3c1053, #ad5389); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     height: 100vh;
     width: 200px;
     display: flex;

@@ -118,7 +118,7 @@ const CustomTable = styled.table`
 `
 const CustomCol = styled.td` 
 border: none;
-padding: 10px 25px;
+padding: 10px 26px;
 text-align: start;
     &:last-child {
         text-align: end;
