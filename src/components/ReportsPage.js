@@ -17,13 +17,15 @@ export default function ReportsPage() {
     const [selectedAccounts, setSelectedAccounts] = useState([]);
     const [amountRange, setAmountRange] = useState([0, max]);
     const [dateRange, setDateRange] = useState([null, null]);
+   
+    const [description, setDescription] = useState("");
     const user = useSelector(state => state.userData.user)
 
    const filterTransactions = (accounts, amount, date) => {
         let filtered = user.transactions.filter(transaction => {
                 return accounts.length ? accounts.indexOf(transaction.account) > -1 : transaction;
          }).filter(transaction => {
-                let current = new Date(JSON.parse(transaction.date)).getTime();
+                let current = new Date(transaction.date).getTime();
                 if(date[0]) {
                     let start = date[0].getTime(); 
                     let end = (date[1] || new Date()).getTime();
