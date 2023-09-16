@@ -36,12 +36,12 @@ export default function CategoryCard(props) {
 
     return (
         <>
-            <Paper sx={{backgroundColor: "#DFDCE5FF"}} className="boxContainer">
-                <h3>{props.label}</h3>
+            <StyledPaper  className="boxContainer">
+                <CategoryHeading>{props.label}</CategoryHeading>
                 <div className="increaseBox">
                     <ColorCard onClick={handleClick} color={props.color}/>
                 </div>
-            </Paper>
+            </StyledPaper>
             <Modal
             open={open}
             onClose={handleClose}
@@ -51,13 +51,31 @@ export default function CategoryCard(props) {
                 <Box sx={style}>
                     <h5>Change Category Color</h5>
                     <HexColorPicker color={color} onChange={setColor}/>
-                    <Button style={{width: "200px", marginTop: "20px"}} variant="contained" onClick={handleEditColor}>Edit Color</Button>
+                    <Button style={{width: "180px", marginTop: "20px"}} variant="contained" onClick={handleEditColor}>Edit Color</Button>
                 </Box>
             </Modal>
         </>
     );
 }
 
+const CategoryHeading = styled.h4`
+    color : rgb(68, 18, 96);
+    text-transform: uppercase;
+    font-size: 18px;
+    font-weight: 600;
+`
+const StyledPaper = styled(Paper)`
+
+    border-radius: 20px;
+    box-shadow: 2px 3px 10px rgba(68, 18, 96, .2);
+    background: #D3CCE3;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #E9E4F0, #D3CCE3);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #E9E4F0, #D3CCE3); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    width: 190px;
+    height: 190px;
+    border: none;
+
+`
 const ColorCard = styled.span`
     display: block;
     width: 50px;

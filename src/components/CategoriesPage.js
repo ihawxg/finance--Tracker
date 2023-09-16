@@ -3,47 +3,70 @@ import styles from "./styles/pages.module.css"
 import AddCategoryBTN from './AddCategoryBTN';
 import CategoryCard from "./CategoryCard";
 import Paper from '@mui/material/Paper';
+import { StyledPage, Heading } from './HistoryPage';
+import styled from 'styled-components'
+import { StyledButton } from "./BudgetsPage";
 
-export default function CategoriesPage(){
+export default function CategoriesPage() {
     const user = useSelector(state => state.userData.user);
 
     return (
-        <div style={{display: "flex", justifyContent: "center"}}>
-        
-            {/* <AddCategoryBTN operation="add"/> */}
+
+        <StyledPage>
+        <StyledButton>
+            <AddCategoryBTN />
+        </StyledButton>
             
-            <div className={styles.bothPageContainer}>
-                <Paper className={styles.categoryPage} elevation={3}>
-                    <h1>Income Categories: </h1>
-                    <div className={styles.container}>
-                        {   
-                            user.incomeCategories.map(cat => (
-                                <>
-                                    <CategoryCard type="Income" label={cat.name} color={cat.color}/>
-                                </>
-                                )
-                            )
-                        }
-                    </div>
-                </Paper>
-                
-                <Paper className={styles.categoryPage} elevation={3}>
-                    <h1 className={styles.categoryLabel}>Expense Categories: </h1>
-                    <div className={styles.container}>
-                        
-                        {   
-                            user.expenseCategories.map(cat => (
-                                <>
-                                    <CategoryCard type="Expense" label={cat.name} color={cat.color}/>
-                                </>
-                                )
-                            )
-                        }
-                        
-                    </div>
-                </Paper>
-            </div>
-            
-        </div>
+            <Columns>
+                <Box>
+                    <CenteredHeading>Income Categories</CenteredHeading>
+                    {
+                        user.incomeCategories.map(cat => (
+                            <>
+                                <CategoryCard type="Income" label={cat.name} color={cat.color} />
+                            </>
+                        )
+                        )
+                    }
+                </Box>
+                <Box>
+                    <CenteredHeading>Expense Categories</CenteredHeading>
+                    {
+                        user.expenseCategories.map(cat => (
+                            <>
+                                <CategoryCard type="Expense" label={cat.name} color={cat.color} />
+                            </>
+                        )
+                        )
+                    }
+                </Box>
+            </Columns>
+        </StyledPage>
+
     );
 }
+const CenteredHeading = styled(Heading)`
+    width: 100%;
+    color : #fff;
+    border-radius: 20px 20px 0 0 ;
+    background: #ad5389;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #3c1053, #ad5389);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #3c1053, #ad5389); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+`
+const Box = styled.div`
+    text-align: center;
+    width: 47%;
+    display : flex;
+    flex-flow : row wrap;
+    justify-content : space-between;
+    border : 1px solid rgba(68, 18, 96, .1);
+    border-radius: 20px;
+    box-shadow: 2px 3px 10px rgba(68, 18, 96, .2);
+    padding-bottom: 20px;
+`
+const Columns = styled.div`
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    gap: 10px;
+`
