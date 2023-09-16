@@ -8,7 +8,9 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Pie } from 'react-chartjs-2';
 import Button from '@mui/material/Button';
 import LegendField from "./LegendField";
-import { getColor } from "../utils/util"
+import { getColor } from "../utils/util";
+import RecentHistoryTable from "./RecentHistoryTable";
+
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -105,7 +107,7 @@ export default function Home() {
                 </div>
                 
             </div>
-        
+            <RecentHistoryTable/>
         </HomePage>
 
     )

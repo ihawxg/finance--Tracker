@@ -25,7 +25,7 @@ export default function SelectVariants(props) {
           {
             props.name === "account" ? 
             accounts.map(account => (<MenuItem key={account.name} value={account.name}>{account.name}</MenuItem>)) :
-            categories.map(category => (<MenuItem key={category} value={category}>{category}</MenuItem>))
+            categories.map(category => (<MenuItem key={category.name} value={category.name}>{category.name}</MenuItem>))
           }
         </Select>
       </FormControl>
