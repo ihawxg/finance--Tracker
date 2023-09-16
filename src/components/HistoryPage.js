@@ -29,7 +29,7 @@ export default function HistoryPage() {
          }).filter(transaction => {
                 if((incomeExpense.length === 0) || (incomeExpense.indexOf(transaction.type) > -1)) return transaction;
          }).filter(transaction => {
-                let current = new Date(JSON.parse(transaction.date)).getTime();
+                let current = new Date(transaction.date).getTime();
                 if(date[0]) {
                     let start = date[0].getTime(); 
                     let end = (date[1] || new Date()).getTime();

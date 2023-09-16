@@ -53,7 +53,7 @@ export const LineChart = (props) => {
     });
    
     const sortedTransactions = props.data.sort((a,b) => {
-        return (new Date(JSON.parse(a.date))) - (new Date(JSON.parse(b.date)));
+        return (new Date(a.date)) - (new Date(b.date));
     })
   
     const timeline = sortedTransactions.map(item => {
@@ -77,7 +77,7 @@ export const LineChart = (props) => {
                 label: 'Balance',
                 data: result,
                 borderColor: 'rgb(255, 99, 132)',
-                backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                backgroundColor: 'rgba(255, 99, 132, 0.6)',
             },
         ],
     };

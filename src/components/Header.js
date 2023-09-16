@@ -31,9 +31,13 @@ export default function Header(){
         <>
             <Logo src="logo.png" onClick={handleClick} />
             <StyledHeader status={navStatusOpen}>
-                <Link className={styles.btn} to="/login"><LoginIcon /><LinkName>Login</LinkName></Link>
-                <Link className={styles.btn} to="/register"><HowToRegIcon /><LinkName>Register</LinkName></Link>
-                <Link className={styles.btn} to="/about"><LightbulbIcon /><LinkName>About us</LinkName></Link>
+                { !logged &&
+                    <>
+                        <Link className={styles.btn} to="/login"><LoginIcon /><LinkName>Login</LinkName></Link>
+                        <Link className={styles.btn} to="/register"><HowToRegIcon /><LinkName>Register</LinkName></Link>
+                        <Link className={styles.btn} to="/about"><LightbulbIcon /><LinkName>About us</LinkName></Link>
+                    </>
+                }
                 {
                     logged && 
                     <>
