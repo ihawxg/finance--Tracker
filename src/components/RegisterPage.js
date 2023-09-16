@@ -42,13 +42,13 @@ export default function RegisterPage(){
                                             expenseCategories: basicExpenseCategories,
                                             accounts: [{
                                                         name: "main",
-                                                        incomes: [{category: {name: "Initial Deposit", color: "#404a0d"}, date: date, description: "Initial App Deposit", amount: userData.startBudget, id: 1}],
+                                                        incomes: [{category: "Initial Deposit", date: date, description: "Initial App Deposit", amount: userData.startBudget, id: 1}],
                                                         expenses: [],
                                                         goals: [],
                                                         total: userData.startBudget
                                                 }],
                                             budgets: [],
-                                            transactions: [{category: {name: "Initial Deposit", color: "#404a0d"}, date: date, description: "Initial App Deposit", amount: userData.startBudget, id: 1, type: "income", account: "main"}]
+                                            transactions: [{category: "Initial Deposit", date: date, description: "Initial App Deposit", amount: userData.startBudget, id: 1, type: "income", account: "main"}]
                                             });
     };
 

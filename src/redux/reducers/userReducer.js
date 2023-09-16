@@ -13,7 +13,9 @@ import { ADD_EXPENSE,
     EDIT_CATEGORY_INCOME,
     UPDATE_ACCOUNTS,
     EDIT_ACCOUNT,
-    UPDATE_USER_INFO
+    UPDATE_USER_INFO,
+    EDIT_INCOME_CATEGORY_COLOR,
+    EDIT_EXPENSE_CATEGORY_COLOR
 } from '../actions/userActions';
 
 const INITIAL_STATE = {
@@ -174,6 +176,24 @@ export const userReducer = (state = INITIAL_STATE, action) => {
                 user : {
                     ...state.user,
                     goals : []
+                }
+            }
+
+        case EDIT_INCOME_CATEGORY_COLOR:
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    incomeCategories : action.payload
+                }
+            }
+
+        case EDIT_EXPENSE_CATEGORY_COLOR:
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    expenseCategories : action.payload
                 }
             }
 

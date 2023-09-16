@@ -5,10 +5,14 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import { HexColorPicker } from "react-colorful";
+import { useDispatch, useSelector } from "react-redux";
+import { editExpenseColor, editIncomeColor } from "../redux/actions/userActions";
 
 export default function CategoryCard(props) {
     const [open, setOpen] = React.useState(false);
     const [color, setColor] = React.useState("#fff");
+    const user = useSelector(state => state.userData.user);
+    const dispatch = useDispatch();
 
     const handleClose = () => {
         setOpen(false);
@@ -16,6 +20,16 @@ export default function CategoryCard(props) {
 
     const handleClick = () => {
         setOpen(true);
+    }
+
+    const handleEditColor = () => {
+        if(props.type === "Income"){
+            dispatch(editIncomeColor(user, color, props.label));
+        }
+        else{
+            dispatch(editExpenseColor(user, color, props.label));
+        }
+        setOpen(false);
     }
 
     return (
@@ -35,7 +49,7 @@ export default function CategoryCard(props) {
                 <Box sx={style}>
                     <h5>Change Category Color</h5>
                     <HexColorPicker color={color} onChange={setColor}/>
-                    <Button style={{width: "200px", marginTop: "20px"}} variant="contained" onClick={handleClick}>Edit Color</Button>
+                    <Button style={{width: "200px", marginTop: "20px"}} variant="contained" onClick={handleEditColor}>Edit Color</Button>
                 </Box>
             </Modal>
         </>

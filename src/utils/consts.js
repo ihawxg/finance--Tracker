@@ -16,5 +16,6 @@ export const basicIncomeCategories = [
     {name: "Selling", color: "#4a0d0d"},
     {name: "Investment", color: "#eb3434"},
     {name: "Allowance", color: "#4a0d39"},
-    {name: "Crypto", color: "#404a0d"}
+    {name: "Crypto", color: "#404a0d"},
+    {name: "Initial Deposit", color: "#424bf5"}
 ];

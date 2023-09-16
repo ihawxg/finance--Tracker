@@ -22,7 +22,7 @@ export default function CategoriesPage(){
                     {   
                         user.incomeCategories.map(cat => (
                             <>
-                                <CategoryCard label={cat.name} color={cat.color}/>
+                                <CategoryCard type="Income" label={cat.name} color={cat.color}/>
                             </>
                             )
                         )
@@ -35,7 +35,7 @@ export default function CategoriesPage(){
                     {   
                         user.expenseCategories.map(cat => (
                             <>
-                                <CategoryCard label={cat.name} color={cat.color}/>
+                                <CategoryCard type="Expense" label={cat.name} color={cat.color}/>
                             </>
                             )
                         )
