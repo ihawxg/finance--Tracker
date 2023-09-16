@@ -2,24 +2,12 @@ import TextField from '@mui/material/TextField';
 import { useSelector, useDispatch } from 'react-redux';
 import styles from "./styles/pages.module.css"
 import AddCategoryBTN from './AddCategoryBTN';
-import {editExpenseCategories, editIncomeCategories} from "../redux/actions/userActions";
-import MyButton from "./MyButton";
+import CategoryCard from "./CategoryCard";
 
 export default function CategoriesPage(){
-    const categories = useSelector(state => state.userData.user.categories);
-    let counterForCategories = 0;
     const dispatch = useDispatch();
 
     const user = useSelector(state => state.userData.user);
-
-    const handleClick = (cat, position) => {
-        if(cat.type === "expense") {
-            dispatch(editExpenseCategories(user.id, position - 1, user.expenseCategories, user.incomeCategories, user.categories, cat, cat, true));
-        }
-        else {
-            dispatch(editIncomeCategories(user.id, position - 1, user.expenseCategories, user.incomeCategories, user.categories, cat, cat, true));
-        }
-    }
 
     return (
         <div className={styles.page}>
@@ -29,18 +17,30 @@ export default function CategoriesPage(){
             </div>
             
             <div>
-                <h1>Categories: </h1>
-                {   
-                    categories.map(cat => (
-                        <>
-                            <ul key={(counterForCategories + 1)*1000}>Category: {cat.name}, type: {cat.type}</ul>
-                            <AddCategoryBTN key={counterForCategories++} position={counterForCategories} operation="edit"/>
-                            {/* <button onClick={() => handleClick(cat, counterForCategories)}>Remove</button> */}
-                            <MyButton handleClick={handleClick} cat={cat} position={counterForCategories}/>
-                        </>
+                <h1>Income Categories: </h1>
+                <div className={styles.container}>
+                    {   
+                        user.incomeCategories.map(cat => (
+                            <>
+                                <CategoryCard label={cat.name} color={cat.color}/>
+                            </>
+                            )
                         )
-                    )
-                }
+                    }
+                </div>
+                
+                <h1>Expense Categories: </h1>
+                <div className={styles.container}>
+                    
+                    {   
+                        user.expenseCategories.map(cat => (
+                            <>
+                                <CategoryCard label={cat.name} color={cat.color}/>
+                            </>
+                            )
+                        )
+                    }
+                </div>
             </div>
             
         </div>
