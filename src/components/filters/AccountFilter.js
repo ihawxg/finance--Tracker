@@ -52,7 +52,7 @@ export const AccountFilter = (props) => {
                 >
                     {accounts.map((acc) => (
                         <MenuItem key={acc.name} value={acc.name}>
-                            <Checkbox checked={selectedAccount.indexOf(acc.name) > -1} />
+                            <Checkbox  color="secondary" checked={selectedAccount.indexOf(acc.name) > -1} />
                             <ListItemText primary={acc.name} />
                         </MenuItem>
                     ))}

@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setSnackbar } from '../redux/actions/snackbarActions';
 import styles from "./styles/progress_card.module.css";
 import { getFormatedDate } from '../utils/util'
+import { DateRangeFilter } from './filters/DateRangeFilter'
 export default function FormDialog(props) {
 
   const [open, setOpen] = useState(false);
@@ -24,6 +25,7 @@ export default function FormDialog(props) {
   const [selectedDate, setSelectedDate] = useState(null);
   const [fromDate, setFromDate] = useState(getFormatedDate(new Date()));
   const [toDate, setToDate] = useState(getFormatedDate(new Date()));
+  const [dateRange, setDateRange] = useState([null, null])
   const [category, setCategory] = useState("");
   const [account, setAccount] = useState("");
   const dispatch = useDispatch();
@@ -42,6 +44,7 @@ export default function FormDialog(props) {
     setSelectedDate(null);
     setToDate(getFormatedDate(new Date()));
     setOpen(false);
+    setDateRange([null, null])
   };
 
   const handleAdd = (value) => {
@@ -72,8 +75,8 @@ export default function FormDialog(props) {
           const details = {
             amount, 
             category,
-            from: JSON.stringify(new Date(fromDate)).replaceAll('"', ''), 
-            to: JSON.stringify(new Date(toDate)).replaceAll('"', '')
+            from: JSON.stringify(new Date(dateRange[0])).replaceAll('"', ''), 
+            to: JSON.stringify(new Date(dateRange[1])).replaceAll('"', '')
           }
 
           dispatch(addBudget(user, details));
@@ -115,8 +118,8 @@ export default function FormDialog(props) {
             amount, 
             category,
             account,
-            from: JSON.stringify(new Date(fromDate)).replaceAll('"', ''), 
-            to: JSON.stringify(new Date(toDate)).replaceAll('"', '')
+            from: JSON.stringify(new Date(dateRange[0])).replaceAll('"', ''), 
+            to: JSON.stringify(new Date(dateRange[1])).replaceAll('"', '')
           }
         
           dispatch(editBudget(user, details));
@@ -145,7 +148,11 @@ export default function FormDialog(props) {
 
   return (
     <div>
-      <Button className={styles.btn} variant="outlined" onClick={handleClickOpen}>
+      <Button 
+          className={styles.btn} 
+          variant={props.value === "Budget" && props.operation !== "edit"  ? "contained" : "outlined"}
+          color={props.value == "Budget" ? "success" : "primary"}
+          onClick={handleClickOpen}>
         {props.operation === "edit" ? "Edit" : "Add"} {props.value}
       </Button>
       <Dialog open={open} onClose={handleClose}>
@@ -180,10 +187,7 @@ export default function FormDialog(props) {
             <StyledEngineProvider injectFirst>
              
               {props.value === "Budget" ? (
-                <>
-                  <DatePick isFromTo={true} label="From... " value={fromDate} handleDateChange={setFromDate} />
-                  <DatePick isFromTo={true} label="To..." value={toDate} handleDateChange={setToDate} />
-                </>
+                <DateRangeFilter value={dateRange} onChange={e => setDateRange(e)} />
               ) : ( <BasicDatePicker label="Choose date" value={selectedDate} selected={selectedDate} onChange={date => setSelectedDate(date)} />)}
               {props.value !== "Budget" && <CategoryPicker name="account" value={account} onChange={e => setAccount(e.target.value)} required/>}
               <CategoryPicker type={props.value} name="category" value={category} list={account} disabled={!((account && props.value !== "Budget") || props.value === "Budget")} onChange={e => setCategory(e.target.value)} />

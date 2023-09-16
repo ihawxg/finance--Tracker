@@ -26,18 +26,13 @@ export default function Header(){
     const handleClick = () => {
         setNavStatusOpen(!navStatusOpen);
     }
-
     return (
         <>
-            <Logo src="logo.png" onClick={handleClick} />
+            
             <StyledHeader status={navStatusOpen}>
-                { !logged &&
-                    <>
-                        <Link className={styles.btn} to="/login"><LoginIcon /><LinkName>Login</LinkName></Link>
-                        <Link className={styles.btn} to="/register"><HowToRegIcon /><LinkName>Register</LinkName></Link>
-                        <Link className={styles.btn} to="/about"><LightbulbIcon /><LinkName>About us</LinkName></Link>
-                    </>
-                }
+                <Link className={styles.btn} to="/login"><LoginIcon /><LinkName>Login</LinkName></Link>
+                <Link className={styles.btn} to="/register"><HowToRegIcon /><LinkName>Register</LinkName></Link>
+                <Link className={styles.btn} to="/about"><LightbulbIcon /><LinkName>About us</LinkName></Link>
                 {
                     logged && 
                     <>
@@ -51,6 +46,7 @@ export default function Header(){
                         <Link className={styles.btn} onClick={() => dispatch(logoutAction)} to="/login"><LogoutIcon /><LinkName>Logout</LinkName></Link>
                     </>
                 }
+                <StyledIcon><Logo src="logo.png" onClick={handleClick} /></StyledIcon>
             </StyledHeader>
         </>
         
@@ -68,20 +64,23 @@ const StyledHeader = styled.header`
     flex-flow: column nowrap;
     justify-content: flex-start;
     align-items: flex-start;
-    box-shadow: 0px 1px 20px rgba(0,0,0,1);
-    transform: ${props => props.status ? `translate(0)` : `translate(-100%)`};
+    box-shadow: 0px 1px 10px rgba(0,0,0,1);
+    transform: ${props => props.status ? `translate(0)` : `translate(-101%)`};
     transition: transform .3s ease-in-out;
 `;
 
 const Logo = styled.img`
-    position: fixed;
-    top:20px;right:20px;
     width: 40px;
     height: 40px;
-    cursor: pointer;
 `;
-
 const LinkName = styled.div`
     display: inline-flex;
     padding-left: 20px;
+`
+const StyledIcon = styled.div`
+    position: absolute;
+    top: 10px; right: -60px;
+    padding:5px;
+    cursor : pointer;
+    border-radius: 5px;
 `

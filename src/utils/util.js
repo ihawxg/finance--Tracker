@@ -33,3 +33,24 @@ export const getColor = (user, categoryName, type) => {
     }
     return user.expenseCategories[user.expenseCategories.findIndex(exp => exp.name === categoryName)].color;
 }
+
+export const toCurrency = (num) => {
+    return Number(num).toLocaleString('bg-BG', {
+        style: 'currency',
+        currency: 'BGN',
+      })
+}
+
+export const getProgressBarVariant = (amount, max) => {
+    const ratio = amount / max;
+    if (ratio < 0.5) return "warning";
+    if (ratio < 0.75) return "primary";
+    return "success";
+}
+
+export const getBudgetProgress = (amount, max) => {
+    const ratio = amount / max;
+    if (ratio < 0.5) return "primary";
+    if (ratio < 0.75) return "warning";
+    return "danger";
+}

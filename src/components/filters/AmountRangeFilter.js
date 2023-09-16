@@ -15,7 +15,7 @@ export const AmountRangeFilter = (props) => {
         props.onChange(event);
     }
     return (
-        <Box sx={{ width: 300 }}>
+        <Box sx={{ width: 300, marginTop: 3}}>
             <Slider
                 getAriaLabel={() => 'Amount range'}
                 value={props.value}

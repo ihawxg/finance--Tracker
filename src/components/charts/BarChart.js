@@ -20,14 +20,13 @@ ChartJS.register(
   );
 
 export const BarChart = (props) => {
-  const incomes = props.data.filter(item => item.type == 'income');
-  const expenses = props.data.filter(item => item.type == 'expense');
-  const incomeAmount = incomes.map(item => Number(item.amount))
-  const expenseAmount = expenses.map(item => Number(item.amount))
+  let transactions = props.data.sort((a,b) => (new Date(a.date).getTime()) - (new Date(b.date)).getTime())
+  let incomes = props.data.filter(item => item.type == 'income')
+  let expenses = props.data.filter(item => item.type == 'expense')
 
-  const months = [...incomes, ...expenses].map(item => (new Date(JSON.parse(item.date))).getMonth())
-  const labels = months.map(item => {
-    switch(item) {
+  const labels = transactions.map(item => {
+    
+    switch((new Date(item.date)).getMonth()) {
         case 0 : return "January";
         case 1 : return "February";
         case 2 : return "March";
@@ -47,12 +46,12 @@ const data = {
   datasets: [
     {
       label: 'Incomes',
-      data: incomeAmount,
+      data: incomes.map(item => item.amount),
       backgroundColor: 'rgba(39, 173, 86, .8)',
     },
     {
         label: 'Expenses',
-        data: expenseAmount,
+        data: expenses.map(item => item.amount),
         backgroundColor: 'rgba(219, 30, 30, .8)',
     }
   ],

@@ -12,72 +12,66 @@ import DataTable from "./Table";
 
 export default function HistoryPage() {
     const max = GetMaxAmount();
-  
+
     const [transactions, setTransactions] = useState([]);
     const [selectedAccounts, setSelectedAccounts] = useState([]);
     const [selectedType, setSelectedType] = useState([]);
     const [amountRange, setAmountRange] = useState([0, max]);
     const [selectedCategories, setSelectedCategories] = useState([]);
     const [dateRange, setDateRange] = useState([null, null]);
-   
-    const [description, setDescription] = useState("");
     const user = useSelector(state => state.userData.user)
 
-   const filterTransactions = (accounts, incomeExpense, amount, categories, date) => {
+    const filterTransactions = (accounts, incomeExpense, amount, categories, date) => {
         let filtered = user.transactions.filter(transaction => {
-                return accounts.length ? accounts.indexOf(transaction.account) > -1 : transaction;
-         }).filter(transaction => {
-                if((incomeExpense.length === 0) || (incomeExpense.indexOf(transaction.type) > -1)) return transaction;
-         }).filter(transaction => {
-                let current = new Date(transaction.date).getTime();
-                if(date[0]) {
-                    let start = date[0].getTime(); 
-                    let end = (date[1] || new Date()).getTime();
-                    return (current >= start && current <= end);  
-                } else return transaction;    
-         }).filter(transaction => {
-                return (Number(transaction.amount) >= amount[0]) && (Number(transaction.amount) <= amount[1]);
-         }).filter(transaction => {
-                return categories.length ? categories.indexOf(transaction.category.name) > -1 : transaction;
-         })
+            return accounts.length ? accounts.indexOf(transaction.account) > -1 : transaction;
+        }).filter(transaction => {
+            if ((incomeExpense.length === 0) || (incomeExpense.indexOf(transaction.type) > -1)) return transaction;
+        }).filter(transaction => {
+            let current = new Date(transaction.date).getTime();
+            if (date[0]) {
+                let start = date[0].getTime();
+                let end = (date[1] || new Date()).getTime();
+                return (current >= start && current <= end);
+            } else return transaction;
+        }).filter(transaction => {
+            return (Number(transaction.amount) >= amount[0]) && (Number(transaction.amount) <= amount[1]);
+        }).filter(transaction => {
+            return categories.length ? categories.indexOf(transaction.category) > -1 : transaction;
+        })
         setTransactions(filtered)
-   }
-   const clearFilters = () => {
-    setSelectedAccounts([]);
-    setSelectedType([])
-    setAmountRange([0, max])
-    setSelectedCategories([])
-    setDateRange([null, null])
-    filterTransactions(selectedAccounts, selectedType, amountRange, selectedCategories, dateRange)
-   }
+    }
+    const clearFilters = () => {
+        setSelectedAccounts([]);
+        setSelectedType([])
+        setAmountRange([0, max])
+        setSelectedCategories([])
+        setDateRange([null, null])
+        filterTransactions(selectedAccounts, selectedType, amountRange, selectedCategories, dateRange)
+    }
     return (
-        
-        <StyledPage>
-         
-                <StyledFilters>
-                   
-                    <AccountFilter value={selectedAccounts} onChange={(e) => { setSelectedAccounts(e.target.value); filterTransactions(e.target.value, selectedType, amountRange, selectedCategories, dateRange)} } />
-                    <TypeFilter value={selectedType} onChange={(e) => { setSelectedType(e.target.value); filterTransactions(selectedAccounts, e.target.value, amountRange, selectedCategories, dateRange)} }/>    
-                    
-                    
-                    <CategoryFilter value={selectedCategories} disabled={false} onChange={(e) => { setSelectedCategories(e.target.value); filterTransactions(selectedAccounts, selectedType, amountRange, e.target.value, dateRange)} } />
-                    <DateRangeFilter value={dateRange} onChange={ (e) => { setDateRange(e); filterTransactions(selectedAccounts, selectedType, amountRange, selectedCategories, e)} } />
-                    <AmountRangeFilter value={amountRange} max={max} onChange={ (e) => { setAmountRange(e.target.value); filterTransactions(selectedAccounts, selectedType, e.target.value, selectedCategories, dateRange) }} />
 
-                    <StyledButton onClick={clearFilters}>Clear Filters
-                    </StyledButton>
-                   
-                </StyledFilters>
-                <Heading>Transaction history</Heading>
-                <DataTable headers={["Date/Time", "Type", "Category", "Description", "Amount" ]} data={transactions}/>
-        
+        <StyledPage>
+
+            <StyledFilters>
+
+                <AccountFilter value={selectedAccounts} onChange={(e) => { setSelectedAccounts(e.target.value); filterTransactions(e.target.value, selectedType, amountRange, selectedCategories, dateRange) }} />
+                <TypeFilter value={selectedType} onChange={(e) => { setSelectedType(e.target.value); filterTransactions(selectedAccounts, e.target.value, amountRange, selectedCategories, dateRange) }} />
+                <CategoryFilter value={selectedCategories} disabled={false} onChange={(e) => { setSelectedCategories(e.target.value); filterTransactions(selectedAccounts, selectedType, amountRange, e.target.value, dateRange) }} />
+                <DateRangeFilter value={dateRange} onChange={(e) => { setDateRange(e); filterTransactions(selectedAccounts, selectedType, amountRange, selectedCategories, e) }} />
+                <AmountRangeFilter value={amountRange} max={max} onChange={(e) => { setAmountRange(e.target.value); filterTransactions(selectedAccounts, selectedType, e.target.value, selectedCategories, dateRange) }} />
+                <StyledButton onClick={clearFilters}>Clear Filters</StyledButton>
+
+            </StyledFilters>
+            <Heading>Transaction history</Heading>
+            <DataTable headers={["Date/Time", "Type", "Category", "Description", "Amount"]} data={transactions} />
+
         </StyledPage>
-      
+
     );
 }
 
 export const StyledPage = styled.div`
-    width: 70%;
+    width: 65%;
     margin: 10px auto 30px ;
     text-align: center;
 `
@@ -93,7 +87,6 @@ export const Row = styled.div`
     gap: 10px;
 `
 export const StyledFilters = styled.div`
-
     display: flex;
     flex-flow : row wrap;
     justify-content: center;
@@ -113,7 +106,7 @@ export const StyledButton = styled.button`
         background-color : rgba(68, 18, 96, .1);
     }
 `
-const Heading = styled.h4`
+export const Heading = styled.h4`
     color: rgb(68, 18, 96);
     padding: 10px;
     border-bottom: 1px solid rgba(68, 18, 96, .6);

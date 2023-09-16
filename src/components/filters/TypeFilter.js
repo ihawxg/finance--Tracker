@@ -34,7 +34,7 @@ export const TypeFilter = (props) => {
     return (
         <div>
             <FormControl sx={{ m: 1, width: 300 }}>
-                <InputLabel id="demo-multiple-checkbox-label">Type</InputLabel>
+                <InputLabel id="demo-multiple-checkbox-label" color="secondary">Type</InputLabel>
                 <Select
                     labelId="demo-multiple-checkbox-label"
                     id="demo-multiple-checkbox"
@@ -44,14 +44,15 @@ export const TypeFilter = (props) => {
                     input={<OutlinedInput label="Tag" />}
                     renderValue={(selected) => selected.join(', ')}
                     MenuProps={MenuProps}
+                    color="secondary"
                 >
                     
                     <MenuItem key="income" value="income">
-                        <Checkbox checked={selectedType.indexOf("income") > -1} />
+                        <Checkbox color="secondary" checked={selectedType.indexOf("income") > -1} />
                         <ListItemText primary="income" />
                     </MenuItem>
                     <MenuItem key="expense" value="expense">
-                        <Checkbox checked={selectedType.indexOf("expense") > -1} />
+                        <Checkbox  color="secondary" checked={selectedType.indexOf("expense") > -1} />
                         <ListItemText primary="expense" />
                     </MenuItem>
                 </Select>

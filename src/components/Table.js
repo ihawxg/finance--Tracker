@@ -30,14 +30,14 @@ const columns = [
     {
         id: 'description',
         label: 'Description',
-        minWidth: 200,
+        minWidth: 150,
         align: 'right',
         icon: <FeedIcon />
     },
     {
         id: 'amount',
         label: 'Amount',
-        minWidth: 170,
+        minWidth: 140,
         align: 'right',
         format: (value) => value.toFixed(2),
         icon: <ReceiptLongIcon />
@@ -62,11 +62,11 @@ export default function DataTable(props) {
     };
 
     return (
-        <CustomPaper sx={{ width: '100%', overflow: 'hidden', borderRadius: '15px' }}>
+        <Paper sx={{ width: '100%', overflow: 'hidden', borderRadius: '15px' }}>
             <CustomTableContainer sx={{ maxHeight: 440 }}>
                 <CustomTable stickyHeader aria-label="sticky table">
                     <TableHead sx={{ backgroundColor: 'rgb(68, 18, 96)' }}>
-                        <CustomRow >
+                        <CustomRow key={Math.random()*100}>
                             {columns.map((column) => (
                                 <CustomCol
                                     key={column.id}
@@ -109,17 +109,16 @@ export default function DataTable(props) {
                 onPageChange={handleChangePage}
                 onRowsPerPageChange={handleChangeRowsPerPage}
             />
-        </CustomPaper>
+        </Paper>
     );
 }
 
 const CustomTable = styled.table`
     border: none
 `
-
 const CustomCol = styled.td` 
 border: none;
-padding: 10px 15px;
+padding: 10px 25px;
 text-align: start;
     &:last-child {
         text-align: end;
@@ -133,7 +132,5 @@ const CustomTableContainer = styled(TableContainer)`
     background: -webkit-linear-gradient(to right, #6E48AA, #9D50BB);  /* Chrome 10-25, Safari 5.1-6 */
     background: linear-gradient(to right, #6E48AA, #9D50BB); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     color : #fff;
-`
-const CustomPaper = styled(Paper)` 
-    background-color: orange;
+
 `

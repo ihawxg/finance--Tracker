@@ -1,32 +1,51 @@
 import { useDispatch, useSelector } from "react-redux";
 import { removeBudget } from "../redux/actions/userActions";
 import FormDialog from "./FormDialog";
-import styles from "./styles/pages.module.css"
-
-export default function BudgetsPage(){
+import { StyledPage, Heading } from "./HistoryPage";
+import BudgetItem from "./BudgetItem";
+import styled from 'styled-components';
+import { getFormatedDate } from "../utils/util";
+export default function BudgetsPage() {
     const user = useSelector(state => state.userData.user);
-
     const dispatch = useDispatch();
-
     const handleClick = (category) => {
         dispatch(removeBudget(user, category));
     }
 
     return (
-        <div className={styles.page}>
-            <h1>Budgets Page</h1>
-            <FormDialog value="Budget" title="Add Budget"/>
+        <StyledPage>
+            <Heading>Budgets</Heading>
+            <StyledButton>
+                <FormDialog value="Budget" title="Add Budget" />
+            </StyledButton>
+
             {
                 user.budgets.map(budget => {
                     return (
-                        <>
-                            <h1>{budget.category}</h1>
-                            <FormDialog value="Budget" title="Edit Budget" operation="edit"/>
-                            <button onClick={() => handleClick(budget.category)}> Remove </button>
-                        </>
+                        <Container>
+                            <BudgetItem
+                                onClick={() => { handleClick(budget.category) }}
+                                name={budget.category}
+                                amount={budget.amount}
+                                max={budget.max}
+                                dateFrom={budget.from}
+                                dateTo={budget.to}
+                                gray
+                            />
+                        </Container>
+
                     );
                 })
             }
-        </div>
+
+        </StyledPage>
     );
 }
+
+const StyledButton = styled.div` 
+    position: fixed;
+    top: 20px; right: 20px;
+`
+const Container = styled.div`
+    margin: 20px;
+`
