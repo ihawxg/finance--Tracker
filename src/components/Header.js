@@ -31,9 +31,9 @@ export default function Header(){
         <>
             <Logo src="logo.png" onClick={handleClick} />
             <StyledHeader status={navStatusOpen}>
-                <Link className={styles.btn} to="/about"><LightbulbIcon /><LinkName>About us</LinkName></Link>
                 <Link className={styles.btn} to="/login"><LoginIcon /><LinkName>Login</LinkName></Link>
                 <Link className={styles.btn} to="/register"><HowToRegIcon /><LinkName>Register</LinkName></Link>
+                <Link className={styles.btn} to="/about"><LightbulbIcon /><LinkName>About us</LinkName></Link>
                 {
                     logged && 
                     <>
@@ -57,16 +57,14 @@ const StyledHeader = styled.header`
     position: fixed;
     z-index: 9999;
     top: 0; left: 0; 
-    background-color: #fff;
-    padding: 10px 10px 10px 0;
+    background-color: rgb(8, 20, 91);
     height: 100vh;
     width: 200px;
     display: flex;
     flex-flow: column nowrap;
     justify-content: flex-start;
     align-items: flex-start;
-    box-shadow: 0px 7px 25px rgba(0,0,0,.1);
-    border-bottom: 1px solid rgba(0,0,0,.1);
+    box-shadow: 0px 1px 20px rgba(0,0,0,1);
     transform: ${props => props.status ? `translate(0)` : `translate(-100%)`};
     transition: transform .3s ease-in-out;
 `;

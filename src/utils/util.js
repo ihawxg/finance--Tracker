@@ -22,7 +22,7 @@ export function getFormatedDate(date){
 export const getDateAndTime = (timeStamp) => {
     const dateTime = JSON.stringify(timeStamp);
     const dateArr = dateTime.split("T");
-    const date = dateArr[0].slice(1);
+    const date = dateArr[0].slice(3);
     const time = dateArr[1].slice(0, 5);
     return `${date}  ${time}`;
 }

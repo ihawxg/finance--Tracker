@@ -35,7 +35,7 @@ export const AccountFilter = (props) => {
  
     return (
         <div>
-            <FormControl sx={{ m: 1, width: 300 }}>
+            <FormControl sx={{ m: 1, width: 300 }} label="Outlined secondary" color="secondary" >
                 <InputLabel id="demo-multiple-checkbox-label">Account</InputLabel>
                 <Select
                     labelId="demo-multiple-checkbox-label"

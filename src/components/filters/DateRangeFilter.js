@@ -11,8 +11,10 @@ export const DateRangeFilter = (props) => {
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <DateRangePicker
-        startText="Check-in"
-        endText="Check-out"
+        label="Outlined secondary" 
+        color="secondary"
+        startText="Start date"
+        endText="End date"
         value={props.value}
         maxDate={new Date()}
         onChange={(newValue) => {
@@ -21,9 +23,9 @@ export const DateRangeFilter = (props) => {
         }}
         renderInput={(startProps, endProps) => (
           <React.Fragment>
-            <TextField {...startProps} />
+            <TextField {...startProps}  color="secondary"  />
             <Box sx={{ mx: 2 }}> to </Box>
-            <TextField {...endProps} />
+            <TextField {...endProps} color="secondary"/>
           </React.Fragment>
         )}
       />

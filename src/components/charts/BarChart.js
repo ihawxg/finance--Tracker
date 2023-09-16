@@ -25,7 +25,7 @@ export const BarChart = (props) => {
   const incomeAmount = incomes.map(item => Number(item.amount))
   const expenseAmount = expenses.map(item => Number(item.amount))
 
-  const months = [...incomes, ...expenses].map(item => (new Date(item.date)).getMonth())
+  const months = [...incomes, ...expenses].map(item => (new Date(JSON.parse(item.date))).getMonth())
   const labels = months.map(item => {
     switch(item) {
         case 0 : return "January";

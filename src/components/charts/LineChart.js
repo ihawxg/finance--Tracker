@@ -33,7 +33,7 @@ export const LineChart = (props) => {
         },
     };
    
-    const months = props.data.map(item => (new Date(item.date)).getMonth())
+    const months = props.data.map(item => (new Date(JSON.parse(item.date))).getMonth())
     const labels = months.map(item => {
         switch (item) {
             case 0: return "January";
@@ -60,7 +60,7 @@ export const LineChart = (props) => {
         return Number(item.amount)
             else return item.amount*(-1);
     })
-console.log(timeline)
+
    let result = []
 
    let accumulator = 0;
@@ -68,7 +68,7 @@ console.log(timeline)
         accumulator += timeline[i];  
         result.push(accumulator);
    }
-console.log(result)
+
     const data = {
         labels,
         datasets: [
@@ -76,7 +76,7 @@ console.log(result)
                 label: 'Balance',
                 data: result,
                 borderColor: 'rgb(255, 99, 132)',
-                backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                backgroundColor: 'rgba(255, 99, 132, 0.6)',
             },
         ],
     };

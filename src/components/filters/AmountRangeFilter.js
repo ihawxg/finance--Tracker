@@ -4,12 +4,10 @@ import Slider from '@mui/material/Slider'
 
 export const AmountRangeFilter = (props) => {
     //set a range of min-max expense/income
-  
-   
+
     function valuetext(value) {
         return `BGN ${value}`;
     }
-   
     const [value, setValue] = useState([0, props.max]);
 
     const handleChange = (event, newValue) => {
@@ -21,6 +19,7 @@ export const AmountRangeFilter = (props) => {
             <Slider
                 getAriaLabel={() => 'Amount range'}
                 value={props.value}
+                color="secondary"
                 onChange={handleChange}
                 valueLabelDisplay="auto"
                 max={props.max}

@@ -40,7 +40,7 @@ export const CategoryFilter = (props) => {
 
     return (
         <div>
-            <FormControl sx={{ m: 1, width: 300 }}>
+            <FormControl sx={{ m: 1, width: 300 }} label="Outlined secondary" color="secondary">
                 <InputLabel id="demo-multiple-checkbox-label">Categories</InputLabel>
                 <Select
                     labelId="demo-multiple-checkbox-label"
@@ -48,15 +48,15 @@ export const CategoryFilter = (props) => {
                     multiple
                     value={props.value}
                     onChange={handleChange}
-                    input={<OutlinedInput label="Tag" />}
+                    input={<OutlinedInput label="Category" />}
                     renderValue={(selected) => selected.join(', ')}
                     MenuProps={MenuProps}
                     disabled={props.disabled}
                 >
                     {allCategories.map((category) => (
-                        <MenuItem key={category} value={category}>
-                            <Checkbox checked={selectedCategory.indexOf(category) > -1} />
-                            <ListItemText primary={category} />
+                        <MenuItem key={category.name} value={category.name}>
+                            <Checkbox checked={selectedCategory.indexOf(category.name) > -1} />
+                            <ListItemText primary={category.name} />
                         </MenuItem>
                     ))}
                 </Select>

@@ -1,17 +1,20 @@
 .btn{
-    margin-left: 15px;
     text-decoration: none;
     font-family: 'Play', sans-serif;
-    color: #707070;
-    width: 80%;
-    border-bottom: 2px solid transparent;
+    color: #fff;
+    width: 100%;
+    border-bottom: 1px solid rgba(48, 67, 173, .5);
     padding: 10px;
     transition: all .2s ease;
 }
+.btn:last-child {
+    border: none;
+}
 
 .btn:hover {
-    color: #176CC0;
-    border-bottom: 2px solid #176CC0;
+    background-color : rgb(48, 67, 173);
+    color: #fff;
+    border-bottom: 2px solid #fff;
 }
 
 .profile{
