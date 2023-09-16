@@ -24,9 +24,9 @@ export const BarChart = (props) => {
   let incomes = props.data.filter(item => item.type == 'income')
   let expenses = props.data.filter(item => item.type == 'expense')
 
-  const labels = transactions.map(item => {
-    
-    switch((new Date(item.date)).getMonth()) {
+  const months = [...incomes, ...expenses].map(item => (new Date(item.date)).getMonth())
+  const labels = months.map(item => {
+    switch(item) {
         case 0 : return "January";
         case 1 : return "February";
         case 2 : return "March";

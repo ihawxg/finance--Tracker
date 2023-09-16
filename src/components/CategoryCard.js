@@ -7,6 +7,8 @@ import Modal from '@mui/material/Modal';
 import { HexColorPicker } from "react-colorful";
 import { useDispatch, useSelector } from "react-redux";
 import { editExpenseColor, editIncomeColor } from "../redux/actions/userActions";
+import Paper from '@mui/material/Paper';
+
 
 export default function CategoryCard(props) {
     const [open, setOpen] = React.useState(false);
@@ -34,12 +36,12 @@ export default function CategoryCard(props) {
 
     return (
         <>
-            <div className="boxContainer">
+            <Paper sx={{backgroundColor: "#DFDCE5FF"}} className="boxContainer">
                 <h3>{props.label}</h3>
                 <div className="increaseBox">
                     <ColorCard onClick={handleClick} color={props.color}/>
                 </div>
-            </div>
+            </Paper>
             <Modal
             open={open}
             onClose={handleClose}
@@ -58,14 +60,14 @@ export default function CategoryCard(props) {
 
 const ColorCard = styled.span`
     display: block;
-    width: 150px;
-    height: 150px;
+    width: 50px;
+    height: 50px;
     border-radius: 5px;
     background-color: ${props => props.color};
     transition: width 1s, height 1s;
     &:hover{
-      width: 180px;
-      height: 180px;
+      width: 70px;
+      height: 70px;
       cursor: pointer;
     }
 `;
@@ -79,7 +81,7 @@ const style = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: "300px",
+    width: "200px",
     bgcolor: 'background.paper',
     border: '2px solid #000',
     boxShadow: 24,

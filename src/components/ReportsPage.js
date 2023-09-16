@@ -21,16 +21,16 @@ export default function ReportsPage() {
    const filterTransactions = (accounts, amount, date) => {
         let filtered = user.transactions.filter(transaction => {
                 return accounts.length ? accounts.indexOf(transaction.account) > -1 : transaction;
-         }).filter(transaction => {
+        }).filter(transaction => {
                 let current = new Date(transaction.date).getTime();
                 if(date[0]) {
                     let start = date[0].getTime(); 
                     let end = (date[1] || new Date()).getTime();
                     return (current >= start && current <= end);  
                 } else return transaction;    
-         }).filter(transaction => {
+        }).filter(transaction => {
                 return (Number(transaction.amount) >= amount[0]) && (Number(transaction.amount) <= amount[1]);
-         })
+        })
         setTransactions(filtered)
    }
 

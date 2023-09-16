@@ -1,46 +1,47 @@
-import TextField from '@mui/material/TextField';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import styles from "./styles/pages.module.css"
 import AddCategoryBTN from './AddCategoryBTN';
 import CategoryCard from "./CategoryCard";
+import Paper from '@mui/material/Paper';
 
 export default function CategoriesPage(){
-    const dispatch = useDispatch();
-
     const user = useSelector(state => state.userData.user);
 
     return (
-        <div className={styles.page}>
-            <div className={styles.filterAddContainer}>
-                <TextField id="standard-basic" label="Standard" variant="standard" />
-                <AddCategoryBTN operation="add"/>
-            </div>
+        <div style={{display: "flex", justifyContent: "center"}}>
+        
+            {/* <AddCategoryBTN operation="add"/> */}
             
-            <div>
-                <h1>Income Categories: </h1>
-                <div className={styles.container}>
-                    {   
-                        user.incomeCategories.map(cat => (
-                            <>
-                                <CategoryCard type="Income" label={cat.name} color={cat.color}/>
-                            </>
+            <div className={styles.bothPageContainer}>
+                <Paper className={styles.categoryPage} elevation={3}>
+                    <h1>Income Categories: </h1>
+                    <div className={styles.container}>
+                        {   
+                            user.incomeCategories.map(cat => (
+                                <>
+                                    <CategoryCard type="Income" label={cat.name} color={cat.color}/>
+                                </>
+                                )
                             )
-                        )
-                    }
-                </div>
+                        }
+                    </div>
+                </Paper>
                 
-                <h1>Expense Categories: </h1>
-                <div className={styles.container}>
-                    
-                    {   
-                        user.expenseCategories.map(cat => (
-                            <>
-                                <CategoryCard type="Expense" label={cat.name} color={cat.color}/>
-                            </>
+                <Paper className={styles.categoryPage} elevation={3}>
+                    <h1 className={styles.categoryLabel}>Expense Categories: </h1>
+                    <div className={styles.container}>
+                        
+                        {   
+                            user.expenseCategories.map(cat => (
+                                <>
+                                    <CategoryCard type="Expense" label={cat.name} color={cat.color}/>
+                                </>
+                                )
                             )
-                        )
-                    }
-                </div>
+                        }
+                        
+                    </div>
+                </Paper>
             </div>
             
         </div>

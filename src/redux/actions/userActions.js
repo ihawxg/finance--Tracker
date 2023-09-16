@@ -219,7 +219,7 @@ export const addAccountAction = (id, name, amount, accounts) => {
                 incomes: [{category: {name: "Initial Deposit", color: "#404a0d"}, date: date, description: "Initial Account Deposit", amount: amount}],
                 budgets: [],
                 expenses: [],
-                transactions: [],
+                transactions: [{category: {name: "Initial Deposit", color: "#404a0d"}, date: date, description: "Initial Account Deposit", amount: amount, type: "income", account: name}],
                 goals: []
             }]}
 

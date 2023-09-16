@@ -34,7 +34,7 @@ export const LineChart = (props) => {
     };
     const sortedTransactions = props.data.sort((a,b) => {
         return ((new Date(a.date)).getTime()) - ((new Date(b.date)).getTime());
-    })
+    });
   
     const months = sortedTransactions.map(item => (new Date(item.date)).getMonth())
     const labels = months.map(item => {
