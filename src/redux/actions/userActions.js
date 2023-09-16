@@ -484,9 +484,10 @@ export const removeIncomeExpense = (user, id, accountName, isExpense) => {
 } 
 
 const isWithinDate = (date, from, to) => {
-    const timeFrom = new Date(from.slice(1,11)).getTime();
-    const timeDate = new Date(date.slice(1,11)).getTime();
-    const timeTo = new Date(to.slice(1,11)).getTime();
+    const timeFrom = new Date(from).getTime();
+    const timeDate = new Date(date).getTime();
+    const timeTo = new Date(to).getTime();
+    console.log(timeFrom, timeDate, timeTo);
     return (timeFrom < timeDate && timeDate < timeTo);
 }
 
@@ -494,7 +495,7 @@ const getAmount = (user, from, to, category) => {
     let amount = 0;
     user.accounts.forEach(acc => {
         acc.expenses.forEach(exp => {
-    
+        
             if(exp.category === category && isWithinDate(exp.date, from, to)){
                 amount += Number(exp.amount);
             }
