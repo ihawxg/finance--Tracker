@@ -82,6 +82,10 @@ export default function RegisterPage(){
             })
             .catch((error) => {
                 setHasError(true);
+                if(error.message === "Firebase: Password should be at least 6 characters (auth/weak-password)."){
+                    setMessage("Password should be at least 6 symbols!");
+                    return;
+                }
                 setMessage("Account with the same email already exists!");
             });
         }

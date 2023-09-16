@@ -21,6 +21,16 @@ export const EDIT_ACCOUNT = "EDIT_ACCOUNT";
 export const REMOVE_ACCOUNT = "REMOVE_ACCOUNT";
 export const EDIT_INCOME = "EDIT_INCOME";
 export const EDIT_EXPENSE = "EDIT_EXPENSE";
+export const UPDATE_USER_INFO = "UPDATE_USER_INFO";
+
+export const updateUserInfoAction = (id, details) => {
+    return async function(dispatch) {
+        const userRef = doc(db, "users", id);
+        const newField = {firstName: details.firstName, lastName: details.lastName, birthdate: details.birthdate};
+        await updateDoc(userRef, newField);
+        dispatch({type: UPDATE_USER_INFO, payload: newField});
+    }
+}
 
 export const logoutAction = {
     type: LOGOUT

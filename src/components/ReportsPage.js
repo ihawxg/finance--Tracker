@@ -43,7 +43,7 @@ export default function ReportsPage() {
     setDateRange([null, null])
     filterTransactions(selectedAccounts, amountRange, dateRange)
    }
-   console.log(transactions)
+  
     return (
         <StyledPage>
             <h1>Reports</h1>

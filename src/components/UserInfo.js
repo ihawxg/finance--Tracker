@@ -3,21 +3,32 @@ import styles from "./styles/info.module.css"
 import TextField from '@mui/material/TextField';
 import DatePick from './DatePick';
 import React from "react";
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import EditButton from './EditButton';
+import { updateUserInfoAction } from '../redux/actions/userActions';
 
 export default function UserInfo(){
 
     const [editable, setEditable] = React.useState(false);
+    const currentUser = useSelector(state => state.userData.user);
 
-    const [user, setUser] = React.useState(useSelector(state => state.userData.user));
+    const dispatch = useDispatch();
+
+    React.useEffect(() => {
+        setUser({firstName: currentUser.firstName, lastName: currentUser.lastName, birthdate: currentUser.birthdate});
+    }, [currentUser]);
+    
+    const [user, setUser] = React.useState({firstName: currentUser.firstName, lastName: currentUser.lastName, birthdate: currentUser.birthdate});
 
     const handleClick = () => {
+        if(editable){
+            dispatch(updateUserInfoAction(currentUser.id, user));
+        }
         setEditable(prev => !prev);
     }
 
     const handleInput = (ev) => {
-        setUser(prev => ({...prev, [ev.target.name]: ev.target.value})) 
+        setUser(prev => ({...prev, [ev.target.name]: ev.target.value}));
     }
 
     return (
@@ -32,12 +43,12 @@ export default function UserInfo(){
                         <TextField disabled={!editable} id="lname" name="lastName" label="Last Name" variant="outlined" value={user.lastName} onInput={handleInput} />
                     </div>
                     <div className={styles.nameContainer}>
-                        <TextField disabled className={styles.mailInput} name="email" id="email" label="Email" variant="outlined" value={user.email} onInput={handleInput}/>
+                        <TextField disabled className={styles.mailInput} name="email" id="email" label="Email" variant="outlined" value={currentUser.email} onInput={handleInput}/>
                     </div>
                
                     <div className={styles.nameContainer}>
-                        <DatePick label="Birthdate" disabled={!editable} value={new Date(user.birthdate.slice(1,11))} className={styles.date}/>
-                        <EditButton handleClick={handleClick}/>
+                        <DatePick label="Birthdate" disabled={!editable} value={new Date(user.birthdate)} className={styles.date} handleDateChange={setUser}/>
+                        <EditButton disabled={user.firstName === "" || user.lastName === "" || user.birthdate === ""} handleClick={handleClick}/>
                     </div> 
                 </div>
             </Paper>

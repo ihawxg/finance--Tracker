@@ -13,6 +13,7 @@ import { ADD_EXPENSE,
     EDIT_CATEGORY_INCOME,
     UPDATE_ACCOUNTS,
     EDIT_ACCOUNT,
+    UPDATE_USER_INFO
 } from '../actions/userActions';
 
 const INITIAL_STATE = {
@@ -173,6 +174,17 @@ export const userReducer = (state = INITIAL_STATE, action) => {
                 user : {
                     ...state.user,
                     goals : []
+                }
+            }
+
+        case UPDATE_USER_INFO: 
+            return {
+                ...state,
+                user : {
+                    ...state.user,
+                    firstName : action.payload.firstName,
+                    lastName : action.payload.lastName,
+                    birtdate : action.payload.birtdate
                 }
             }
        
