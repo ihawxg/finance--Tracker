@@ -35,7 +35,7 @@ export default function CategoryCard(props) {
                 <Box sx={style}>
                     <h5>Change Category Color</h5>
                     <HexColorPicker color={color} onChange={setColor}/>
-                    <Button style={{width: "200px", marginTop: "20px"}} variant="contained" onClick={handleClose}>Edit Color</Button>
+                    <Button style={{width: "200px", marginTop: "20px"}} variant="contained" onClick={handleClick}>Edit Color</Button>
                 </Box>
             </Modal>
         </>

@@ -31,12 +31,12 @@ export default function RegisterPage(){
     const usersCollectionRef = collection(db, "users");
 
     const createUser = async () => {
-        const date = JSON.stringify(new Date());
+        const date = JSON.stringify(new Date()).replaceAll('"', '');
         //init a new User with his coresponding data
         await addDoc(usersCollectionRef, { firstName: userData.firstName,
                                             lastName: userData.lastName,
                                             email: userData.email, 
-                                            birthdate: JSON.stringify(new Date(userData.birthdate)),
+                                            birthdate: JSON.stringify(new Date(userData.birthdate)).replaceAll('"', ''),
                                             categories: [],
                                             incomeCategories: basicIncomeCategories,
                                             expenseCategories: basicExpenseCategories,
@@ -48,7 +48,7 @@ export default function RegisterPage(){
                                                         total: userData.startBudget
                                                 }],
                                             budgets: [],
-                                            transactions: [{category: "Initial Deposit", date: date, description: "Initial App Deposit", amount: userData.startBudget, id: 1, type: "income", account: "main"}]
+                                            transactions: [{category: {name: "Initial Deposit", color: "#404a0d"}, date: date, description: "Initial App Deposit", amount: userData.startBudget, id: 1, type: "income", account: "main"}]
                                             });
     };
 

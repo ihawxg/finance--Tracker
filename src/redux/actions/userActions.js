@@ -261,7 +261,7 @@ export const addExpense = (user, details) => {
                         type: "expense",
                         date: details.date,
                         amount: details.amount,
-                        category: details.category,
+                        category: {name: details.category, color},
                         description: details.descr,
                         id: id,
                         account: acc.name
@@ -315,7 +315,7 @@ export const addIncome = (user, details) => {
                     type: "income",
                     date: details.date,
                     amount: details.amount,
-                    category: details.category,
+                    category: {name: details.category, color: color},
                     description: details.descr,
                     id: id,
                     account: acc.name
