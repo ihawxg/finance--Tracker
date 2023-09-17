@@ -7,7 +7,6 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import { getDateAndTime } from '../utils/util'
 import styled from 'styled-components';
 import DateRangeIcon from '@mui/icons-material/DateRange';
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
@@ -16,7 +15,7 @@ import CategoryIcon from '@mui/icons-material/Category';
 import FeedIcon from '@mui/icons-material/Feed';
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import { toCurrency } from '../utils/util';
+import { toCurrency, formatTime, formatDate } from '../utils/util';
 const columns = [
     { id: 'date', label: 'Date', minWidth: 100, icon: <DateRangeIcon /> },
     { id: 'time', label: 'Time', minWidth: 100, icon: <AccessTimeIcon /> },
@@ -53,7 +52,7 @@ function createData(date, time, type, account, category, description, amount) {
 export default function DataTable(props) {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
-    const rows = props.data.map(item => createData(getDateAndTime(item.date)[0], getDateAndTime(item.date)[1], item.type, item.account, item.category, item.description, Number(item.amount)))
+    const rows = props.data.map(item => createData(formatDate(item.date), formatTime(item.date), item.type, item.account, item.category, item.description, Number(item.amount)))
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
     };
@@ -68,7 +67,7 @@ export default function DataTable(props) {
             <CustomTableContainer sx={{ maxHeight: 440 }}>
                 <CustomTable stickyHeader aria-label="sticky table">
                     <TableHead sx={{ backgroundColor: 'rgb(68, 18, 96)' }}>
-                        <CustomRow key={Math.random()*100}>
+                        <CustomRow key={Math.random() * 100}>
                             {columns.map((column) => (
                                 <CustomCol
                                     key={column.id}
@@ -116,7 +115,7 @@ export default function DataTable(props) {
 }
 
 const CustomTable = styled.table`
-    border: none
+    border: none;
 `
 const CustomCol = styled.td` 
 border: none;
@@ -124,7 +123,7 @@ padding: 12px;
 width:100%;
 text-align: start;
     &:last-child {
-        text-align: end;
+        font-weight: 600;
     }
 `
 const CustomRow = styled(TableRow)`

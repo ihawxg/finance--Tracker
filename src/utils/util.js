@@ -1,3 +1,4 @@
+import moment from 'moment';
 export default function delay(fn, ms) {
     let timer = 0;
     return function(...args) {
@@ -18,29 +19,19 @@ export function getFormatedDate(date){
     const formattedDate = `${(date.getMonth()+1)}/${date.getDate()}/${date.getFullYear()}`;
     return formattedDate;
 }
-
-export const getDateAndTime = (timeStamp) => {
-    // const dateTime = JSON.stringify(timeStamp);
-    const dateArr = timeStamp.split("T");
-    const date = dateArr[0].slice(0,10);
-    const time = dateArr[1].slice(0, 5);
-    return [date, time];
-}
-
 export const getColor = (user, categoryName, type) => {
-    if(type === "income"){
+    if(type === "Income"){
         return user.incomeCategories[user.incomeCategories.findIndex(inc => inc.name === categoryName)].color;
     }
     return user.expenseCategories[user.expenseCategories.findIndex(exp => exp.name === categoryName)].color;
 }
 
 export const toCurrency = (num) => {
-    return Number(num).toLocaleString('bg-BG', {
+    return Number(num).toLocaleString('en-US', {
         style: 'currency',
         currency: 'BGN',
       })
 }
-
 export const getProgressBarVariant = (amount, max) => {
     const ratio = amount / max;
     if (ratio < 0.5) return "warning";
@@ -53,4 +44,10 @@ export const getBudgetProgress = (amount, max) => {
     if (ratio < 0.5) return "primary";
     if (ratio < 0.75) return "warning";
     return "danger";
+}
+export const formatDate = (timestamp) => {
+    return moment(timestamp).format("dddd, MMM Do YYYY")
+}
+export const formatTime = (timestamp) => {
+    return moment(timestamp).format("h:mm:ss A")
 }

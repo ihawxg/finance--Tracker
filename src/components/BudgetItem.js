@@ -47,9 +47,9 @@ export default function BudgetItem({ name, amount, max, onClick, gray, dateFrom,
                 <ProgressBar 
                     className="rounded-pill" 
                     variant={getBudgetProgress(amount, max)}
-                    min={amount}
+                    min={0}
                     max={max} 
-                    now={amount}   
+                    now={amount}    
                 />
                 <Stack direction='horizontal' gap='2' className='mt-4'>
                     <FormDialog value="Budget" title="Edit Budget" operation="edit" />

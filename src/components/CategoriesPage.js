@@ -1,8 +1,6 @@
 import { useSelector } from 'react-redux';
-import styles from "./styles/pages.module.css"
 import AddCategoryBTN from './AddCategoryBTN';
 import CategoryCard from "./CategoryCard";
-import Paper from '@mui/material/Paper';
 import { StyledPage, Heading } from './HistoryPage';
 import styled from 'styled-components'
 import { StyledButton } from "./BudgetsPage";
@@ -11,38 +9,28 @@ export default function CategoriesPage() {
     const user = useSelector(state => state.userData.user);
 
     return (
-
         <StyledPage>
-        <StyledButton>
-            <AddCategoryBTN />
-        </StyledButton>
-            
+            <StyledButton>
+                <AddCategoryBTN />
+            </StyledButton>
+            <Heading>Categories</Heading>
             <Columns>
                 <Box>
                     <CenteredHeading>Income Categories</CenteredHeading>
-                    {
-                        user.incomeCategories.map(cat => (
-                            <>
-                                <CategoryCard type="Income" label={cat.name} color={cat.color} />
-                            </>
-                        )
-                        )
+                    { user.incomeCategories.map(cat => (
+                            <CategoryCard type="Income" label={cat.name} color={cat.color} />
+                        ))
                     }
                 </Box>
                 <Box>
                     <CenteredHeading>Expense Categories</CenteredHeading>
-                    {
-                        user.expenseCategories.map(cat => (
-                            <>
-                                <CategoryCard type="Expense" label={cat.name} color={cat.color} />
-                            </>
-                        )
-                        )
+                    { user.expenseCategories.map(cat => (
+                            <CategoryCard type="Expense" label={cat.name} color={cat.color} />
+                        ))
                     }
                 </Box>
             </Columns>
         </StyledPage>
-
     );
 }
 const CenteredHeading = styled(Heading)`

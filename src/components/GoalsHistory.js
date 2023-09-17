@@ -7,12 +7,12 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import { getDateAndTime } from '../utils/util'
+import { formatDate, formatTime, getDateAndTime } from '../utils/util'
 import styled from 'styled-components';
 import DateRangeIcon from '@mui/icons-material/DateRange';
 import FeedIcon from '@mui/icons-material/Feed';
 import SavingsIcon from '@mui/icons-material/Savings';
-
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import { toCurrency } from '../utils/util';
 
 const columns = [
@@ -32,17 +32,19 @@ const columns = [
         format: (value) => toCurrency(value),
         icon: <SavingsIcon />
     },
-    { id: 'date', label: 'Finished on', minWidth: 170, icon: <DateRangeIcon /> }
+    { id: 'date', label: 'Completed on', minWidth: 170, icon: <DateRangeIcon /> },
+    { id: 'time', label: 'Time', minWidth: 100, align: 'left', icon: <AccessTimeIcon /> }
 ];
 
-function createData(date, description, amount) {
-    return { description, amount, date };
+function createData(date, time, description, amount) {
+
+    return { description, amount, date, time };
 }
 
 export default function DataTable(props) {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
-    const rows = props.data.map(item => createData(getDateAndTime(item.date), item.name, item.amount + ' / ' + item.goal));
+    const rows = props.data.map(item => createData(formatDate(item.date), formatTime(item.date), item.name, item.amount + "/" + item.goal));
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
     };
@@ -112,9 +114,6 @@ border: none;
 padding: 12px;
 width:100%;
 text-align: start;
-    &:last-child {
-        text-align: end;
-    }
 `
 const CustomRow = styled(TableRow)`
     border: 1px solid rgba(255,255,255, 0.5);

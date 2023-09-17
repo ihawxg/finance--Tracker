@@ -9,10 +9,8 @@ import { DateRangeFilter } from './filters/DateRangeFilter';
 import { TypeFilter } from './filters/TypeFilter';
 import DataTable from "./Table";
 
-
 export default function HistoryPage() {
     const max = GetMaxAmount();
-
     const [transactions, setTransactions] = useState([]);
     const [selectedAccounts, setSelectedAccounts] = useState([]);
     const [selectedType, setSelectedType] = useState([]);
@@ -49,29 +47,23 @@ export default function HistoryPage() {
         filterTransactions(selectedAccounts, selectedType, amountRange, selectedCategories, dateRange)
     }
     return (
-
         <StyledPage>
-
+            <Heading>Transaction history</Heading>
             <StyledFilters>
-
                 <AccountFilter value={selectedAccounts} onChange={(e) => { setSelectedAccounts(e.target.value); filterTransactions(e.target.value, selectedType, amountRange, selectedCategories, dateRange) }} />
                 <TypeFilter value={selectedType} onChange={(e) => { setSelectedType(e.target.value); filterTransactions(selectedAccounts, e.target.value, amountRange, selectedCategories, dateRange) }} />
                 <CategoryFilter value={selectedCategories} disabled={false} onChange={(e) => { setSelectedCategories(e.target.value); filterTransactions(selectedAccounts, selectedType, amountRange, e.target.value, dateRange) }} />
                 <DateRangeFilter disabled={true} value={dateRange} onChange={(e) => { setDateRange(e); filterTransactions(selectedAccounts, selectedType, amountRange, selectedCategories, e) }} />
                 <AmountRangeFilter value={amountRange} max={max} onChange={(e) => { setAmountRange(e.target.value); filterTransactions(selectedAccounts, selectedType, e.target.value, selectedCategories, dateRange) }} />
                 <StyledButton onClick={clearFilters}>Clear Filters</StyledButton>
-
             </StyledFilters>
-            <Heading>Transaction history</Heading>
             <DataTable data={transactions} />
-
         </StyledPage>
-
     );
 }
 
 export const StyledPage = styled.div`
-    width: 65%;
+    width: 70%;
     margin: 10px auto 30px ;
     text-align: center;
 `

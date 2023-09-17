@@ -67,10 +67,10 @@ export default function ReportsPage() {
                     <PieChart puprose="Expenses" data={transactions.filter(item => item.type == 'expense')} />
                 </Column>
             </PieCharts>
-
-            <LineChart data={transactions} />
-            <BarChart data={transactions} />
-
+            <ChartWrapper>
+                <LineChart data={transactions} />
+                <BarChart data={transactions} />
+            </ChartWrapper>
         </StyledPage>
     );
 }
@@ -80,9 +80,12 @@ const PieCharts = styled.div`
     display: flex;
     flex-flow : row wrap;
     justify-content: center;
-
 `
 const FiltersRow = styled(Row)`
    flex-direction: column;
    align-items : center;
+`
+const ChartWrapper = styled.div`
+    max-width: 90%;
+    margin: auto;
 `

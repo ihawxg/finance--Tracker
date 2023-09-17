@@ -42,17 +42,18 @@ export default function Header(){
                     logged && 
                     <>
                         <Link className={styles.btn} to="/home"><HomeIcon /><LinkName>Home</LinkName></Link>
-                        <Link className={styles.btn} to="/profile"><AssignmentIndIcon/><LinkName>My Profile</LinkName></Link>   
-                        <Link className={styles.btn} to="/categories"><CategoryIcon/><LinkName>Categories</LinkName></Link>  
-                        <Link className={styles.btn} to="/budgets"><SavingsIcon /><LinkName>Budgets</LinkName></Link>  
-                        <Link className={styles.btn} to="/history"><HistoryIcon /><LinkName>History</LinkName></Link> 
+                        <Link className={styles.btn} to="/profile"><AssignmentIndIcon/><LinkName>My Profile</LinkName></Link>
+                        <Link className={styles.btn} to="/accounts"><AccountBalanceWalletIcon /><LinkName>Accounts</LinkName></Link> 
                         <Link className={styles.btn} to="/reports"><AssessmentIcon /><LinkName>Reports</LinkName></Link>  
-                        <Link className={styles.btn} to="/accounts"><AccountBalanceWalletIcon /><LinkName>Accounts</LinkName></Link>
+                        <Link className={styles.btn} to="/budgets"><SavingsIcon /><LinkName>Budgets</LinkName></Link>  
                         <Link className={styles.btn} to="/goals"><FlagIcon></FlagIcon><LinkName>Goals</LinkName></Link>
+                        <Link className={styles.btn} to="/categories"><CategoryIcon/><LinkName>Categories</LinkName></Link>  
+                        <Link className={styles.btn} to="/history"><HistoryIcon /><LinkName>History</LinkName></Link> 
                         <Link className={styles.btn} onClick={() => dispatch(logoutAction)} to="/login"><LogoutIcon /><LinkName>Logout</LinkName></Link>
+                        <StyledIcon><Logo src="logo.png" onClick={handleClick} /></StyledIcon>
                     </>
                 }
-                <StyledIcon><Logo src="logo.png" onClick={handleClick} /></StyledIcon>
+                
             </StyledHeader>
         </>
         
@@ -67,7 +68,7 @@ const StyledHeader = styled.header`
     background: -webkit-linear-gradient(to right, #3c1053, #ad5389);
     background: linear-gradient(to right, #3c1053, #ad5389);
     height: 100vh;
-    width: 200px;
+    width: 160px;
     display: flex;
     flex-flow: column nowrap;
     justify-content: flex-start;
@@ -87,7 +88,7 @@ const LinkName = styled.div`
 `
 const StyledIcon = styled.div`
     position: absolute;
-    top: 10px; right: -60px;
+    top: 5px; right: -55px;
     padding:5px;
     cursor : pointer;
     border-radius: 5px;

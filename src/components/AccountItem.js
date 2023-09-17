@@ -4,18 +4,14 @@ import styled from 'styled-components';
 import { LineChart} from './charts/LineChart';
 
 export const AccountItem = ({  name, total, transactions }) => {
-  console.log(transactions)
     return (
         <Account>
-            
             <AccountName>
                 { name } 
                 <span className='fs-6 ms-1'> / { toCurrency(total) } </span> 
             </AccountName>
-          
             <LineChart data={transactions}/>
         </Account>
-       
     )
 }
 const AccountName = styled.div`
