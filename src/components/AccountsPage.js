@@ -9,8 +9,7 @@ import { StyledButton } from "./BudgetsPage";
 
 export default function AccountsPage(){
     const user = useSelector(state => state.userData.user);
-    const dispatch = useDispatch();
-   
+
     return (
         <StyledPage>
             <Heading> Accounts</Heading>

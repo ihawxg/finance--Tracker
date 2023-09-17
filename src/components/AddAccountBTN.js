@@ -6,19 +6,12 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Radio from '@mui/material/Radio';
-import { useSelector, useDispatch } from 'react-redux';
-import { updateUserIncomeCategories, updateUserExpenseCategories, editExpenseCategories, editIncomeCategories } from '../redux/actions/userActions'; 
-import { HexColorPicker } from "react-colorful";
-import styles from "./styles/pages.module.css";
+import { useDispatch, useSelector } from 'react-redux';
+import { addAccountAction, editAccountAction } from '../redux/actions/userActions';
 
-export default function AddCategoryBTN(props) {
+export default function AddAccountBTN(props) {
   const [open, setOpen] = React.useState(false);
-  const [categoryInfo, setCategoryInfo] = React.useState({name: "", type: "expense"});
-  const [value, setValue] = React.useState('expense');
-  const [color, setColor] = React.useState("#fff");
+  const [accountInfo, setAccountInfo] = React.useState({name: "", amount: ""});
 
   const dispatch = useDispatch();
 
@@ -33,81 +26,68 @@ export default function AddCategoryBTN(props) {
   };
 
   const handleAdd = () => {
-    if(props.operation !== "edit"){
-      if(value === "income") {
-          dispatch(updateUserIncomeCategories(user.id, user.incomeCategories, user.categories, categoryInfo, color));
-      } 
-      else {
-          dispatch(updateUserExpenseCategories(user.id, user.expenseCategories, user.categories, categoryInfo, color));
-      }
-    }
-    else{
-      if(value === "expense") {
-        dispatch(editExpenseCategories(user.id, props.position, user.expenseCategories, user.incomeCategories, user.categories, user.categories[props.position], categoryInfo, false, color));
-      }
-      else {
-        dispatch(editIncomeCategories(user.id, props.position, user.expenseCategories, user.incomeCategories, user.categories, user.categories[props.position], categoryInfo, false, color));
-      }
-    }
-
-    setCategoryInfo({name: "", type: "expense"});
-    setColor("#fff");
+    dispatch(addAccountAction(user.id, accountInfo.name, accountInfo.amount, user.accounts))
+    
+    setAccountInfo({name: "", amount: ""});
     setOpen(false);
   }
 
-  const handleChangeText = (ev) => {
-    setCategoryInfo(prevInfo => ({...prevInfo, [ev.target.name]: ev.target.value}));
+  const handleEdit = () => {
+
+    //use redux to update the account
+    dispatch(editAccountAction(user.id, props.name, accountInfo.name, user.accounts));
+
+    setAccountInfo({name: "", amount: ""});
+    setOpen(false);
   }
 
-  const handleRadioChange = (event) => {
-    setValue(event.target.value);
-    setCategoryInfo(prevInfo => ({...prevInfo, type: event.target.value}));
-  };
+  const handleChange = (ev) => {
+    setAccountInfo(prevInfo => ({...prevInfo, [ev.target.name]: ev.target.value}));
+  }
 
   return (
     <div>
       <Button 
-        variant={props.operation == 'edit' ? 'outlined' : 'contained'} 
-        color={props.operation == 'edit' ? 'primary' : 'success'}
-        onClick={handleClickOpen}>
-        {props.operation === "edit" ? "Edit" : "Add"} Category
+          className={props.isInHome ? "w-200" : "w-100"}
+          variant="contained" 
+          color={ props.isInHome ? 'secondary' : 'success'} onClick={handleClickOpen}>
+          Add Account
       </Button>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>{props.operation === "edit" ? "Edit" : "Add"} Category</DialogTitle>
+        <DialogTitle> Add Account</DialogTitle>
         <DialogContent>
           <DialogContentText>
-          {props.operation === "edit" ? "Edit category name or type" : "Enter category name and type!" }
+            Enter name and start wage for the account you want to {props.operation === "edit" ? "edit" : "add"}!
           </DialogContentText>
           <TextField
             autoFocus
             margin="dense"
-            id="categoryName"
-            label="Category Name"
+            id="accName"
+            label="Account Name"
             name="name"
             type="text"
             fullWidth
             variant="standard"
-            value={categoryInfo.name}
-            onChange={handleChangeText}
+            value={accountInfo.name}
+            onChange={handleChange}
           />
-    
-        <div className={styles.categoryContainer}>
-          <RadioGroup
-            aria-labelledby="category-type"
-            name="type"
-            value={value}
-            onChange={handleRadioChange}>
-              <FormControlLabel value="income" control={<Radio />} label="Income" />
-              <FormControlLabel value="expense" control={<Radio />} label="Expense" />
-          </RadioGroup>
-          
-          <HexColorPicker color={color} onChange={setColor}/>
-        </div>
-
+          <br/>
+          {props.operation !== "edit" && <TextField
+            autoFocus
+            margin="dense"
+            id="accWage"
+            label="Start Wage"
+            name="amount"
+            type="number"
+            fullWidth
+            variant="standard"
+            value={accountInfo.amount}
+            onChange={handleChange}
+          />}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}> Cancel </Button>
-          <Button onClick={handleAdd} disabled={!categoryInfo.name}> {props.operation === "edit" ? "Edit Category" : "Add Category" } </Button>
+          <Button onClick={props.operation === "edit" ? handleEdit : handleAdd}>  {props.operation === "edit" ? "Edit" : "Add"} Account </Button>
         </DialogActions>
       </Dialog>
     </div>

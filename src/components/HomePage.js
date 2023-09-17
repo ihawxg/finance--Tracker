@@ -95,8 +95,8 @@ export default function Home() {
                         <FormDialog value="Expense" title="Add an expense"/>
                         <FormDialog value="Income" title="Add an income" />
                         <FormDialog value="Savings" title="Add to savings" />
-                        <AddAccountBTN />
-                        <AddCategoryBTN />
+                        <AddAccountBTN isInHome={true}/>
+                        <AddCategoryBTN isInHome={true}/>
                     </div>
                 </div>
             

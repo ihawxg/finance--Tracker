@@ -11,7 +11,7 @@ export default function CategoriesPage() {
     return (
         <StyledPage>
             <StyledButton>
-                <AddCategoryBTN />
+                <AddCategoryBTN isInHome={false}/>
             </StyledButton>
             <Heading>Categories</Heading>
             <Columns>
