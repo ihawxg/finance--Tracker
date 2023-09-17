@@ -3,6 +3,8 @@
     flex-direction: column;
     align-items: center;
     row-gap: 20px;
+   
+   
 }
 
 .input_container{
@@ -33,7 +35,14 @@
 .formContainer{
     display: flex;
     justify-content: center;
-    margin-top: 50px;
+    margin-top: -20px;
+    padding: 40px;
+    min-height: 100vh;
+
+    background: #A1FFCE;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #FAFFD1, #A1FFCE);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #FAFFD1, #A1FFCE); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
 }
 
 .formText{
@@ -41,6 +50,9 @@
     font-weight: 400;
     font-size: 26px;
     margin-top: 20px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color : #707070;
 }
 
 .startBudget{
@@ -56,4 +68,3 @@
     justify-content: space-between;
     width: 100%;
 }
-

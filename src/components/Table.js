@@ -15,31 +15,31 @@ import ShowChartIcon from '@mui/icons-material/ShowChart';
 import CategoryIcon from '@mui/icons-material/Category';
 import FeedIcon from '@mui/icons-material/Feed';
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
-
+import { toCurrency } from '../utils/util';
 const columns = [
     { id: 'date', label: 'Date/Time', minWidth: 120, icon: <DateRangeIcon /> },
     { id: 'type', label: 'Type', minWidth: 100, icon: <ShowChartIcon /> },
-    { id: 'account', label: 'Account', minWidth: 150, icon: <AccountBalanceWalletIcon /> },
+    { id: 'account', label: 'Account', minWidth: 130, icon: <AccountBalanceWalletIcon /> },
     {
         id: 'category',
         label: 'Category',
-        minWidth: 170,
+        minWidth: 140,
         align: 'right',
         icon: <CategoryIcon />
     },
     {
         id: 'description',
         label: 'Description',
-        minWidth: 150,
+        minWidth: 170,
         align: 'right',
         icon: <FeedIcon />
     },
     {
         id: 'amount',
         label: 'Amount',
-        minWidth: 140,
+        minWidth: 120,
         align: 'right',
-        format: (value) => value.toFixed(2),
+        format: (value) => toCurrency(value),
         icon: <ReceiptLongIcon />
     },
 ];
@@ -62,7 +62,7 @@ export default function DataTable(props) {
     };
 
     return (
-        <Paper sx={{ width: '100%', overflow: 'hidden', borderRadius: '15px' }}>
+        <Paper sx={{ width: '100%', overflow: 'hidden' }}>
             <CustomTableContainer sx={{ maxHeight: 440 }}>
                 <CustomTable stickyHeader aria-label="sticky table">
                     <TableHead sx={{ backgroundColor: 'rgb(68, 18, 96)' }}>
@@ -118,7 +118,8 @@ const CustomTable = styled.table`
 `
 const CustomCol = styled.td` 
 border: none;
-padding: 10px 26px;
+padding: 12px;
+width:100%;
 text-align: start;
     &:last-child {
         text-align: end;

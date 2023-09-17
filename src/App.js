@@ -13,6 +13,7 @@ import AccountsPage from "./components/AccountsPage";
 import BudgetsPage from "./components/BudgetsPage";
 import HistoryPage from "./components/HistoryPage";
 import ReportsPage from "./components/ReportsPage";
+import GoalsPage from "./components/GoalsPage";
 import { useDispatch } from "react-redux";
 import { loginAction, logoutAction } from "./redux/actions/userActions";
 
@@ -51,6 +52,7 @@ function App() {
             <Route path="/budgets" element={<BudgetsPage/>}/>
             <Route path="/history" element={<HistoryPage/>}/>
             <Route path="/reports" element={<ReportsPage/>}/>
+            <Route path="/goals" element={<GoalsPage/>}/>
         </Routes>
     </>
   );

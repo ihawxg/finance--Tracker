@@ -13,6 +13,7 @@ import SavingsIcon from '@mui/icons-material/Savings';
 import HistoryIcon from '@mui/icons-material/History';
 import AssessmentIcon from '@mui/icons-material/Assessment';
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
+import FlagIcon from '@mui/icons-material/Flag';
 import { useDispatch, useSelector } from "react-redux";
 import { logoutAction } from "../redux/actions/userActions";
 
@@ -44,9 +45,10 @@ export default function Header(){
                         <Link className={styles.btn} to="/profile"><AssignmentIndIcon/><LinkName>My Profile</LinkName></Link>   
                         <Link className={styles.btn} to="/categories"><CategoryIcon/><LinkName>Categories</LinkName></Link>  
                         <Link className={styles.btn} to="/budgets"><SavingsIcon /><LinkName>Budgets</LinkName></Link>  
-                        <Link className={styles.btn} to="/history"><HistoryIcon /><LinkName>History</LinkName></Link>  
+                        <Link className={styles.btn} to="/history"><HistoryIcon /><LinkName>History</LinkName></Link> 
                         <Link className={styles.btn} to="/reports"><AssessmentIcon /><LinkName>Reports</LinkName></Link>  
-                        <Link className={styles.btn} to="/accounts"><AccountBalanceWalletIcon /><LinkName>Accounts</LinkName></Link>  
+                        <Link className={styles.btn} to="/accounts"><AccountBalanceWalletIcon /><LinkName>Accounts</LinkName></Link>
+                        <Link className={styles.btn} to="/goals"><FlagIcon></FlagIcon><LinkName>Goals</LinkName></Link>
                         <Link className={styles.btn} onClick={() => dispatch(logoutAction)} to="/login"><LogoutIcon /><LinkName>Logout</LinkName></Link>
                     </>
                 }

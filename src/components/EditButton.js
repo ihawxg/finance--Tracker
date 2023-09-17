@@ -10,6 +10,6 @@ export default function EditButton(props){
     }
 
     return (
-        <Button disabled={props.disabled} className="w-200" onClick={() => toggle(props.handleClick)} variant="contained" color={editable ? "success" : "primary"}>{editable ? "Save Info" : "Edit Info"}</Button>
+        <Button  disabled={props.disabled} className="w-300" sx={{ padding : '15px 0px' }} onClick={() => toggle(props.handleClick)} variant="contained" color={editable ? "success" : "secondary"}>{editable ? "Save Info" : "Edit Info"}</Button>
     );
 }

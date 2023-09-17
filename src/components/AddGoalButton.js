@@ -37,7 +37,7 @@ export default function AddGoalButton(props) {
 
   return (
     <div>
-      <Button className="w-200" variant="outlined" onClick={handleClickOpen}>
+      <Button className="w-200" variant="contained" color="success" onClick={handleClickOpen}>
         {props.title}
       </Button>
       <Dialog open={open} onClose={handleClose}>

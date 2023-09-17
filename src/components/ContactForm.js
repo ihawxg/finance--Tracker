@@ -37,11 +37,14 @@ export default function FormDialog() {
     setMessage("");
   };
   return (
-    <div>
-      <Button variant="contained" fullWidth color="primary" onClick={handleOpen}>
+    <PushDownDiv>
+      <ButtonHeader>
+        <Button variant="contained" color="info" sx={{borderRadius : '0', width : '50%', float : 'left'}}> LOGIN </Button>
+        <Button variant='contained' color='secondary' sx={{borderRadius : '0', width : '50%'}}> REGISTER </Button>
+      </ButtonHeader>
+      <Button sx={{borderRadius : '0'}} variant="contained" fullWidth color="primary" onClick={handleOpen}>
          CONTACT US NOW
       </Button>
-  
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Leave us a message</DialogTitle>
         <DialogContent>
@@ -87,14 +90,17 @@ export default function FormDialog() {
           </Button>
         </DialogActions>
       </Dialog>
-    </div>
+    </PushDownDiv>
   );
 }
-const Success = styled.div`
-  padding: 10px;
-  background-color: green;
-  opacity: 0.7;
-  color: white;
-  width: 100%;
-  text-align: center;
+
+const ButtonHeader = styled.div`
+  position : fixed;
+  top : 0; left:0;
+  width:100%;
+  z-index: 9999;
+`
+
+const PushDownDiv = styled.div`
+  margin-top:37px;
 `
