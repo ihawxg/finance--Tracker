@@ -29,7 +29,7 @@ const HistoryHeader = styled(Heading)`
     text-align: center;
 `
 const CustomPaper = styled(Paper)`
-    margin: 20px;
+    margin-top: 25px;
     background: #A1FFCE;
     background: -webkit-linear-gradient(to right, #FAFFD1, #A1FFCE);
     background: linear-gradient(to right, #FAFFD1, #A1FFCE);

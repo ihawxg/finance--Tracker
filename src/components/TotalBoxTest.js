@@ -3,6 +3,7 @@ import styled, { keyframes } from "styled-components";
 import React from "react";
 import { BsWallet2, BsArrowUpRight, BsArrowDownRight, BsReceipt } from "react-icons/bs";
 import { useSelector } from "react-redux";
+import { toCurrency } from "../utils/util";
 
 export default function TotalBoxTest(props){
     const [counter, setCounter] = React.useState(0);
@@ -53,7 +54,7 @@ export default function TotalBoxTest(props){
 
     return (
         <Container onClick={handleClick}>
-            <Label toggle={toggle}>{icon} {label} : {details}&nbsp;{counter !== 3 && currency}</Label>
+            <Label toggle={toggle}>{icon} {label} : {toCurrency(details)}</Label>
         </Container>
     );
 }
@@ -61,18 +62,18 @@ export default function TotalBoxTest(props){
 const Container = styled.div`
     min-height: 100px;
     position: relative;
-    width: 400px;
+    width: 520px;
+    border-radius: 5px;
     display: flex;
-
     background: #ad5389;
     background: -webkit-linear-gradient(to right, #3c1053, #ad5389);
     background: linear-gradient(to right, #3c1053, #ad5389);
-
+    text-transform : uppercase;
+    letter-spacing: 1px;
     justify-content: center;
     align-items: center;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     position: relative;
-    cursor: pointer;
 `;
 
 const Label = styled.h2`

@@ -7,8 +7,8 @@ export default function AddButtons(props) {
     return (
         <ButtonsWrapper>
             <StyledEngineProvider injectFirst>
-                <FormDialog operation={props.operation} value="Expense" title="Add an expense"/>
-                <FormDialog operation={props.operation} value="Income" title="Add an income" />
+                <FormDialog color="danger" variant="contained" operation={props.operation} value="Expense" title="Add an expense"/>
+                <FormDialog color="success" variant="contained" operation={props.operation} value="Income" title="Add an income" />
             </StyledEngineProvider>
         </ButtonsWrapper>
     )

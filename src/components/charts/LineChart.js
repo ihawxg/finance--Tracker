@@ -75,7 +75,7 @@ export const LineChart = (props) => {
                 label: 'Balance',
                 data: result,
                 borderColor: 'rgb(255, 99, 132)',
-                backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                backgroundColor: 'rgba(255, 99, 132, 0.8)',
             },
         ],
     };

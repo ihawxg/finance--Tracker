@@ -1,10 +1,19 @@
-import styles from './styles/total_box.module.css';
+
+import styled from 'styled-components';
 
 export default function LegendField(props){
    return (
-        <div style={styles.legendCollection}>
+        <Legend>
             <div style={{backgroundColor: `${props.color}`, width: "20px", height: "20px", display: "inline-block", marginTop: "20px"}}></div>
             <span> {props.label} </span>
-        </div>
+        </Legend>
    ) 
-}
+} 
+const Legend = styled.div` 
+    width: 300px;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    align-items: baseline;
+    gap: 20px;
+`

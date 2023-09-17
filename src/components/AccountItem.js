@@ -27,12 +27,17 @@ const AccountName = styled.div`
     color : #fff;
     margin-top: 20px;
 `
-const Account = styled.div`
+export const Account = styled.div`
     max-width: 768px;
     margin: 30px auto;
-    padding: 0 20px 20px 20px;
+    padding: 30px;
     border : 1px solid rgba(68, 18, 96, .1);
     border-radius: 20px;
     box-shadow: 2px 3px 10px rgba(68, 18, 96, .2);
 
+    background: #D3CCE3;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #E9E4F0, #D3CCE3);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #E9E4F0, #D3CCE3); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+   
+   
 `

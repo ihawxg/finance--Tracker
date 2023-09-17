@@ -65,16 +65,16 @@ const CategoryHeading = styled.h4`
     font-weight: 600;
 `
 const StyledPaper = styled(Paper)`
-
+   
+    background: #A1FFCE;
+    background: -webkit-linear-gradient(to right, #FAFFD1, #A1FFCE);
+    background: linear-gradient(to right, #FAFFD1, #A1FFCE);
     border-radius: 20px;
     box-shadow: 2px 3px 10px rgba(68, 18, 96, .2);
-    background: #D3CCE3;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #E9E4F0, #D3CCE3);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #E9E4F0, #D3CCE3); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     width: 190px;
     height: 190px;
     border: none;
-
+    margin-right: 21px;
 `
 const ColorCard = styled.span`
     display: block;

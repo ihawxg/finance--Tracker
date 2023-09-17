@@ -6,7 +6,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { useSelector } from "react-redux";
-  
+import { toCurrency } from '../utils/util';
 export default function RecentHistoryTable() {
     const currency = "BGN";
     const transactions = useSelector(state => state.userData.user.transactions);
@@ -39,7 +39,8 @@ export default function RecentHistoryTable() {
                             <TableCell component="th" scope="row">
                                 {trans.category}
                             </TableCell>
-                            <TableCell align="left" style={{color: trans.type === "income" ? "green" : "red"}}>{trans.type === "income" ? "+" : "-"}{trans.amount}</TableCell>
+                            <TableCell align="left" style={{color: trans.type === "income" ? "green" : "red"}}>{trans.type === "income" ? "+" : "-"}{ toCurrency(trans.amount) }
+                            </TableCell>
                             <TableCell align="left">{trans.description}</TableCell>
                         </TableRow>
                     ))}

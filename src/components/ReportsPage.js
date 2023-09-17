@@ -9,7 +9,7 @@ import GetMaxAmount from './filters/GetMaxAmount';
 import { AccountFilter } from "./filters/AccountFilter";
 import { AmountRangeFilter } from './filters/AmountRangeFilter';
 import { DateRangeFilter } from './filters/DateRangeFilter';
-
+import { Account } from './AccountItem';
 export default function ReportsPage() {
     const max = GetMaxAmount();
     const [transactions, setTransactions] = useState([]);
@@ -55,21 +55,29 @@ export default function ReportsPage() {
                     </FiltersRow>
 
             </StyledFilters>
-
-                <PieCharts>
-                <Column>
-                
+            
+            <PieCharts>
+                <Account>
+                <Column>    
                     <h6>Incomes</h6>
-                    <PieChart purpose="Incomes" data={transactions.filter(item => item.type == 'income')} />
+                    <PieChart purpose="Incomes" transactions={transactions.filter(item => item.type == 'income')} />
                 </Column>
-                <Column>
+            </Account>
+            <Account>
+                 <Column>
                     <h6>Expenses</h6>
-                    <PieChart puprose="Expenses" data={transactions.filter(item => item.type == 'expense')} />
+                    <PieChart puprose="Expenses" transactions={transactions.filter(item => item.type == 'expense')} />
                 </Column>
+            </Account>
+               
             </PieCharts>
-
-            <LineChart data={transactions} />
-            <BarChart data={transactions} />
+            <Account>
+                <LineChart data={transactions} />
+            </Account>
+            <Account>
+                 <BarChart data={transactions} />
+            </Account>
+           
 
         </StyledPage>
     );
