@@ -1,6 +1,6 @@
 import { Bar } from 'react-chartjs-2';
-import styled from 'styled-components'
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { getMonthFromNumber } from "../../utils/util";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -10,6 +10,7 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
+
 ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -17,46 +18,54 @@ ChartJS.register(
     Title,
     Tooltip,
     Legend
-  );
+);
 
 export const BarChart = (props) => {
-  let transactions = props.data.sort((a,b) => (new Date(a.date).getTime()) - (new Date(b.date)).getTime())
-  let incomes = props.data.filter(item => item.type == 'income')
-  let expenses = props.data.filter(item => item.type == 'expense')
+    let transactions =  props.data;
+    transactions.sort((a,b) => (new Date(a.date).getTime()) - (new Date(b.date)).getTime());
 
-  const months = [...incomes, ...expenses].map(item => (new Date(item.date)).getMonth())
-  const labels = months.map(item => {
-    switch(item) {
-        case 0 : return "January";
-        case 1 : return "February";
-        case 2 : return "March";
-        case 3 : return "April";
-        case 4 : return "May";
-        case 5 : return "June";
-        case 6 : return "July";
-        case 7 : return "August";
-        case 8 : return "September";
-        case 9 : return "October";
-        case 10 : return "November";
-        case 11 : return "December";
+    let dataMap = new Map();
+
+    transactions.forEach(trans => {
+        const month = (new Date(trans.date)).getMonth();
+        if(dataMap.has(month)){
+            if(trans.type === "income"){
+              dataMap.set(month, [dataMap.get(month)[0], dataMap.get(month)[1] + Number(trans.amount)]);
+            }
+            else{
+              dataMap.set(month, [dataMap.get(month)[0] + Number(trans.amount), dataMap.get(month)[1]]);
+            }
+        }
+        else{
+            if(trans.type === "income"){
+              dataMap.set(month, [0, Number(trans.amount)]);
+            }
+            else{
+              dataMap.set(month, [Number(trans.amount), 0]);
+            }
+        }
+    });
+
+    const labels = Array.from(dataMap.keys()).map(num => getMonthFromNumber(num));
+    const incomes = Array.from(dataMap.values()).map(trans => trans[1]);
+    const expenses = Array.from(dataMap.values()).map(trans => trans[0]);
+
+    const data = {
+        labels,
+        datasets: [
+          {
+            label: 'Incomes',
+            data: incomes,
+            backgroundColor: 'rgba(39, 173, 86, .8)',
+          },
+          {
+              label: 'Expenses',
+              data: expenses,
+              backgroundColor: 'rgba(219, 30, 30, .8)',
+          }
+        ],
     };
-});
 
-const data = {
-  labels,
-  datasets: [
-    {
-      label: 'Incomes',
-      data: incomes.map(item => item.amount),
-      backgroundColor: 'rgba(39, 173, 86, .8)',
-    },
-    {
-        label: 'Expenses',
-        data: expenses.map(item => item.amount),
-        backgroundColor: 'rgba(219, 30, 30, .8)',
-    }
-  ],
-};
     return (
         <Bar data={data} />
     )

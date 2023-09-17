@@ -21,13 +21,13 @@ export default function RecentHistoryTable() {
 
     return (
         <>
-            <TableContainer component={Paper} sx={{ maxWidth: 500 }} >
+            <TableContainer component={Paper} sx={{ maxWidth: 600 }} >
                 <Table aria-label="simple table">
-                    <TableHead sx={{backgroundColor: "#9D50BB", backgroundColor: "-webkit-linear-gradient(to right, #6E48AA, #9D50BB)", backgroundColor: "linear-gradient(to right, #6E48AA, #9D50BB)", color: "#fff"}}>
+                    <TableHead sx={{background: "#ad5389", background: "-webkit-linear-gradient(to right, #3c1053, #ad5389)", background: "linear-gradient(to right, #3c1053, #ad5389)"}}>
                         <TableRow>
-                            <TableCell>Category</TableCell>
-                            <TableCell align="left">Amount ({currency})</TableCell>
-                            <TableCell align="left">Description</TableCell>
+                            <TableCell style={{ color: "white", fontFamily: "Poppins" }}>Category</TableCell>
+                            <TableCell align="left" style={{ color: "white", fontFamily: "Poppins" }}>Amount&nbsp;({currency})</TableCell>
+                            <TableCell align="left" style={{ color: "white", fontFamily: "Poppins" }}>Description</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
