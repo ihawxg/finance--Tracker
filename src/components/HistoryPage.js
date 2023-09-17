@@ -63,7 +63,7 @@ export default function HistoryPage() {
 
             </StyledFilters>
             <Heading>Transaction history</Heading>
-            <DataTable headers={["Date/Time", "Type", "Category", "Description", "Amount"]} data={transactions} />
+            <DataTable data={transactions} />
 
         </StyledPage>
 

@@ -15,9 +15,11 @@ import ShowChartIcon from '@mui/icons-material/ShowChart';
 import CategoryIcon from '@mui/icons-material/Category';
 import FeedIcon from '@mui/icons-material/Feed';
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import { toCurrency } from '../utils/util';
 const columns = [
-    { id: 'date', label: 'Date/Time', minWidth: 120, icon: <DateRangeIcon /> },
+    { id: 'date', label: 'Date', minWidth: 100, icon: <DateRangeIcon /> },
+    { id: 'time', label: 'Time', minWidth: 100, icon: <AccessTimeIcon /> },
     { id: 'type', label: 'Type', minWidth: 100, icon: <ShowChartIcon /> },
     { id: 'account', label: 'Account', minWidth: 130, icon: <AccountBalanceWalletIcon /> },
     {
@@ -44,14 +46,14 @@ const columns = [
     },
 ];
 
-function createData(date, type, account, category, description, amount) {
-    return { date, type, account, category, description, amount };
+function createData(date, time, type, account, category, description, amount) {
+    return { date, time, type, account, category, description, amount };
 }
 
 export default function DataTable(props) {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
-    const rows = props.data.map(item => createData(getDateAndTime(item.date), item.type, item.account, item.category, item.description, Number(item.amount)))
+    const rows = props.data.map(item => createData(getDateAndTime(item.date)[0], getDateAndTime(item.date)[1], item.type, item.account, item.category, item.description, Number(item.amount)))
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
     };
