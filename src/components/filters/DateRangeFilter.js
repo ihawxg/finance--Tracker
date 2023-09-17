@@ -7,7 +7,7 @@ import Box from '@mui/material/Box';
 
 export const DateRangeFilter = (props) => {
   const [value, setValue] = React.useState([null, null]);
-
+ 
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <DateRangePicker
@@ -15,11 +15,13 @@ export const DateRangeFilter = (props) => {
         startText="Start date"
         endText="End date"
         value={props.value}
-        maxDate={new Date()}
+        maxDate={ props.disabled ? new Date() : new Date('2048-12-01T14:07:28.000Z') }
+
         onChange={(newValue) => {
           setValue(newValue);
           props.onChange(newValue);
         }}
+
         renderInput={(startProps, endProps) => (
           <React.Fragment>
             <TextField {...startProps}  color="secondary"  />

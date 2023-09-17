@@ -14,12 +14,13 @@ import BudgetsPage from "./components/BudgetsPage";
 import HistoryPage from "./components/HistoryPage";
 import ReportsPage from "./components/ReportsPage";
 import GoalsPage from "./components/GoalsPage";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { loginAction, logoutAction } from "./redux/actions/userActions";
 
 function App() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const logged = useSelector(state => state.userData.logged);
 
   const log = () => {
     if(sessionStorage.getItem("currentUser")){
@@ -29,7 +30,7 @@ function App() {
       dispatch(loginAction(localStorage.getItem("currentUser")));
     }
     else{
-      navigate("/login");
+      navigate("/about");
       dispatch(logoutAction); 
     }
   }
@@ -38,7 +39,7 @@ function App() {
 
   return (
     <>
-        <Header />
+        {logged && <Header />}
         <Snackbar />
         <Routes>
             <Route path="/login" element={<LoginPage />}/>

@@ -10,6 +10,7 @@ import Button from '@mui/material/Button';
 import LegendField from "./LegendField";
 import { getColor } from "../utils/util";
 import RecentHistoryTable from "./RecentHistoryTable";
+import TotalBoxTest from "./TotalBoxTest";
 
 
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -79,31 +80,19 @@ export default function Home() {
 
     return (
         <HomePage>
-            
-            <div className={styles.overAllContainer}>
-                <div className={styles.containerBoxAll}>
-                    <div className={styles.containerBoxTwo}>
-                        <TotalBox name="balance"/>
-                        <TotalBox name="transactions"/>               
-                    </div>
-                    <div className={styles.containerBoxTwo}>
-                        <TotalBox name="incomes"/>
-                        <TotalBox name="expenses"/>
-                    </div>
-                </div>
-            </div>
+            <TotalBoxTest/>
             <div className={styles.pieContainer}>
-                <div className={styles.pie}>
+                <div className={styles.pie} onClick={handleClick}>
                     <Pie data={metaData} options={options} />
                 </div>
                 <div className={styles.legendContainer}>
-                    {
+                    {/* {
                         colors.map(color => {
                             return (<LegendField key={br} label={labels[br++]} color={color}/>);
                         })
-                    }   
+                    }    */}
                     <AddButtons/>
-                    <Button className="w-200" onClick={handleClick} variant="contained" color={!toggle ? "success" : "error"}>{!toggle ? "Check Incomes" : "Check Expenses"}</Button>
+                    {/* <Button className="w-200" onClick={handleClick} variant="contained" color={!toggle ? "success" : "error"}>{!toggle ? "Check Incomes" : "Check Expenses"}</Button> */}
                 </div>
                 
             </div>

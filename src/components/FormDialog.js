@@ -187,7 +187,7 @@ export default function FormDialog(props) {
             <StyledEngineProvider injectFirst>
              
               {props.value === "Budget" ? (
-                <DateRangeFilter value={dateRange} onChange={e => setDateRange(e)} />
+                <DateRangeFilter disabled={false} value={dateRange} onChange={e => setDateRange(e)} />
               ) : ( <BasicDatePicker label="Choose date" value={selectedDate} selected={selectedDate} onChange={date => setSelectedDate(date)} />)}
               {props.value !== "Budget" && <CategoryPicker name="account" value={account} onChange={e => setAccount(e.target.value)} required/>}
               <CategoryPicker type={props.value} name="category" value={category} list={account} disabled={!((account && props.value !== "Budget") || props.value === "Budget")} onChange={e => setCategory(e.target.value)} />

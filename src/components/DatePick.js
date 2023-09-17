@@ -10,7 +10,7 @@ export default function DatePick(props){
     return (
         <LocalizationProvider dateAdapter={DateAdapter}>
             <DatePicker
-                disableFuture
+                disableFuture={props.disabled}
                 disabled={isDisabled}
                 label={props.label}
                 openTo="year"

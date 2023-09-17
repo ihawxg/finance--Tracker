@@ -7,7 +7,7 @@ export default function TotalBox(props){
     const user = useSelector(state => state.userData.user);
     let icon = <BsWallet2 />;
     let label;
-    const currency = "BGN"; //user.currency
+    const currency = "BGN";
 
     let style = styles.totalBalance;
     switch(props.name){
@@ -17,7 +17,7 @@ export default function TotalBox(props){
             });
             style = styles.totalIncomes;
             icon = <BsArrowUpRight />;
-            label = "Total Incomes "
+            label = "Total Incomes ";
         break;
 
         case "expenses": 
@@ -26,7 +26,7 @@ export default function TotalBox(props){
             });
             style = styles.totalExpenses;
             icon = <BsArrowDownRight />;
-            label = "Total Expenses "
+            label = "Total Expenses ";
         break;
 
         case "transactions": 
@@ -35,14 +35,14 @@ export default function TotalBox(props){
             });
             style = styles.totalTransactions;
             icon = <BsReceipt />;
-            label = "Total Transactions "
+            label = "Total Transactions ";
         break;
 
         case "balance": 
             user.accounts.forEach(acc => details += Number(acc.total));
             style = styles.totalBalance;
             icon = <BsWallet2 />;
-            label = "Balance "
+            label = "Balance ";
         break;
     }
 

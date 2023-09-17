@@ -11,12 +11,14 @@ import styled from 'styled-components';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { setSnackbar } from '../redux/actions/snackbarActions';
+import { useNavigate } from 'react-router-dom';
 
 export default function FormDialog() {
   const [open, setOpen] = useState(false);
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleInput = (e) => {
     if(e.target.name === "email") {
@@ -36,11 +38,16 @@ export default function FormDialog() {
     setEmail("");
     setMessage("");
   };
+
+  const handleRedirect = (location) => {
+    navigate(`/${location}`);
+  }
+
   return (
     <PushDownDiv>
       <ButtonHeader>
-        <Button variant="contained" color="info" sx={{borderRadius : '0', width : '50%', float : 'left'}}> LOGIN </Button>
-        <Button variant='contained' color='secondary' sx={{borderRadius : '0', width : '50%'}}> REGISTER </Button>
+        <Button variant="contained" color="info" sx={{borderRadius : '0', width : '50%', float : 'left'}} onClick={() => handleRedirect("login")}> LOGIN </Button>
+        <Button variant='contained' color='secondary' sx={{borderRadius : '0', width : '50%'}} onClick={() => handleRedirect("register")}> REGISTER </Button>
       </ButtonHeader>
       <Button sx={{borderRadius : '0'}} variant="contained" fullWidth color="primary" onClick={handleOpen}>
          CONTACT US NOW

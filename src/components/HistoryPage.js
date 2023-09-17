@@ -57,7 +57,7 @@ export default function HistoryPage() {
                 <AccountFilter value={selectedAccounts} onChange={(e) => { setSelectedAccounts(e.target.value); filterTransactions(e.target.value, selectedType, amountRange, selectedCategories, dateRange) }} />
                 <TypeFilter value={selectedType} onChange={(e) => { setSelectedType(e.target.value); filterTransactions(selectedAccounts, e.target.value, amountRange, selectedCategories, dateRange) }} />
                 <CategoryFilter value={selectedCategories} disabled={false} onChange={(e) => { setSelectedCategories(e.target.value); filterTransactions(selectedAccounts, selectedType, amountRange, e.target.value, dateRange) }} />
-                <DateRangeFilter value={dateRange} onChange={(e) => { setDateRange(e); filterTransactions(selectedAccounts, selectedType, amountRange, selectedCategories, e) }} />
+                <DateRangeFilter disabled={true} value={dateRange} onChange={(e) => { setDateRange(e); filterTransactions(selectedAccounts, selectedType, amountRange, selectedCategories, e) }} />
                 <AmountRangeFilter value={amountRange} max={max} onChange={(e) => { setAmountRange(e.target.value); filterTransactions(selectedAccounts, selectedType, e.target.value, selectedCategories, dateRange) }} />
                 <StyledButton onClick={clearFilters}>Clear Filters</StyledButton>
 

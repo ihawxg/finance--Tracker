@@ -21,17 +21,7 @@ export default function AboutUsPage(){
                     </svg>
                 </div>
             </div>
-
-            {/* <div className={styles.someContent}>
-                <img className={styles.graphShow} src="./graph_show.png"/>
-                <span className={styles.salesText}>
-                    When you use Finance Tracker you get the best use of your time by checking everything in one place. 
-                    You get the most accurate graphs, charts and predictions about your future income.
-                    You can start achieving more by earning more with your current budget.
-                </span>
-                
-            </div> */}
-
+            
             <StyledPage>
 
             <InfoBox>
