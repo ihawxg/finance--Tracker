@@ -71,12 +71,12 @@ export default function ReportsPage() {
             </Account>
                
             </PieCharts>
-            <Account>
+            <Charts>
                 <LineChart data={transactions} />
-            </Account>
-            <Account>
+            </Charts>
+            <Charts>
                  <BarChart data={transactions} />
-            </Account>
+            </Charts>
            
 
         </StyledPage>
@@ -93,4 +93,8 @@ const PieCharts = styled.div`
 const FiltersRow = styled(Row)`
    flex-direction: column;
    align-items : center;
+`
+const Charts = styled(Account)`
+   max-width: 100%;
+   margin-top: -15px;
 `

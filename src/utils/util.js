@@ -20,7 +20,7 @@ export function getFormatedDate(date){
     return formattedDate;
 }
 export const getColor = (user, categoryName, type) => {
-    if(type === "Income"){
+    if(type == 'income' || type == 'Income'){
         return user.incomeCategories[user.incomeCategories.findIndex(inc => inc.name === categoryName)].color;
     }
     return user.expenseCategories[user.expenseCategories.findIndex(exp => exp.name === categoryName)].color;
