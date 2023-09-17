@@ -105,4 +105,5 @@ export const Heading = styled.h4`
     text-transform : uppercase;
     letter-spacing : 1px;
     margin-bottom: 20px;
+    font-weight: 600;
 `

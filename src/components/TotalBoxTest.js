@@ -54,7 +54,7 @@ export default function TotalBoxTest(props){
 
     return (
         <Container onClick={handleClick}>
-            <Label toggle={toggle}>{icon} {label} : {toCurrency(details)}</Label>
+            <Label toggle={toggle}>{icon} {label} : {details}&nbsp;{counter !== 3 && currency}</Label>
         </Container>
     );
 }
@@ -74,6 +74,7 @@ const Container = styled.div`
     align-items: center;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     position: relative;
+    cursor: pointer;
 `;
 
 const Label = styled.h2`
