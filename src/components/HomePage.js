@@ -1,17 +1,17 @@
-import React from "react";
 import AddButtons from "./AddButtons";
 import styled from 'styled-components';
 import styles from './styles/total_box.module.css';
-import TotalBox from "./TotalBox";
 import { useSelector } from "react-redux";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Pie } from 'react-chartjs-2';
-import Button from '@mui/material/Button';
-import LegendField from "./LegendField";
 import { getColor } from "../utils/util";
 import RecentHistoryTable from "./RecentHistoryTable";
 import TotalBoxTest from "./TotalBoxTest";
-
+import { StyledPage } from "./HistoryPage";
+import React from "react";
+import FormDialog from "./FormDialog";
+import AddAccountBTN from "./AddAccountBTN";
+import AddCategoryBTN from "./AddCategoryBTN";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -33,7 +33,7 @@ export default function Home() {
                     dataMap.set(inc.category, {...dataMap.get(inc.category), amount: dataMap.get(inc.category) + Number(inc.amount)});
                 }
                 else{
-                    dataMap.set(inc.category, {amount: Number(inc.amount), color: getColor(user, inc.category, "Income")});
+                    dataMap.set(inc.category, {amount: Number(inc.amount), color: getColor(user, inc.category, "income")});
                 }
             })
         })
@@ -46,7 +46,7 @@ export default function Home() {
                     dataMap.set(exp.category, {...dataMap.get(exp.category), amount: dataMap.get(exp.category) + Number(exp.amount)});
                 }
                 else{
-                    dataMap.set(exp.category, {amount: Number(exp.amount), color: getColor(user, exp.category, "Expense")});
+                    dataMap.set(exp.category, {amount: Number(exp.amount), color: getColor(user, exp.category, "expense")});
                 }
             })
         })
@@ -76,34 +76,35 @@ export default function Home() {
         }
     }
 
-    let br = 0;
-
     return (
-        <HomePage>
-            <TotalBoxTest/>
-            <div className={styles.pieContainer}>
-                <div className={styles.pie} onClick={handleClick}>
-                    <Pie data={metaData} options={options} />
-                </div>
-                <div className={styles.legendContainer}>
-                    {/* {
-                        colors.map(color => {
-                            return (<LegendField key={br} label={labels[br++]} color={color}/>);
-                        })
-                    }    */}
-                    <AddButtons/>
-                    {/* <Button className="w-200" onClick={handleClick} variant="contained" color={!toggle ? "success" : "error"}>{!toggle ? "Check Incomes" : "Check Expenses"}</Button> */}
-                </div>
-                
-            </div>
-            <RecentHistoryTable/>
-        </HomePage>
+        <StyledPage>
 
+            <div className={styles.homePageContainer}>
+                <div classnName={styles.sectionContainer}>
+                    <TotalBoxTest/>
+                </div>
+            
+                <div classnName={styles.sectionContainer}>
+                    <div className={styles.pie} onClick={handleClick}>
+                        <Pie data={metaData} options={options}/>
+                    </div>
+                </div>
+            
+                <div classnName={styles.sectionContainer}>
+                    <div className={styles.btnsContainer}>
+                        <FormDialog value="Expense" title="Add an expense"/>
+                        <FormDialog value="Income" title="Add an income" />
+                        <FormDialog value="Savings" title="Add to savings" />
+                        <AddAccountBTN />
+                        <AddCategoryBTN />
+                    </div>
+                </div>
+            
+                <div classnName={styles.sectionContainer}>
+                    <RecentHistoryTable/>
+                </div>
+            </div>
+            
+        </StyledPage>
     )
 }
-const HomePage = styled.div`
-    margin: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-`

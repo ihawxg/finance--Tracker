@@ -21,31 +21,31 @@ export default function RecentHistoryTable() {
 
     return (
         <>
-         <TableContainer component={Paper} sx={{ maxWidth: 500 }} >
-            <Table aria-label="simple table">
-                <TableHead>
-                <TableRow>
-                    <TableCell>Category</TableCell>
-                    <TableCell align="left">Amount ({currency})</TableCell>
-                    <TableCell align="left">Description</TableCell>
-                </TableRow>
-                </TableHead>
-                <TableBody>
-                {recentTransactions.map((trans) => (
-                    <TableRow
-                    key={trans.id}
-                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                    >
-                        <TableCell component="th" scope="row">
-                            {trans.category}
-                        </TableCell>
-                        <TableCell align="left" style={{color: trans.type === "income" ? "green" : "red"}}>{trans.type === "income" ? "+" : "-"}{trans.amount}</TableCell>
-                        <TableCell align="left">{trans.description}</TableCell>
-                    </TableRow>
-                ))}
-                </TableBody>
-            </Table>
-        </TableContainer>
+            <TableContainer component={Paper} sx={{ maxWidth: 500 }} >
+                <Table aria-label="simple table">
+                    <TableHead sx={{backgroundColor: "#9D50BB", backgroundColor: "-webkit-linear-gradient(to right, #6E48AA, #9D50BB)", backgroundColor: "linear-gradient(to right, #6E48AA, #9D50BB)", color: "#fff"}}>
+                        <TableRow>
+                            <TableCell>Category</TableCell>
+                            <TableCell align="left">Amount ({currency})</TableCell>
+                            <TableCell align="left">Description</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                    {recentTransactions.map((trans) => (
+                        <TableRow
+                        key={trans.id}
+                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                        >
+                            <TableCell component="th" scope="row">
+                                {trans.category}
+                            </TableCell>
+                            <TableCell align="left" style={{color: trans.type === "income" ? "green" : "red"}}>{trans.type === "income" ? "+" : "-"}{trans.amount}</TableCell>
+                            <TableCell align="left">{trans.description}</TableCell>
+                        </TableRow>
+                    ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
         </>
     );
 }

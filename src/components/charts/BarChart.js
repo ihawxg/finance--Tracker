@@ -39,8 +39,9 @@ export const BarChart = (props) => {
         case 9 : return "October";
         case 10 : return "November";
         case 11 : return "December";
-    }
-})
+    };
+});
+
 const data = {
   labels,
   datasets: [
