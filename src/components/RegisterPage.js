@@ -14,6 +14,7 @@ import { addDoc, collection } from "firebase/firestore";
 import { useDispatch } from 'react-redux';
 import { setSnackbar } from '../redux/actions/snackbarActions';
 import { basicIncomeCategories, basicExpenseCategories } from "../utils/consts";
+import SelectCurrency from "./SelectCurrency";
 
 export default function RegisterPage(){
     const dispatch = useDispatch();
@@ -35,7 +36,8 @@ export default function RegisterPage(){
         //init a new User with his coresponding data
         await addDoc(usersCollectionRef, {  firstName: userData.firstName,
                                             lastName: userData.lastName,
-                                            email: userData.email, 
+                                            email: userData.email,
+                                            currency: currency, 
                                             birthdate: JSON.stringify(new Date(userData.birthdate)).replaceAll('"', ''),
                                             categories: [],
                                             incomeCategories: basicIncomeCategories,
@@ -120,7 +122,7 @@ export default function RegisterPage(){
 
     const isFilled = () => {
         return (userData.firstName && userData.lastName && userData.email && userData.pass && userData.confirm && userData.birthdate && userData.startBudget && userData.startBudget !== "0");
-    }
+    };
 
     return (
         <div className={styles.formContainer}>
@@ -138,7 +140,7 @@ export default function RegisterPage(){
                     <div className={styles.dateCurrencyContainer}>
                         <DatePick disabled={true} name="birthDate" label="Birthdate" handleDateChange={setUserData}/>
                         <TextField className={styles.startBudget} name="startBudget" id="budget" label="Start Budget" variant="outlined" onInput={e => handleInput(e)} />
-                        <TextField className={styles.currency} disabled id="currency" label="Currency" value={currency} variant="filled" />
+                        <SelectCurrency handleChange={setCurrency}/>
                     </div>
                     
                     <Button variant="contained" disabled={!isFilled()} onClick={handleClick}>Sign up</Button>

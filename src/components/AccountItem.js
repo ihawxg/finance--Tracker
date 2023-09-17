@@ -2,13 +2,16 @@ import React from 'react';
 import { toCurrency } from '../utils/util' 
 import styled from 'styled-components';
 import { LineChart} from './charts/LineChart';
+import { useSelector } from 'react-redux';
 
 export const AccountItem = ({  name, total, transactions }) => {
+    const currency = useSelector(state => state.userData.user.currency);
+
     return (
         <Account>
             <AccountName>
                 { name } 
-                <span className='fs-6 ms-1'> / { toCurrency(total) } </span> 
+                <span className='fs-6 ms-1'> / { toCurrency(total, currency) } </span> 
             </AccountName>
             <LineChart data={transactions}/>
         </Account>
@@ -27,17 +30,12 @@ const AccountName = styled.div`
     color : #fff;
     margin-top: 20px;
 `
-export const Account = styled.div`
+const Account = styled.div`
     max-width: 768px;
     margin: 30px auto;
-    padding: 30px;
+    padding: 0 20px 20px 20px;
     border : 1px solid rgba(68, 18, 96, .1);
     border-radius: 20px;
     box-shadow: 2px 3px 10px rgba(68, 18, 96, .2);
 
-    background: #D3CCE3;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #E9E4F0, #D3CCE3);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #E9E4F0, #D3CCE3); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-   
-   
 `

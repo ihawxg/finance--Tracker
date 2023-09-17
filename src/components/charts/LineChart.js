@@ -39,7 +39,7 @@ export const LineChart = (props) => {
     const months = sortedTransactions.map(item => (new Date(item.date)).getMonth())
     const labels = months.map(item => {
         switch (item) {
-            case 0: return "January";
+            case 0: return "January";//start from total at the date
             case 1: return "February";
             case 2: return "March";
             case 3: return "April";
@@ -55,9 +55,12 @@ export const LineChart = (props) => {
     });
    
     const timeline = sortedTransactions.map(item => {
-        if(item.type === "income")
-        return Number(item.amount)
-            else return item.amount*(-1);
+        if(item.type === "income"){
+            return Number(item.amount);
+        }
+        else {
+            return item.amount*(-1);
+        }
     })
 
    let result = []
@@ -75,7 +78,7 @@ export const LineChart = (props) => {
                 label: 'Balance',
                 data: result,
                 borderColor: 'rgb(255, 99, 132)',
-                backgroundColor: 'rgba(255, 99, 132, 0.8)',
+                backgroundColor: 'rgba(255, 99, 132, 0.6)',
             },
         ],
     };

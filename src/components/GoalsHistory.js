@@ -13,27 +13,7 @@ import SavingsIcon from '@mui/icons-material/Savings';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import { toCurrency } from '../utils/util';
 import styles from "./styles/goal.module.css";
-
-const columns = [
-
-    {
-        id: 'description',
-        label: 'Description',
-        minWidth: 170,
-        align: 'right',
-        icon: <FeedIcon />
-    },
-    {
-        id: 'amount',
-        label: 'Reached / Goal',
-        minWidth: 200,
-        align: 'right',
-        format: (value) => toCurrency(value),
-        icon: <SavingsIcon />
-    },
-    { id: 'date', label: 'Completed on', minWidth: 170, icon: <DateRangeIcon /> },
-    { id: 'time', label: 'Time', minWidth: 100, align: 'left', icon: <AccessTimeIcon /> }
-];
+import { useSelector } from 'react-redux';
 
 function createData(date, time, description, amount) {
 
@@ -41,6 +21,28 @@ function createData(date, time, description, amount) {
 }
 
 export default function DataTable(props) {
+    const currency = useSelector(state => state.userData.user.currency);
+
+    const columns = [
+        {
+            id: 'description',
+            label: 'Description',
+            minWidth: 170,
+            align: 'right',
+            icon: <FeedIcon />
+        },
+        {
+            id: 'amount',
+            label: 'Reached / Goal',
+            minWidth: 200,
+            align: 'right',
+            format: (value) => toCurrency(value, currency),
+            icon: <SavingsIcon />
+        },
+        { id: 'date', label: 'Completed on', minWidth: 170, icon: <DateRangeIcon /> },
+        { id: 'time', label: 'Time', minWidth: 100, align: 'left', icon: <AccessTimeIcon /> }
+    ];
+
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
     const rows = props.data.map(item => createData(formatDate(item.date), formatTime(item.date), item.name, item.amount + "/" + item.goal));

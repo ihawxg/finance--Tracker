@@ -20,16 +20,16 @@ export function getFormatedDate(date){
     return formattedDate;
 }
 export const getColor = (user, categoryName, type) => {
-    if(type == 'income' || type == 'Income'){
+    if(type === "Income"){
         return user.incomeCategories[user.incomeCategories.findIndex(inc => inc.name === categoryName)].color;
     }
     return user.expenseCategories[user.expenseCategories.findIndex(exp => exp.name === categoryName)].color;
 }
 
-export const toCurrency = (num) => {
+export const toCurrency = (num, currency) => {
     return Number(num).toLocaleString('en-US', {
         style: 'currency',
-        currency: 'BGN',
+        currency
       })
 }
 export const getProgressBarVariant = (amount, max) => {

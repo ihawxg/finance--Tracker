@@ -24,6 +24,7 @@ const INITIAL_STATE = {
     logged: false,
     user: {
         email: "guest@guest.com",
+        currency: "BGN",
         categories : [],
         transactions: [],
         accounts: [
@@ -63,6 +64,7 @@ export const userReducer = (state = INITIAL_STATE, action) => {
                 user: {
                     email: "guest@guest.com",
                     categories : [],
+                    currency: "BGN",
                     accounts: [
                         {
                             name: "main",

@@ -3,8 +3,11 @@ import { toCurrency, getBudgetProgress } from "../utils/util";
 import { Card, ProgressBar, Stack } from 'react-bootstrap';
 import Button from '@mui/material/Button';
 import FormDialog from "./FormDialog";
+import { useSelector } from 'react-redux';
 
 export default function BudgetItem({ name, amount, max, onClick, gray, dateFrom, dateTo }) {
+
+    const currency = useSelector(state => state.userData.user.currency);
 
     const classNames = []
     if(amount > max) {
@@ -40,8 +43,8 @@ export default function BudgetItem({ name, amount, max, onClick, gray, dateFrom,
                     <div className='me-2'>{name}</div>
                     <div className='text-muted fs-6'>{getDateString(dateFrom)} - {getDateString(dateTo)}</div>
                     <div className='d-flex align-items-baseline'>
-                        {toCurrency(amount)} 
-                        <span className='text-muted fs-6 ms-1'>/ {toCurrency(max)}</span>
+                        {toCurrency(amount, currency)} 
+                        <span className='text-muted fs-6 ms-1'>/ {toCurrency(max, currency)}</span>
                     </div>
                 </Card.Title>
                 <ProgressBar 

@@ -13,7 +13,7 @@ export default function TotalBoxTest(props){
     const user = useSelector(state => state.userData.user);
     let icon = <BsWallet2 />;
     let label;
-    const currency = "BGN";
+    const currency = useSelector(state => state.userData.user.currency);
 
     switch(counter){
         case 0: 

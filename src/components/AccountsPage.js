@@ -14,7 +14,7 @@ export default function AccountsPage(){
         <StyledPage>
             <Heading> Accounts</Heading>
             <StyledButton>
-                <AddAccountBTN />
+                <AddAccountBTN isInHome={false} />
             </StyledButton>
             
            

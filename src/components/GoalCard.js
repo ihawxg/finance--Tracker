@@ -13,15 +13,17 @@ export default function GoalCard(props) {
         dispatch(removeGoal(user, props.goal.name));
     }
 
+    const currency = useSelector(state => state.userData.user.currency);
+
     return (
 
-        <Card className="bg-light mb-3">
+        <Card className="bg-light">
             <Card.Body>
                 <Card.Title className='d-flex justify-content-between align-items-baseline fw-normal mb-3'>
                     <div className='me-2'>{props.goal.name}</div>
                     <div className='d-flex align-items-baseline'>
-                        {toCurrency(props.goal.amount)}
-                        <span className='text-muted fs-6 ms-1'>/ {toCurrency(props.goal.goal)}</span>
+                        {toCurrency(props.goal.amount, currency)}
+                        <span className='text-muted fs-6 ms-1'>/ {toCurrency(props.goal.goal, currency)}</span>
                     </div>
                 </Card.Title>
                 <ProgressBar

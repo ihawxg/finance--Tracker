@@ -16,40 +16,44 @@ import FeedIcon from '@mui/icons-material/Feed';
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import { toCurrency, formatTime, formatDate } from '../utils/util';
-const columns = [
-    { id: 'date', label: 'Date', minWidth: 100, icon: <DateRangeIcon /> },
-    { id: 'time', label: 'Time', minWidth: 100, icon: <AccessTimeIcon /> },
-    { id: 'type', label: 'Type', minWidth: 100, icon: <ShowChartIcon /> },
-    { id: 'account', label: 'Account', minWidth: 130, icon: <AccountBalanceWalletIcon /> },
-    {
-        id: 'category',
-        label: 'Category',
-        minWidth: 140,
-        align: 'right',
-        icon: <CategoryIcon />
-    },
-    {
-        id: 'description',
-        label: 'Description',
-        minWidth: 170,
-        align: 'right',
-        icon: <FeedIcon />
-    },
-    {
-        id: 'amount',
-        label: 'Amount',
-        minWidth: 120,
-        align: 'right',
-        format: (value) => toCurrency(value),
-        icon: <ReceiptLongIcon />
-    },
-];
+import { useSelector } from 'react-redux';
 
 function createData(date, time, type, account, category, description, amount) {
     return { date, time, type, account, category, description, amount };
 }
 
 export default function DataTable(props) {
+    const currency = useSelector(state => state.userData.user.currency);
+
+    const columns = [
+        { id: 'date', label: 'Date', minWidth: 100, icon: <DateRangeIcon /> },
+        { id: 'time', label: 'Time', minWidth: 100, icon: <AccessTimeIcon /> },
+        { id: 'type', label: 'Type', minWidth: 100, icon: <ShowChartIcon /> },
+        { id: 'account', label: 'Account', minWidth: 130, icon: <AccountBalanceWalletIcon /> },
+        {
+            id: 'category',
+            label: 'Category',
+            minWidth: 140,
+            align: 'right',
+            icon: <CategoryIcon />
+        },
+        {
+            id: 'description',
+            label: 'Description',
+            minWidth: 170,
+            align: 'right',
+            icon: <FeedIcon />
+        },
+        {
+            id: 'amount',
+            label: 'Amount',
+            minWidth: 120,
+            align: 'right',
+            format: (value) => toCurrency(value, currency),
+            icon: <ReceiptLongIcon />
+        },
+    ];
+
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
     const rows = props.data.map(item => createData(formatDate(item.date), formatTime(item.date), item.type, item.account, item.category, item.description, Number(item.amount)))
