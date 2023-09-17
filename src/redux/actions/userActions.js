@@ -8,6 +8,7 @@ export const LOGOUT = "LOGOUT";
 export const ADD_INCOME = "ADD_INCOME";
 export const ADD_EXPENSE = "ADD_EXPENSE";
 export const ADD_GOAL = "ADD_GOAL";
+export const ADD_TO_GOAL = "ADD_TO_GOAL";
 export const CLEAR_GOALS = "CLEAR_GOALS";
 export const UPDATE_BUDGET = "UPDATE_BUDGET";
 export const ADD_CATEGORY = "ADD_CATEGORY";
@@ -24,7 +25,7 @@ export const EDIT_EXPENSE = "EDIT_EXPENSE";
 export const UPDATE_USER_INFO = "UPDATE_USER_INFO";
 export const EDIT_EXPENSE_CATEGORY_COLOR = "EDIT_EXPENSE_CATEGORY_COLOR";
 export const EDIT_INCOME_CATEGORY_COLOR = "EDIT_INCOME_CATEGORY_COLOR";
-
+export const REMOVE_GOAL = "REMOVE_GOAL";
 
 export const updateUserInfoAction = (id, details) => {
     return async function(dispatch) {
@@ -78,6 +79,98 @@ export const addCategoryExpenseAction = (category) => {
     return {
         type : ADD_CATEGORY_EXPENSE,
         payload : category
+    }
+}
+
+export const addGoal = (user, goalName, goalAmount) => {
+    return async function(dispatch) {
+        const userRef = doc(db, "users", user.id);
+        
+        let newField = [...user.goals, {name: goalName, deposits: [], amount: 0, goal: goalAmount, status: "ongoing" }];
+
+        await updateDoc(userRef, {goals: newField});
+        dispatch({type: ADD_GOAL, payload: newField});
+    }
+}
+
+export const addToGoal = (user, goalName, amount, accountName) => {
+    return async function(dispatch) {
+        const userRef = doc(db, "users", user.id);
+
+        let newField = user.goals;
+        const ind = newField.findIndex(goal => goal.name === goalName && goal.status === "ongoing");
+
+        if(Number(newField[ind].amount) + Number(amount) >= Number(newField[ind].goal)) {
+            const neededAmount = Number(newField[ind].goal) - Number(newField[ind].amount);
+            if(Number(user.accounts.find(acc => acc.name === accountName).total) < neededAmount){
+                dispatch(setSnackbar(true, "error", `You do not have such amount in ${accountName}`));
+                return;
+            }
+
+            dispatch(addExpense(user, {
+                amount: neededAmount.toString(),
+                descr: `Deposit in ${goalName} goal`, 
+                category: "Goal",
+                date: JSON.stringify(new Date()).replaceAll('"', ''),
+                account: accountName}
+                )
+            );
+
+            dispatch(setSnackbar(true, "success", `You have achieved your ${goalName} goal. Congratulations!`));
+            newField[ind].amount = newField[ind].goal;
+            newField[ind].status = "completed";
+            newField[ind] = {...newField[ind], date: JSON.stringify(new Date()).replaceAll('"', ''), deposits: [...newField[ind].deposits, {
+                amount: neededAmount.toString(),
+                date: JSON.stringify(new Date()).replaceAll('"', ''),
+                account: accountName}
+            ]};
+        }
+        else{
+            if(Number(user.accounts.find(acc => acc.name === accountName).total) < Number(amount)){
+                dispatch(setSnackbar(true, "error", `You do not have such amount in ${accountName}`));
+                return;
+            }
+            dispatch(addExpense(user, {
+                amount,
+                descr: `Deposit in ${goalName} goal`, 
+                category: "Goal",
+                date: JSON.stringify(new Date()).replaceAll('"', ''),
+                account: accountName}
+                )
+            );
+
+            newField[ind] = {...newField[ind], amount: Number(newField[ind].amount) + Number(amount), deposits: [...newField[ind].deposits, {
+                amount,
+                date: JSON.stringify(new Date()).replaceAll('"', ''),
+                account: accountName}
+            ]};
+        }
+
+        await updateDoc(userRef, {goals: newField});
+        dispatch({type: ADD_TO_GOAL, payload: newField});
+    }
+}
+
+export const removeGoal = (user, goalName) => {
+    return async function(dispatch) {
+        const userRef = doc(db, "users", user.id);
+
+        let newField = user.goals;
+        const ind = newField.findIndex(goal => goal.name === goalName && goal.status === "ongoing");
+        newField[ind] = {...newField[ind], status: "aborted", date: JSON.stringify(new Date()).replaceAll('"', '')};
+        newField[ind].deposits.forEach(dep => {
+            dispatch(addIncome(user, {
+                    amount: dep.amount,
+                    descr: `Reverse deposit from aborting "${goalName}" goal`, 
+                    category: "Reverse deposit",
+                    date: JSON.stringify(new Date()).replaceAll('"', ''),
+                    account: dep.account
+                }
+            ));
+        });
+
+        await updateDoc(userRef, {goals: newField});
+        dispatch({type: REMOVE_GOAL, payload: newField});
     }
 }
 
@@ -487,7 +580,7 @@ const isWithinDate = (date, from, to) => {
     const timeFrom = new Date(from).getTime();
     const timeDate = new Date(date).getTime();
     const timeTo = new Date(to).getTime();
-    console.log(timeFrom, timeDate, timeTo);
+
     return (timeFrom < timeDate && timeDate < timeTo);
 }
 

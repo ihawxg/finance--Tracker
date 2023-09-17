@@ -15,7 +15,9 @@ import { ADD_EXPENSE,
     EDIT_ACCOUNT,
     UPDATE_USER_INFO,
     EDIT_INCOME_CATEGORY_COLOR,
-    EDIT_EXPENSE_CATEGORY_COLOR
+    EDIT_EXPENSE_CATEGORY_COLOR,
+    ADD_TO_GOAL,
+    REMOVE_GOAL
 } from '../actions/userActions';
 
 const INITIAL_STATE = {
@@ -29,11 +31,11 @@ const INITIAL_STATE = {
                 name: "main",
                 expenses: [],
                 incomes: [],
-                goals: []
             },
 
         ],
         budgets: [],
+        goals: [],
         incomeCategories: basicIncomeCategories,
         expenseCategories: basicExpenseCategories,
         birthdate: "2021-12-16T14:00:51.813Z",
@@ -66,7 +68,6 @@ export const userReducer = (state = INITIAL_STATE, action) => {
                             name: "main",
                             expenses: [],
                             incomes: [],
-                            goals: []
                         },
             
                     ],
@@ -76,7 +77,9 @@ export const userReducer = (state = INITIAL_STATE, action) => {
                     expenseCategories: basicExpenseCategories,
                     birthdate: "2021-12-16T14:00:51.813Z",
                     firstName: "Guest",
-                    lastName: "Guest",}
+                    lastName: "Guest",
+                    goals: []
+                }
             }
         case ADD_INCOME :
             return {
@@ -111,9 +114,27 @@ export const userReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 user : {
                     ...state.user,
-                    goals : [...state.user.goals, action.payload]
+                    goals : action.payload
                 }
             }
+        case ADD_TO_GOAL : 
+            return {
+                ...state,
+                user : {
+                    ...state.user,
+                    goals : action.payload
+                }
+            }
+
+        case REMOVE_GOAL : 
+            return {
+                ...state,
+                user : {
+                    ...state.user,
+                    goals : action.payload
+                }
+            }   
+
         case ADD_CATEGORY_INCOME:
             return {
                 ...state,

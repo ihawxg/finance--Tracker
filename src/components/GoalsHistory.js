@@ -26,13 +26,13 @@ const columns = [
     },
     {
         id: 'amount',
-        label: 'Amount',
-        minWidth: 140,
+        label: 'Reached / Goal',
+        minWidth: 200,
         align: 'right',
         format: (value) => toCurrency(value),
         icon: <SavingsIcon />
     },
-    { id: 'date', label: 'Completed on', minWidth: 170, icon: <DateRangeIcon /> }
+    { id: 'date', label: 'Finished on', minWidth: 170, icon: <DateRangeIcon /> }
 ];
 
 function createData(date, description, amount) {
@@ -42,13 +42,13 @@ function createData(date, description, amount) {
 export default function DataTable(props) {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
-    const rows = props.data.map(item => createData(getDateAndTime(item.date), item.description, Number(item.amount) ))
+    const rows = props.data.map(item => createData(getDateAndTime(item.date), item.name, item.amount + ' / ' + item.goal));
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
     };
 
     const handleChangeRowsPerPage = (event) => {
-        setRowsPerPage(+event.target.value);
+        setRowsPerPage(event.target.value);
         setPage(0);
     };
 
@@ -120,9 +120,9 @@ const CustomRow = styled(TableRow)`
     border: 1px solid rgba(255,255,255, 0.5);
 `
 const CustomTableContainer = styled(TableContainer)` 
-    background: #9D50BB;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #6E48AA, #9D50BB);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #6E48AA, #9D50BB); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: #9D50BB;
+    background: -webkit-linear-gradient(to right, #6E48AA, #9D50BB); 
+    background: linear-gradient(to right, #6E48AA, #9D50BB);
     color : #fff;
 
 `

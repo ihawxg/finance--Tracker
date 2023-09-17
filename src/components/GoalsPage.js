@@ -5,18 +5,20 @@ import GoalHistory from "./GoalsHistory";
 import BudgetCard from "./BudgetCard";
 import AddGoalButton from './AddGoalButton';
 import { StyledButton } from "./BudgetsPage";
+import { useSelector } from 'react-redux';
 export default function GoalsPage() {
-    let goals = [{date : "2021-12-01T14:07:28.000Z", description : "Ibanez RG320", amount : '1200'} , {date : "2021-11-01T14:20:48.000Z", description : 'Kindle Paperwhite', amount : '300'}, {date : "2022-02-09T17:13:53.000Z", description : "Plumbus", amount : "249"}];
+
+    const user = useSelector(state => state.userData.user);
 
     return (
         <StyledPage>
             <StyledButton>
                 <AddGoalButton title="Add New Goal" />
             </StyledButton>
-            <BudgetCard />
+            {user.goals.filter(goal => goal.status === "ongoing").map(goal => <BudgetCard goal={goal}/>)}    
         <CustomPaper elevation={2} >
             <HistoryHeader>Goals history</HistoryHeader>
-            <GoalHistory data={goals} />
+            <GoalHistory data={user.goals.filter(goal => goal.status === "completed" || goal.status === "aborted")} />
         </CustomPaper>
         </StyledPage>
     )
@@ -27,7 +29,7 @@ const HistoryHeader = styled(Heading)`
 `
 const CustomPaper = styled(Paper)`
     margin: 20px;
-    background: #A1FFCE;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #FAFFD1, #A1FFCE);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #FAFFD1, #A1FFCE); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: #A1FFCE;
+    background: -webkit-linear-gradient(to right, #FAFFD1, #A1FFCE);
+    background: linear-gradient(to right, #FAFFD1, #A1FFCE);
 `

@@ -5,9 +5,14 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
+import { useDispatch, useSelector } from 'react-redux';
+import { addGoal } from '../redux/actions/userActions';
 
 export default function AddGoalButton(props) {
   const [open, setOpen] = React.useState(false);
+  const user = useSelector(state => state.userData.user);
+
+  const dispatch = useDispatch();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -18,9 +23,7 @@ export default function AddGoalButton(props) {
   };
 
   function handleAdd(){
-    props.setGoal({min: 0, max: amountVal, amount: 0, name: nameVal});
-    props.setHasGoal(prev => !prev);
-    console.log({min: 0, max: amountVal, amount: 0, name: nameVal});
+    dispatch(addGoal(user, nameVal, amountVal));
     setOpen(false);
   }
 

@@ -11,11 +11,6 @@ export default function ProfilePage(){
     return (
         <div className={styles.userContainer}>
             <UserInfo />
-            <BudgetCard />
-            <CustomPaper elevation={2} className={styles.goalContainer}>
-                <HistoryHeader>Goals history</HistoryHeader>
-                <GoalHistory data={goals} />
-            </CustomPaper>
         </div>
     );
 }

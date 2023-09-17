@@ -6,7 +6,8 @@ export const basicExpenseCategories = [
     {name: "Insurance", color: "#eb3434"},
     {name: "Health", color: "#4a0d39"},
     {name: "Transportation", color: "#404a0d"},
-    {name: "Knowledge", color: "#6534eb"}
+    {name: "Knowledge", color: "#6534eb"},
+    {name: "Goal", color: "#32a852"}
 ];
 
 export const basicIncomeCategories = [
@@ -17,5 +18,6 @@ export const basicIncomeCategories = [
     {name: "Investment", color: "#eb3434"},
     {name: "Allowance", color: "#4a0d39"},
     {name: "Crypto", color: "#404a0d"},
-    {name: "Initial Deposit", color: "#424bf5"}
+    {name: "Initial Deposit", color: "#424bf5"},
+    {name: "Reverse deposit", color: "#719c0c"}
 ];

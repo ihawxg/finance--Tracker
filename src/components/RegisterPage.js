@@ -33,7 +33,7 @@ export default function RegisterPage(){
     const createUser = async () => {
         const date = JSON.stringify(new Date()).replaceAll('"', '');
         //init a new User with his coresponding data
-        await addDoc(usersCollectionRef, { firstName: userData.firstName,
+        await addDoc(usersCollectionRef, {  firstName: userData.firstName,
                                             lastName: userData.lastName,
                                             email: userData.email, 
                                             birthdate: JSON.stringify(new Date(userData.birthdate)).replaceAll('"', ''),
@@ -44,12 +44,12 @@ export default function RegisterPage(){
                                                         name: "main",
                                                         incomes: [{category: "Initial Deposit", date: date, description: "Initial App Deposit", amount: userData.startBudget, id: 1}],
                                                         expenses: [],
-                                                        goals: [],
                                                         total: userData.startBudget
                                                 }],
                                             budgets: [],
-                                            transactions: [{category: "Initial Deposit", date: date, description: "Initial App Deposit", amount: userData.startBudget, id: 1, type: "income", account: "main"}]
-                                            });
+                                            transactions: [{category: "Initial Deposit", date: date, description: "Initial App Deposit", amount: userData.startBudget, id: 1, type: "income", account: "main"}],
+                                            goals: []
+                                        });
     };
 
     const handleInput = e => {
@@ -136,7 +136,7 @@ export default function RegisterPage(){
                         <TextField fullWidth name="confirm" id="pass-rep" label="Repeat Password" type="password" value={userData.confirm} autoComplete="current-password" onInput={e => handleInput(e)}/>
                     </form>
                     <div className={styles.dateCurrencyContainer}>
-                        <DatePick disabled={true} name="birthDate" label="Birthdate" handleDateChange={setUserData}/>
+                        <DatePick name="birthDate" label="Birthdate" handleDateChange={setUserData}/>
                         <TextField className={styles.startBudget} name="startBudget" id="budget" label="Start Budget" variant="outlined" onInput={e => handleInput(e)} />
                         <TextField className={styles.currency} disabled id="currency" label="Currency" value={currency} variant="filled" />
                     </div>

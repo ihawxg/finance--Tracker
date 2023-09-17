@@ -11,7 +11,7 @@ import { StyledEngineProvider } from '@mui/material/styles';
 import CategoryPicker from "./CategoryPicker";
 import styled from 'styled-components';
 import { useState} from 'react';
-import { addGoalAction, addBudget, addIncome, addExpense, editExpense, editIncome, editBudget } from '../redux/actions/userActions';
+import { addGoalAction, addBudget, addIncome, addExpense, editExpense, editIncome, editBudget, addToGoal } from '../redux/actions/userActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSnackbar } from '../redux/actions/snackbarActions';
 import styles from "./styles/progress_card.module.css";
@@ -48,7 +48,7 @@ export default function FormDialog(props) {
   };
 
   const handleAdd = (value) => {
-    dispatch(setSnackbar(true, "success", "Transaction added!"));
+    // dispatch(setSnackbar(true, "success", "Transaction added!"));
 
     const detail = {
       amount,
@@ -64,7 +64,7 @@ export default function FormDialog(props) {
           break;
 
         case "Savings": 
-          dispatch(addGoalAction(user, {...detail, date: JSON.stringify(selectedDate).replaceAll('"', '')}))
+          dispatch(addToGoal(user, props.goal.name, amount, account));
           break;
 
         case "Income" : 
@@ -188,9 +188,9 @@ export default function FormDialog(props) {
              
               {props.value === "Budget" ? (
                 <DateRangeFilter disabled={false} value={dateRange} onChange={e => setDateRange(e)} />
-              ) : ( <BasicDatePicker label="Choose date" value={selectedDate} selected={selectedDate} onChange={date => setSelectedDate(date)} />)}
+              ) : (props.value !== "Savings" && <BasicDatePicker label="Choose date" value={selectedDate} selected={selectedDate} onChange={date => setSelectedDate(date)} />)}
               {props.value !== "Budget" && <CategoryPicker name="account" value={account} onChange={e => setAccount(e.target.value)} required/>}
-              <CategoryPicker type={props.value} name="category" value={category} list={account} disabled={!((account && props.value !== "Budget") || props.value === "Budget")} onChange={e => setCategory(e.target.value)} />
+              {props.value !== "Savings" && <CategoryPicker type={props.value} name="category" value={category} list={account} disabled={!((account && props.value !== "Budget") || props.value === "Budget")} onChange={e => setCategory(e.target.value)} />}
             </StyledEngineProvider>
           </Pickers>
           
@@ -198,7 +198,7 @@ export default function FormDialog(props) {
         <DialogActions>
           <Button fullWidth={true} onClick={handleClose}>Cancel</Button>
           <Button fullWidth={true} variant="contained" 
-            disabled={!(((amount && category && account && descr && (selectedDate || (fromDate && toDate))) || ((amount && category && props.value === "Budget")))) } 
+            disabled={!(((amount && category && account && descr && (selectedDate || (fromDate && toDate))) || ((amount && category && props.value === "Budget")) || ((amount && account && props.value === "Savings")) ))} 
             onClick={ props.operation === "edit" ? () => handleEdit(props.value) : () => handleAdd(props.value) }> {props.operation === "edit" ? "Edit" : "Add"} {props.value}
           </Button>
         </DialogActions>
