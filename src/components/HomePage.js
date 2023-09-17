@@ -94,7 +94,6 @@ export default function Home() {
                     <div className={styles.btnsContainer}>
                         <FormDialog value="Expense" title="Add an expense"/>
                         <FormDialog value="Income" title="Add an income" />
-                        <FormDialog value="Savings" title="Add to savings" />
                         <AddAccountBTN isInHome={true}/>
                         <AddCategoryBTN isInHome={true}/>
                     </div>

@@ -150,8 +150,8 @@ export default function FormDialog(props) {
     <div>
       <Button 
           className={styles.btn} 
-          variant={props.value === "Budget" && props.operation !== "edit"  ? "contained" : "outlined"}
-          color={props.value == "Budget" ? "success" : "primary"}
+          variant="contained"
+          color={props.value == "Budget" ? "success" : "secondary"}
           onClick={handleClickOpen}>
         {props.operation === "edit" ? "Edit" : "Add"} {props.value}
       </Button>
@@ -197,7 +197,7 @@ export default function FormDialog(props) {
         </DialogContent>
         <DialogActions>
           <Button fullWidth={true} onClick={handleClose}>Cancel</Button>
-          <Button fullWidth={true} variant="contained" 
+          <Button fullWidth={true} variant="contained"
             disabled={!(((amount && category && account && descr && (selectedDate || (fromDate && toDate))) || ((amount && category && props.value === "Budget")) || ((amount && account && props.value === "Savings")) ))} 
             onClick={ props.operation === "edit" ? () => handleEdit(props.value) : () => handleAdd(props.value) }> {props.operation === "edit" ? "Edit" : "Add"} {props.value}
           </Button>

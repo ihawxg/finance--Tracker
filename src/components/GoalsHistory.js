@@ -1,8 +1,6 @@
 import * as React from 'react';
 import Paper from '@mui/material/Paper';
-import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
@@ -14,6 +12,7 @@ import FeedIcon from '@mui/icons-material/Feed';
 import SavingsIcon from '@mui/icons-material/Savings';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import { toCurrency } from '../utils/util';
+import styles from "./styles/goal.module.css";
 
 const columns = [
 
@@ -55,7 +54,7 @@ export default function DataTable(props) {
     };
 
     return (
-        <Paper sx={{ width: '100%', overflow: 'hidden'}}>
+        <Paper sx={{ width: '100%', overflow: 'hidden', margin: "0"}}>
             <CustomTableContainer sx={{ maxHeight: 440 }}>
                 <CustomTable stickyHeader aria-label="sticky table">
                     <TableHead sx={{ backgroundColor: 'rgb(68, 18, 96)' }}>
