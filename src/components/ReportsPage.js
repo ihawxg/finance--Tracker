@@ -55,7 +55,8 @@ export default function ReportsPage() {
                     </FiltersRow>
 
             </StyledFilters>
-            
+      {transactions.length ? (
+        <>    
             <PieCharts>
                 <Account>
                 <Column>    
@@ -77,8 +78,8 @@ export default function ReportsPage() {
             <Charts>
                  <BarChart data={transactions} />
             </Charts>
-           
-
+        </>  
+      ) : null }
         </StyledPage>
     );
 }

@@ -25,9 +25,11 @@ function App() {
   const log = () => {
     if(sessionStorage.getItem("currentUser")){
       dispatch(loginAction(sessionStorage.getItem("currentUser")));
+      navigate("/home");
     }
     else if(localStorage.getItem("currentUser")){
       dispatch(loginAction(localStorage.getItem("currentUser")));
+      navigate("/home");
     }
     else{
       navigate("/about");

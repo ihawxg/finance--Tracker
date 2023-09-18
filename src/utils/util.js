@@ -26,7 +26,7 @@ export const getColor = (user, categoryName, type) => {
     return user.expenseCategories[user.expenseCategories.findIndex(exp => exp.name === categoryName)].color;
 }
 
-export const toCurrency = (num, currency) => {
+export const toCurrency = (num, currency = "BGN") => {
     return Number(num).toLocaleString('en-US', {
         style: 'currency',
         currency
