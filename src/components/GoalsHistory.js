@@ -13,8 +13,7 @@ import SavingsIcon from '@mui/icons-material/Savings';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import { toCurrency } from '../utils/util';
 import styles from "./styles/goal.module.css";
-import { useSelector } from 'react-redux';
-
+import { useSelector } from "react-redux";
 function createData(date, time, description, amount) {
 
     return { description, amount, date, time };
