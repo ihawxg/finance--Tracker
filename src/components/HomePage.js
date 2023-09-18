@@ -1,5 +1,4 @@
 import React from "react";
-import AddButtons from "./AddButtons";
 import AddCategoryBTN from './AddCategoryBTN';
 import AddGoalButton from './AddGoalButton';
 import AddAccountBTN from './AddAccountBTN'
@@ -8,8 +7,6 @@ import styles from './styles/total_box.module.css';
 import { useSelector } from "react-redux";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Pie } from 'react-chartjs-2';
-import Button from '@mui/material/Button';
-import LegendField from "./LegendField";
 import { getColor } from "../utils/util";
 import RecentHistoryTable from "./RecentHistoryTable";
 import TotalBoxTest from "./TotalBoxTest";
@@ -35,7 +32,7 @@ export default function Home() {
         user.accounts.forEach(acc => {
             acc.incomes.forEach(inc => {
                 if (dataMap.has(inc.category)) {
-                    dataMap.set(inc.category, { ...dataMap.get(inc.category), amount: dataMap.get(inc.category) + Number(inc.amount) });
+                    dataMap.set(inc.category, { ...dataMap.get(inc.category), amount: dataMap.get(inc.category).amount + Number(inc.amount) });
                 }
                 else {
                     dataMap.set(inc.category, { amount: Number(inc.amount), color: getColor(user, inc.category, "income") });
@@ -48,7 +45,7 @@ export default function Home() {
         user.accounts.forEach(acc => {
             acc.expenses.forEach(exp => {
                 if (dataMap.has(exp.category)) {
-                    dataMap.set(exp.category, { ...dataMap.get(exp.category), amount: dataMap.get(exp.category) + Number(exp.amount) });
+                    dataMap.set(exp.category, { ...dataMap.get(exp.category), amount: dataMap.get(exp.category).amount + Number(exp.amount) });
                 }
                 else {
                     dataMap.set(exp.category, { amount: Number(exp.amount), color: getColor(user, exp.category, "expense") });
@@ -76,7 +73,7 @@ export default function Home() {
             },
         }
     }
-    let br = 0;
+
     return (
         <StyledPage>
             <Heading>Welcome, {user.firstName}</Heading>
@@ -94,14 +91,8 @@ export default function Home() {
                             <Pie data={metaData} options={options} />
                         </ChartWrapper>
                     </Widget>
-                        {/* <Widget>
-                        {colors.map(color => {
-                                return (<LegendField key={br} label={labels[br++]} color={color}/>);
-                            })}
-                        </Widget> */}
                     <ButtonsWrapper>
 
-                       
                         <AddAccountBTN isInHome={true} />
                         <AddCategoryBTN isInHome={true} />
                         <AddGoalButton sx={{ backgroundColor: 'purple' }} title="Add Goal" />
@@ -145,8 +136,7 @@ const ButtonsWrapper = styled.div`
     gap : 5px;
     width: 410px;
 `
-const TableWrapper = styled.div`
-`
+
 const ChartWrapper = styled.div`
     height: 360px;
     width:360px;

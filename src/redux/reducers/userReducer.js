@@ -180,7 +180,8 @@ export const userReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 user : {
                     ...state.user,
-                    accounts: [...action.payload]
+                    accounts: [...action.payload.accounts],
+                    transactions: [...action.payload.transactions]
                 }
             } 
 

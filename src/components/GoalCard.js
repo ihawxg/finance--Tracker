@@ -34,7 +34,7 @@ export default function GoalCard(props) {
                     now={props.goal.amount}
                 />
                 <Stack direction='horizontal' gap='2' className='mt-4'>
-                    <FormDialog value="Budget" value="Savings" title="Add Savings" goal={props.goal} />
+                    <FormDialog value="Savings" title="Add Savings" goal={props.goal} />
                     <Button variant="contained" color="error" className='ms-auto' onClick={handleClick}> Abort Goal </Button>
                 </Stack>
             </Card.Body>

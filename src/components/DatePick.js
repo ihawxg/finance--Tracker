@@ -6,12 +6,11 @@ import React from "react";
 
 export default function DatePick(props){
     const [value, setValue] = React.useState(new Date());
-    const isDisabled = (typeof props.disabled != "undefined") ? props.disabled : false;
+
     return (
         <LocalizationProvider dateAdapter={DateAdapter}>
             <DatePicker
                 disableFuture={props.disabled}
-            
                 label={props.label}
                 openTo="year"
                 views={['year', 'month', 'day']}

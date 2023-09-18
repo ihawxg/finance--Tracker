@@ -26,7 +26,7 @@ export default function AddAccountBTN(props) {
   };
 
   const handleAdd = () => {
-    dispatch(addAccountAction(user.id, accountInfo.name, accountInfo.amount, user.accounts))
+    dispatch(addAccountAction(user, accountInfo.name, accountInfo.amount, user.accounts))
     
     setAccountInfo({name: "", amount: ""});
     setOpen(false);
@@ -35,7 +35,7 @@ export default function AddAccountBTN(props) {
   const handleEdit = () => {
 
     //use redux to update the account
-    dispatch(editAccountAction(user.id, props.name, accountInfo.name, user.accounts));
+    dispatch(editAccountAction(user, props.name, accountInfo.name, user.accounts));
 
     setAccountInfo({name: "", amount: ""});
     setOpen(false);

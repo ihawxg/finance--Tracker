@@ -7,10 +7,8 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { useSelector } from "react-redux";
 import { toCurrency } from '../utils/util';
-
 export default function RecentHistoryTable() {
-    const currency = useSelector(state => state.userData.user.currency) || "BGN";
-    
+    const currency = useSelector(state => state.userData.user.currency);
     const transactions = useSelector(state => state.userData.user.transactions);
     const recentTransactions = [];
     let counter = 0;
@@ -25,7 +23,7 @@ export default function RecentHistoryTable() {
         <>
             <TableContainer component={Paper} sx={{ maxWidth: 600 }} >
                 <Table aria-label="simple table">
-                    <TableHead sx={{background: "#ad5389", background: "-webkit-linear-gradient(to right, #3c1053, #ad5389)", background: "linear-gradient(to right, #3c1053, #ad5389)"}}>
+                    <TableHead sx={{background: "linear-gradient(to right, #3c1053, #ad5389)"}}>
                         <TableRow>
                             <TableCell style={{ color: "white", fontFamily: "Poppins" }}>Category</TableCell>
                             <TableCell align="left" style={{ color: "white", fontFamily: "Poppins" }}>Amount&nbsp;({currency})</TableCell>
@@ -41,7 +39,7 @@ export default function RecentHistoryTable() {
                             <TableCell component="th" scope="row">
                                 {trans.category}
                             </TableCell>
-                            <TableCell align="left" style={{color: trans.type === "income" ? "green" : "red"}}>{trans.type === "income" ? "+" : "-"}{ toCurrency(trans.amount) }
+                            <TableCell align="left" style={{color: trans.type === "income" ? "green" : "red"}}>{trans.type === "income" ? "+" : "-"}{ toCurrency(trans.amount, currency) }
                             </TableCell>
                             <TableCell align="left">{trans.description}</TableCell>
                         </TableRow>

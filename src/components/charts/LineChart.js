@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -10,7 +10,6 @@ import {
     Legend,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
-import styled from 'styled-components';
 
 ChartJS.register(
     CategoryScale,

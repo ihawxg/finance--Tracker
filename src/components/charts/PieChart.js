@@ -10,7 +10,7 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 export function PieChart(props) {
   const user = useSelector(state => state.userData.user);
   const dataMap = new Map();
-  if (props.purpose == 'Incomes') {
+  if (props.purpose === 'Incomes') {
     props.transactions.forEach(inc => {
       if (dataMap.has(inc.category)) {
         dataMap.set(inc.category, { ...dataMap.get(inc.category), amount: dataMap.get(inc.category) + Number(inc.amount) });

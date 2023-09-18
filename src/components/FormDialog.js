@@ -5,13 +5,12 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import DatePick from './DatePick';
 import BasicDatePicker from './DatePicker';
 import { StyledEngineProvider } from '@mui/material/styles';
 import CategoryPicker from "./CategoryPicker";
 import styled from 'styled-components';
 import { useState} from 'react';
-import { addGoalAction, addBudget, addIncome, addExpense, editExpense, editIncome, editBudget, addToGoal } from '../redux/actions/userActions';
+import { addBudget, addIncome, addExpense, editExpense, editIncome, editBudget, addToGoal } from '../redux/actions/userActions';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSnackbar } from '../redux/actions/snackbarActions';
 import styles from "./styles/progress_card.module.css";
@@ -151,7 +150,7 @@ export default function FormDialog(props) {
       <Button 
           className={styles.btn} 
           variant="contained"
-          color={props.value == "Budget" ? "success" : "secondary"}
+          color={props.value === "Budget" ? "success" : "secondary"}
           onClick={handleClickOpen}>
         {props.operation === "edit" ? "Edit" : "Add"} {props.value}
       </Button>

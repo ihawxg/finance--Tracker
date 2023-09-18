@@ -1,9 +1,8 @@
 import styles from "./styles/boxTest_module.css";
-import styled, { keyframes } from "styled-components"; 
+import styled from "styled-components"; 
 import React from "react";
 import { BsWallet2, BsArrowUpRight, BsArrowDownRight, BsReceipt } from "react-icons/bs";
 import { useSelector } from "react-redux";
-import { toCurrency } from "../utils/util";
 
 export default function TotalBoxTest(props){
     const [counter, setCounter] = React.useState(0);

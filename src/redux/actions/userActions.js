@@ -302,22 +302,25 @@ export const loginAction = (email) => {
     }
 } 
 
-export const addAccountAction = (id, name, amount, accounts) => {
-    const date = JSON.stringify(new Date());
+export const addAccountAction = (user, name, amount, accounts) => {
+    const date = JSON.stringify(new Date()).replaceAll('"', '');
+    const id = new Date().valueOf();
+
     return async function(dispatch) {
-        const userRef = doc(db, "users", id);
+        const userRef = doc(db, "users", user.id);
         const newFields = {accounts: [...accounts,
             {
                 name: name,
-                incomes: [{category: {name: "Initial Deposit", color: "#404a0d"}, date: date, description: "Initial Account Deposit", amount: amount}],
-                budgets: [],
+                incomes: [{category: "Initial Deposit", date: date, description: `Initial ${name} Deposit`, amount: amount}, id],
                 expenses: [],
-                transactions: [{category: {name: "Initial Deposit", color: "#404a0d"}, date: date, description: "Initial Account Deposit", amount: amount, type: "income", account: name}],
-                goals: []
-            }]}
-
+                total: amount
+            }],
+            transactions: [...user.transactions, {category: "Initial Deposit", date: date, description: `Initial ${name} Deposit`, amount: amount, account: name, type: "income", id}]
+        };
+        
         await updateDoc(userRef, newFields);
-        dispatch({type: UPDATE_ACCOUNTS, payload: newFields.accounts});
+        dispatch({type: UPDATE_ACCOUNTS, payload: newFields});
+
     }
 } 
 

@@ -1,9 +1,7 @@
 import AddAccountBTN from "./AddAccountBTN";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 import { StyledPage, Heading } from "./HistoryPage";
-import styled from 'styled-components';
-import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import { AccountItem } from './AccountItem';
 import { StyledButton } from "./BudgetsPage";
 

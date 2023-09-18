@@ -1,4 +1,3 @@
-import Paper from '@mui/material/Paper';
 import styles from "./styles/info.module.css"
 import TextField from '@mui/material/TextField';
 import DatePick from './DatePick';
@@ -7,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import EditButton from './EditButton';
 import { updateUserInfoAction } from '../redux/actions/userActions';
 import styled from 'styled-components';
-import { StyledPage, Heading } from './HistoryPage';
+import { Heading } from './HistoryPage';
 export default function UserInfo(){
 
     const [editable, setEditable] = React.useState(false);

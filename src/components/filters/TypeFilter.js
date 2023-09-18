@@ -6,7 +6,6 @@ import FormControl from '@mui/material/FormControl';
 import ListItemText from '@mui/material/ListItemText';
 import Select from '@mui/material/Select';
 import Checkbox from '@mui/material/Checkbox';
-import styled from 'styled-components';
 
 export const TypeFilter = (props) => {
     const ITEM_HEIGHT = 48;

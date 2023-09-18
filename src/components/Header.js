@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import styles from "./styles/nav.module.css";
 import styled from 'styled-components';
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import HomeIcon from '@mui/icons-material/Home';
 import LoginIcon from '@mui/icons-material/Login';
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -20,7 +20,6 @@ import { logoutAction } from "../redux/actions/userActions";
 export default function Header(){
    
     const [navStatusOpen, setNavStatusOpen] = useState(false);
-    const [screenSize, setScreenSize] = useState("large");
     const logged = useSelector(state => state.userData.logged);
     const dispatch = useDispatch();
 

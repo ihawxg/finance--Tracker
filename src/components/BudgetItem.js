@@ -1,4 +1,3 @@
-import Container from 'react-bootstrap/Container';
 import { toCurrency, getBudgetProgress } from "../utils/util";
 import { Card, ProgressBar, Stack } from 'react-bootstrap';
 import Button from '@mui/material/Button';
@@ -33,6 +32,7 @@ export default function BudgetItem({ name, amount, max, onClick, gray, dateFrom,
             case 9: month = "October"; break;
             case 10: month = "November"; break;
             case 11: month = "December"; break;
+            default: month = "January";
         }
         return `${month} ${date.getDate()}, ${date.getFullYear()}`
     }

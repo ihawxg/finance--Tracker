@@ -1,8 +1,6 @@
 import * as React from 'react';
 import Paper from '@mui/material/Paper';
-import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
@@ -16,7 +14,8 @@ import FeedIcon from '@mui/icons-material/Feed';
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import { toCurrency, formatTime, formatDate } from '../utils/util';
-import { useSelector } from 'react-redux'
+import { useSelector } from "react-redux";
+
 function createData(date, time, type, account, category, description, amount) {
     return { date, time, type, account, category, description, amount };
 }
