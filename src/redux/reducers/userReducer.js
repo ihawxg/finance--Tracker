@@ -227,9 +227,9 @@ export const userReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 user : {
                     ...state.user,
-                    firstName : action.payload.firstName,
-                    lastName : action.payload.lastName,
-                    birtdate : action.payload.birtdate
+                    firstName: action.payload.firstName,
+                    lastName: action.payload.lastName,
+                    birtdate: action.payload.birtdate
                 }
             }
        

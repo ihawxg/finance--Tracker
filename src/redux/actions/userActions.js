@@ -31,7 +31,7 @@ export const REMOVE_GOAL = "REMOVE_GOAL";
 export const updateUserInfoAction = (id, details) => {
     return async function(dispatch) {
         const userRef = doc(db, "users", id);
-        const newAccountInfo = {firstName: details.firstName, lastName: details.lastName, birthdate: details.birthdate};
+        const newAccountInfo = {firstName: details.firstName, lastName: details.lastName, birthdate: JSON.stringify(new Date(details.birthdate)).replaceAll('"', '')};
         await updateDoc(userRef, newAccountInfo);
         dispatch({type: UPDATE_USER_INFO, payload: newAccountInfo});
     }

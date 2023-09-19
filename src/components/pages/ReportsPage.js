@@ -90,13 +90,11 @@ const PieCharts = styled.div`
     display: flex;
     flex-flow : row wrap;
     justify-content: center;
-    
-
 `
 const FullWidthButton = styled(StyledButton)`
    width: 100%;
 `
-const Charts = styled(Account)`
+export const Charts = styled(Account)`
    max-width: 92%;
    margin-top: -15px;
 `

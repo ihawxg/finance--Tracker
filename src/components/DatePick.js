@@ -10,7 +10,8 @@ export default function DatePick(props){
     return (
         <LocalizationProvider dateAdapter={DateAdapter}>
             <DatePicker
-                disableFuture={props.disabled}
+                disabled={props.disabled}
+                disableFuture={true}
                 label={props.label}
                 openTo="year"
                 views={['year', 'month', 'day']}

@@ -38,7 +38,7 @@ export default function FormDialog(props) {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [fromDate, setFromDate] = useState(getFormatedDate(new Date()));
   const [toDate, setToDate] = useState(getFormatedDate(new Date()));
-  const [dateRange, setDateRange] = useState([null, null]);
+  const [dateRange, setDateRange] = useState(["", ""]);
   const [category, setCategory] = useState("");
   const [account, setAccount] = useState("");
   const dispatch = useDispatch();
@@ -56,7 +56,7 @@ export default function FormDialog(props) {
   };
 
   const handleClose = () => {
-    setAmount(null);
+    setAmount("");
     setDescr("");
     setAccount("");
     setCategory("");
@@ -64,7 +64,7 @@ export default function FormDialog(props) {
     setSelectedDate(new Date());
     setToDate(getFormatedDate(new Date()));
     setOpen(false);
-    setDateRange([null, null]);
+    setDateRange(["", ""]);
   };
 
   const handleAdd = (value) => {

@@ -48,7 +48,6 @@ export default function AddGoalButton(props) {
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>{props.title}</DialogTitle>
         <DialogContent sx={{ display : 'flex', flexFlow : 'column wrap', gap: '10px' }}>
-        
             <TextField 
               margin="dense"
               id="name"
@@ -61,19 +60,18 @@ export default function AddGoalButton(props) {
               onInput={handleNameChange}
           />
 
-            <TextField
-              autoFocus
-              color="secondary"
-              margin="dense"
-              id="name"
-              label="Goal Amount"
-              type="number"
-              sx={{width : '240px'}}
-              variant="outlined"
-              value={amountVal}
-              onInput={handleAmountChange}
-          />
-
+          <TextField
+            autoFocus
+            color="secondary"
+            margin="dense"
+            id="name"
+            label="Goal Amount"
+            type="number"
+            sx={{width : '240px'}}
+            variant="outlined"
+            value={amountVal}
+            onInput={handleAmountChange}
+        />
         </DialogContent>
         <DialogActions>
           <Button color="secondary" fullWidth onClick={handleClose}>Cancel</Button>

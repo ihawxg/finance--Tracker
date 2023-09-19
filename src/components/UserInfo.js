@@ -7,24 +7,34 @@ import EditButton from './EditButton';
 import { updateUserInfoAction } from '../redux/actions/userActions';
 import styled from 'styled-components';
 import { Heading } from './pages/HistoryPage';
+import { setSnackbar } from "../redux/actions/snackbarActions";
 export default function UserInfo(){
 
     const [editable, setEditable] = React.useState(false);
+    
     const currentUser = useSelector(state => state.userData.user);
+
     const dispatch = useDispatch();
-    React.useEffect(() => {
-        setUser({firstName: currentUser.firstName, lastName: currentUser.lastName, birthdate: currentUser.birthdate});
-    }, [currentUser]);
+
     const [user, setUser] = React.useState({firstName: currentUser.firstName, lastName: currentUser.lastName, birthdate: currentUser.birthdate});
+
     const handleClick = () => {
+        const currentYear = new Date().getFullYear();
+        if((currentYear - Number(user.birthdate.slice(0,4))) < 18){
+            dispatch(setSnackbar(true, "error", `You cannot edit your birthdate to be underage!`));
+            setEditable(prev => !prev);
+            return;
+        }
         if(editable){
             dispatch(updateUserInfoAction(currentUser.id, user));
         }
         setEditable(prev => !prev);
     }
+
     const handleInput = (ev) => {
         setUser(prev => ({...prev, [ev.target.name]: ev.target.value}));
     }
+
     return (
             <CustomPaper>
                 <HeadingProfile>My Profile</HeadingProfile>

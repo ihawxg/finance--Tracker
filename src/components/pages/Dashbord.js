@@ -12,6 +12,8 @@ import TotalBox from "../TotalBox";
 import { Heading, StyledPage } from "./HistoryPage";
 import FormDialog from '../FormDialog';
 import { Account } from '../AccountItem';
+import { BarChart } from "../charts/BarChart";
+import { Charts } from "./ReportsPage";;
 
 
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -135,7 +137,8 @@ const Row = styled.div`
     display: flex;
     flex-flow: row wrap;
     justify-content : space-evenly;
-    align-items: flex-start;
+    align-items: center;
+    height: 80vh;
     gap: 20px;
 `
 const ColumnWrapper = styled.div`
