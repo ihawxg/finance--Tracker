@@ -136,5 +136,4 @@ const CustomTableContainer = styled(TableContainer)`
     background: -webkit-linear-gradient(to right, #6E48AA, #9D50BB);
     background: linear-gradient(to right, #6E48AA, #9D50BB);
     color : #fff;
-
 `

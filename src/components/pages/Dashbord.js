@@ -160,4 +160,12 @@ const ChartWrapper = styled.div`
     min-width: 360px;
     margin-left: auto;
     
+    @media (max-width: 1287px){
+        width: 558px;
+    }
+
+    @media (min-width: 1300px){
+        width: 360px;
+        heigth: 360px;
+    }
 `

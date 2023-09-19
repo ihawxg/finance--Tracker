@@ -1,7 +1,8 @@
 import { db } from '../../backendConfig/firebase';
 import { collection, getDocs, updateDoc, doc } from "firebase/firestore"; 
 import { setSnackbar } from "./snackbarActions";
-import { getAmount} from "../../utils/util";
+import { getAmount } from "../../utils/util";
+import { CronJob, CronTime } from 'cron';
 
 export const LOGIN = "LOGIN";
 export const LOGOUT = "LOGOUT";
@@ -236,7 +237,7 @@ export const addAccountAction = (user, name, amount, accounts) => {
         const newUser = {accounts: [...accounts,
             {
                 name: name,
-                incomes: [{category: "Initial Deposit", date: date, description: `Initial ${name} Deposit`, amount: amount}, id],
+                incomes: [{category: "Initial Deposit", date: date, description: `Initial ${name} Deposit`, amount: amount, id}],
                 expenses: [],
                 total: amount
             }],
@@ -364,9 +365,23 @@ export const addBudget = (user, details) => {
         if(amount > details.amount){
             dispatch(setSnackbar(true, "warning", `You have exceeded you ${details.category} budget!`));
         }
-        
+
         await updateDoc(userRef, {budgets: newBudgets});
         dispatch({type: UPDATE_BUDGET, payload: newBudgets});
+
+        //for demonstration purspose
+        let date = new Date();
+        date.setMinutes(date.getMinutes() + 1);
+        new CronJob(date,() => {
+            dispatch(removeBudget(user, details.category));
+        }).start();
+
+        //code for real removing budgets on time
+        // new CronJob(new Date(details.to),() => {
+        //     console.log("removed " + details.category + " budget");
+        //     dispatch(removeBudget(user, details.category));
+        // }).start();
+
     }
 } 
 

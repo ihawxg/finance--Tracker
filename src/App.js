@@ -1,6 +1,6 @@
 import Header from "./components/Header";
 import { Routes, Route, useNavigate } from "react-router-dom";
-import HomePage from "./components/pages/Dashbord";
+import Dashbord from "./components/pages/Dashbord";
 import AboutUsPage from "./components/pages/AboutUsPage";
 import LoginPage from "./components/pages/LoginPage";
 import RegisterPage from "./components/pages/RegisterPage";
@@ -25,11 +25,11 @@ function App() {
   const log = () => {
     if(sessionStorage.getItem("currentUser")){
       dispatch(loginAction(sessionStorage.getItem("currentUser")));
-      navigate("/home");
+      navigate("/dashbord");
     }
     else if(localStorage.getItem("currentUser")){
       dispatch(loginAction(localStorage.getItem("currentUser")));
-      navigate("/home");
+      navigate("/dashbord");
     }
     else{
       navigate("/about");
@@ -48,7 +48,7 @@ function App() {
             <Route path="/register" element={<RegisterPage />}/>
             <Route path="/about" element={<AboutUsPage />}/>
             <Route path="/" element={<AboutUsPage />}/>
-            <Route path="/home" element={<HomePage />}/>
+            <Route path="/dashbord" element={<Dashbord />}/>
             <Route path="/profile" element={<ProfilePage/>}/>
             <Route path="/categories" element={<CategoriesPage/>}/>
             <Route path="/accounts" element={<AccountsPage/>}/>

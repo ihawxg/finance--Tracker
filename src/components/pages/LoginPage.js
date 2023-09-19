@@ -53,7 +53,7 @@ export default function LoginPage(){
                 sessionStorage.setItem("currentUser", email);
     
                 dispatch(loginAction(email));
-                navigate("/home");
+                navigate("/dashbord");
             })
             .catch((error) => {
                 setHasError(true);

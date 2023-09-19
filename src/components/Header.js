@@ -44,7 +44,7 @@ export default function Header(){
                 {
                     logged && 
                     <>
-                        <Link className={page === "home" ? `${styles.active} ${styles.btn}` : `${styles.btn}`} to="/home"><HomeIcon /><LinkName>Home</LinkName></Link>
+                        <Link className={page === "dashbord" ? `${styles.active} ${styles.btn}` : `${styles.btn}`} to="/dashbord"><HomeIcon /><LinkName>Dashbord</LinkName></Link>
                         <Link className={page === "profile" ? `${styles.active} ${styles.btn}` : `${styles.btn}`} to="/profile"><AssignmentIndIcon/><LinkName>My Profile</LinkName></Link>
                         <Link className={page === "accounts" ? `${styles.active} ${styles.btn}` : `${styles.btn}`} to="/accounts"><AccountBalanceWalletIcon /><LinkName>Accounts</LinkName></Link> 
                         <Link className={page === "reports" ? `${styles.active} ${styles.btn}` : `${styles.btn}`} to="/reports"><AssessmentIcon /><LinkName>Reports</LinkName></Link>  
