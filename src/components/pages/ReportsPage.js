@@ -41,12 +41,12 @@ export default function ReportsPage() {
     setDateRange([null, null])
     filterTransactions(selectedAccounts, amountRange, dateRange)
    }
-  
+
     return (
         <StyledPage status={headerOpen}>
             <Heading>Reports & Analytics</Heading>
             <StyledFilters>
-                    <Row>
+                    <Row style={{width: "100%"}}>
                         
                         <AccountFilter value={selectedAccounts} onChange={(e) => { setSelectedAccounts(e.target.value); filterTransactions(e.target.value, amountRange, dateRange)} } />
                         <DateRangeFilter value={dateRange} onChange={ (e) => { setDateRange(e); filterTransactions(selectedAccounts, amountRange, e)} } />
@@ -57,8 +57,8 @@ export default function ReportsPage() {
 
             </StyledFilters>
       {transactions.length ? (
-        <>    
-            <PieCharts>
+        <div>    
+            <PieCharts style={{justifyContent: "space-between"}}>
                 <Account>
                 <Column>    
                     <h6>Incomes</h6>
@@ -79,7 +79,7 @@ export default function ReportsPage() {
             <Charts>
                  <BarChart data={transactions} />
             </Charts>
-        </>  
+        </div>  
       ) : null }
         </StyledPage>
     );

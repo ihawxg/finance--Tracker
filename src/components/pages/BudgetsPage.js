@@ -4,6 +4,8 @@ import FormDialog from "../FormDialog";
 import { StyledPage, Heading } from "./HistoryPage";
 import BudgetItem from "../BudgetItem";
 import styled from 'styled-components';
+import { uuidv4 } from "../../utils/util";
+
 export default function BudgetsPage() {
     const user = useSelector(state => state.userData.user);
     const dispatch = useDispatch();
@@ -16,13 +18,14 @@ export default function BudgetsPage() {
         <StyledPage status={headerOpen}>
             <Heading>Budgets</Heading>
             <StyledButton>
-                <FormDialog value="Budget" title="Add Budget" />
+                <FormDialog key={uuidv4()} value="Budget" title="Add Budget" />
             </StyledButton>
             {
                 user.budgets.map(budget => {
                     return (
-                        <Container>
+                        <Container key={uuidv4()}>
                             <BudgetItem
+                                key={uuidv4()}
                                 onClick={() => { handleClick(budget.category) }}
                                 name={budget.category}
                                 amount={budget.amount}

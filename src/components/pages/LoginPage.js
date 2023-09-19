@@ -1,5 +1,5 @@
 import TextField from '@mui/material/TextField';
-import styles from "./styles/reg_log.module.css";
+import styles from "../styles/reg_log.module.css";
 import Button from '@mui/material/Button';
 import { Link } from "react-router-dom";
 import Card from '@mui/material/Card';
@@ -13,7 +13,6 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { loginAction } from '../../redux/actions/userActions';
 
-
 export default function LoginPage(){
 
     const dispatch = useDispatch();
@@ -24,15 +23,20 @@ export default function LoginPage(){
     const [pass, setPass] = useState("");
     const [rememberMe, setRememberMe] = useState(false);
     const [hasError, setHasError] = useState(false);
+    const [errors, setErrors] = useState({email: false, pass: false});
+
 
     const handleInput = e => {
-        if(e.target.name === "loginEmail") {
-            setEmail( e.target.value);
+        if(e.target.name === "email") {
+            setEmail(e.target.value.trim());
+            
             setTimeout(() => {
             }, 2000);
-        } else if(e.target.name === "loginPass") {
-            setPass(e.target.value);
-        } 
+        } else if(e.target.name === "pass") {
+            setPass(e.target.value.trim());
+        }
+
+        setErrors(prevData => ({...prevData, [e.target.name]: e.target.value.trim() === ""}));
     }  
 
     const handleChange = () => {
@@ -68,18 +72,25 @@ export default function LoginPage(){
                     <form className={styles.input_container}>
                         <TextField 
                             fullWidth 
+                            error={errors.email}
                             id="outlined-basic" 
                             label="Email" 
-                            name="loginEmail" 
+                            name="email" 
                             variant="outlined" 
+                            value={email}
+                            inputProps={{ maxLength: 36 }} 
                             autoComplete="current-email"
                             onInput={(e) => handleInput(e)}/>
+                        
                             
                         <TextField 
                             fullWidth 
                             id="outlined-password-input" 
                             label="Password" 
-                            name="loginPass" 
+                            error={errors.pass}
+                            value={pass}
+                            inputProps={{ maxLength: 16 }} 
+                            name="pass" 
                             type="password" 
                             autoComplete="current-password"
                             onInput={(e) => handleInput(e)}/>

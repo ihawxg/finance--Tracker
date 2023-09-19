@@ -6,21 +6,23 @@ import GoalCard from "../GoalCard";
 import AddGoalButton from '../AddGoalButton';
 import { StyledButton } from "./BudgetsPage";
 import { useSelector } from 'react-redux';
+import { uuidv4 } from "../../utils/util";
+
 export default function GoalsPage() {
     const user = useSelector(state => state.userData.user);
     const headerOpen = useSelector(state => state.headerStatus.isOpen);
     return (
-        <StyledPage status={headerOpen}>
-            <StyledButton>
-                <AddGoalButton title="Add New Goal" />
+        <StyledPage status={headerOpen} key={uuidv4()}>
+            <StyledButton key={uuidv4()}>
+                <AddGoalButton key={uuidv4()} title="Add New Goal" />
             </StyledButton>
-            <Heading>Goals</Heading>
+            <Heading key={uuidv4()}>Goals</Heading>
             { user.goals.filter(goal => goal.status === "ongoing")
-                        .map(goal => <GoalCard goal={goal} />)
+                        .map(goal => <GoalCard key={uuidv4()} goal={goal} />)
             }
-            <CustomPaper elevation={2} >
-                <HistoryHeader>Goals history</HistoryHeader>
-                <GoalHistory data={ user.goals.filter(goal => goal.status === "completed" || goal.status === "aborted") } />
+            <CustomPaper elevation={2} key={uuidv4()}>
+                <HistoryHeader key={uuidv4()}>Goals history</HistoryHeader>
+                <GoalHistory key={uuidv4()} data={ user.goals.filter(goal => goal.status === "completed" || goal.status === "aborted") } />
             </CustomPaper>
         </StyledPage>
     )

@@ -1,18 +1,19 @@
-import styles from "./styles/about_us.module.css"
+import styles from "../styles/about_us.module.css"
 import Form from '../ContactForm';
 import styled from 'styled-components';
 import { StyledPage } from './HistoryPage';
-import analytics from './imgs/analytics.png';
-import beHero from './imgs/beHero.png';
-import goal from './imgs/goal.png';
-import money from './imgs/money.png';
-import monthly from './imgs/monthly.png';
-import success from './imgs/success.png';
+import analytics from '../imgs/analytics.png';
+import beHero from '../imgs/beHero.png';
+import goal from '../imgs/goal.png';
+import money from '../imgs/money.png';
+import monthly from '../imgs/monthly.png';
+import success from '../imgs/success.png';
 
 export default function AboutUsPage(){
     return (
         <div className="mt-minus">
             <Form />
+            
             <h1 className={styles.greetings}>Welcome to Finance Tracker</h1>
             <div className={styles.separator}>
                 <div className={styles.curve}>
@@ -20,8 +21,8 @@ export default function AboutUsPage(){
                         <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" className="shape-fill"></path>
                         <defs>
                             <linearGradient id="curve">
-                                <stop offset="0%" stop-color="#3c1053" />
-                                <stop offset="100%" stop-color="#ad5389" />
+                                <stop offset="0%" stopColor="#3c1053" />
+                                <stop offset="100%" stopColor="#ad5389" />
                             </linearGradient>
                         </defs>
                     </svg>

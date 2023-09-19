@@ -3,13 +3,13 @@ import AddCategoryBTN from '../AddCategoryBTN';
 import AddGoalButton from '../AddGoalButton';
 import AddAccountBTN from '../AddAccountBTN'
 import styled from 'styled-components';
-import styles from './styles/total_box.module.css';
+import styles from '../styles/total_box.module.css';
 import { useSelector } from "react-redux";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Pie } from 'react-chartjs-2';
 import { getColor } from "../../utils/util";
 import RecentHistoryTable from "../RecentHistoryTable";
-import TotalBoxTest from "./TotalBoxTest";
+import TotalBox from "../TotalBox";
 import { Heading, StyledPage } from "./HistoryPage";
 import FormDialog from '../FormDialog';
 import { Account } from '../AccountItem';
@@ -79,7 +79,7 @@ export default function Home() {
             <Heading>Welcome, {user.firstName}</Heading>
             <Row>
                 <ColumnWrapper>
-                    <TotalBoxTest />
+                    <TotalBox />
                     <MainButtons>
                         <FormDialog value="Expense" title="Add an expense" />
                         <FormDialog value="Income" title="Add an income" />
@@ -100,7 +100,7 @@ export default function Home() {
                             <AddCategoryBTN isInHome={true} />
                         </ButtonRow>
                         <ButtonRow>
-                            <AddGoalButton sx={{ backgroundColor: 'purple' }} title="Add Goal" />
+                            <AddGoalButton sx={{ backgroundColor: 'purple' }} isInHome={true} title="Add Goal" />
                             <FormDialog value="Budget" title="Add Budget" />
 
                         </ButtonRow>

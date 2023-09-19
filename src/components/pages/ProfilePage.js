@@ -1,5 +1,5 @@
 import UserInfo from "../UserInfo";
-import styles from "./styles/info.module.css"
+import styles from "../styles/info.module.css"
 
 export default function ProfilePage(){
     return (

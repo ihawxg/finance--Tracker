@@ -1,9 +1,9 @@
 import AddAccountBTN from "../AddAccountBTN";
 import { useSelector } from "react-redux";
-
 import { StyledPage, Heading } from "./HistoryPage";
 import { AccountItem } from '../AccountItem';
 import { StyledButton } from "./BudgetsPage";
+import { uuidv4 } from "../../utils/util";
 
 export default function AccountsPage(){
     const user = useSelector(state => state.userData.user);
@@ -17,7 +17,8 @@ export default function AccountsPage(){
            
                 {user.accounts.map( acc => {
                     return (
-                      <AccountItem  
+                      <AccountItem 
+                            key={uuidv4()} 
                             name={acc.name}
                             total={acc.total}
                             transactions={user.transactions.filter(transaction => transaction.account === acc.name)}

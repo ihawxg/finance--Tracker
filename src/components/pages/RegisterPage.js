@@ -3,7 +3,7 @@ import DatePick from "../DatePick";
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { Link, useNavigate } from "react-router-dom";
-import styles from "./styles/reg_log.module.css";
+import styles from "../styles/reg_log.module.css";
 import Card from '@mui/material/Card';
 import { useState } from 'react';
 import Alert from '@mui/material/Alert';
@@ -31,6 +31,8 @@ export default function RegisterPage(){
 
     const usersCollectionRef = collection(db, "users");
 
+    const [errors, setErrors] = React.useState({firstName: false, lastName: false, email: false, pass: false, confirm: false, birthdate: false});
+
     const createUser = async () => {
         const date = JSON.stringify(new Date()).replaceAll('"', '');
         //init a new User with his coresponding data
@@ -55,15 +57,22 @@ export default function RegisterPage(){
     };
 
     const handleInput = e => {
-        setUserData(prevData => ({...prevData, [e.target.name]: e.target.value}));
+        setUserData(prevData => ({...prevData, [e.target.name]: e.target.value.trim()}));
+        setErrors(prevData => ({...prevData, [e.target.name]: e.target.value.trim() === ""}));
     }
 
     const handleClick = () => {
         setHasError(false);
 
+        const currentYear = new Date().getFullYear();
+
         if(userData.pass !== userData.confirm){
             setHasError(true);
             setMessage("Password missmatch!")
+        }
+        else if(currentYear - Number(userData.birthdate.slice(0,4)) < 18){
+            setHasError(true);
+            setMessage("Underaged people do not have permission to register!");
         }
         else if(userData.email.split('@').length !== 2){
             setHasError(true);
@@ -92,7 +101,6 @@ export default function RegisterPage(){
             });
         }
     }
-
 
     //getting the local currency of the user
     React.useEffect( () => {
@@ -134,6 +142,7 @@ export default function RegisterPage(){
                         <TextField 
                             fullWidth 
                             name="firstName" 
+                            error={errors.firstName}
                             id="fname" label="First Name" 
                             variant="outlined" 
                             autoComplete="current-first-name" 
@@ -144,6 +153,7 @@ export default function RegisterPage(){
                             fullWidth 
                             name="lastName" 
                             id="lname" 
+                            error={errors.lastName}
                             label="Last Name" 
                             variant="outlined" 
                             autoComplete="current-last-name" 
@@ -153,7 +163,8 @@ export default function RegisterPage(){
                         <TextField 
                             fullWidth 
                             name="email" 
-                            id="email" 
+                            id="email"
+                            error={errors.email}
                             label="Email" 
                             variant="outlined" 
                             value={userData.email} 
@@ -163,7 +174,8 @@ export default function RegisterPage(){
                         <TextField 
                             fullWidth 
                             name="pass" 
-                            id="pass" 
+                            id="pass"
+                            error={errors.pass} 
                             label="Password" 
                             type="password" 
                             value={userData.pass} 
@@ -174,6 +186,7 @@ export default function RegisterPage(){
                             fullWidth 
                             name="confirm" 
                             id="pass-rep" 
+                            error={errors.confirm}
                             label="Repeat Password" 
                             type="password" 
                             value={userData.confirm} 
