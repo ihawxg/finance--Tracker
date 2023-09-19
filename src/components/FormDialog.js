@@ -24,17 +24,17 @@ export const OurButton = styled(Button)({
   padding: '6px 12px',
   lineHeight: 1.5,
   background: "#753068",
+  minWidth : "240px",
   fontFamily: "Poppins",
   '&:hover': {
     background: '#ad5389',
+  },
+  '@media (max-width: 768px)': {
+    width: '100%', 
   }
 });
 
 export default function FormDialog(props) {
-
-  const dateNow = new Date();
-  const dateNextMonth = new Date();
-  dateNextMonth.setMonth(dateNextMonth.getMonth() + 1);
 
   const [open, setOpen] = useState(false);
   const [amount, setAmount] = useState("");
@@ -42,109 +42,110 @@ export default function FormDialog(props) {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [fromDate, setFromDate] = useState(getFormatedDate(new Date()));
   const [toDate, setToDate] = useState(getFormatedDate(new Date()));
-  const [dateRange, setDateRange] = useState([dateNow, dateNextMonth]);
+  const [dateRange, setDateRange] = useState(["", ""]);
   const [category, setCategory] = useState("");
   const [account, setAccount] = useState("");
-  const user = useSelector(state => state.userData.user);
   const dispatch = useDispatch();
+  const user = useSelector(state => state.userData.user);
 
   const handleClickOpen = () => {
-      setOpen(true);
-      if(props.value === "Budget" && props.operation === "edit") {
-        setAmount(props.editdetails.max);
-        setCategory(props.editdetails.name);
-        setFromDate(props.editdetails.dateFrom);
-        setToDate(props.editdetails.dateTo);
-        setDateRange([props.editdetails.dateFrom, props.editdetails.dateTo]);
-      }
+    setOpen(true);
+    if(props.value === "Budget" && props.operation === "edit") {
+      setAmount(props.editdetails.max);
+      setCategory(props.editdetails.name);
+      setFromDate(props.editdetails.dateFrom);
+      setToDate(props.editdetails.dateTo);
+      setDateRange([props.editdetails.dateFrom, props.editdetails.dateTo]);
+    }
   };
 
   const handleClose = () => {
-      setAmount("");
-      setDescr("");
-      setAccount("");
-      setCategory("");
-      setFromDate(getFormatedDate(new Date()));
-      setSelectedDate(new Date());
-      setToDate(getFormatedDate(new Date()));
-      setOpen(false);
-      setDateRange([dateNow, dateNextMonth]);
+    setAmount("");
+    setDescr("");
+    setAccount("");
+    setCategory("");
+    setFromDate(getFormatedDate(new Date()));
+    setSelectedDate(new Date());
+    setToDate(getFormatedDate(new Date()));
+    setOpen(false);
+    setDateRange(["", ""]);
   };
 
   const handleAdd = (value) => {
-      const detail = {
-        amount,
-        descr,
-        category,
-        date: selectedDate,
-        account
-      }
+    // dispatch(setSnackbar(true, "success", "Transaction added!"));
+    const detail = {
+      amount,
+      descr,
+      category,
+      date: selectedDate,
+      account
+    }
 
-      switch(value) {
-          case "Expense" :
-              dispatch(addExpense(user, {...detail, date: JSON.stringify(selectedDate).replaceAll('"', '')}))
-              break;
-
-          case "Savings": 
-              dispatch(addToGoal(user, props.goal.name, amount, account));
-              break;
-
-          case "Income" : 
-              dispatch(addIncome(user, {...detail, date: JSON.stringify(selectedDate).replaceAll('"', '')}))
-              break;
-
-          case "Budget" : 
-              const details = {
-                amount, 
-                category,
-                from: JSON.stringify(new Date(dateRange[0])).replaceAll('"', ''), 
-                to: JSON.stringify(new Date(dateRange[1])).replaceAll('"', '')
-              }
-
-              dispatch(addBudget(user, details));
+    switch(value) {
+        case "Expense" :
+          dispatch(addExpense(user, {...detail, date: JSON.stringify(selectedDate).replaceAll('"', '')}))
           break;
 
-          default: {
-              return;
+        case "Savings": 
+          dispatch(addToGoal(user, props.goal.name, amount, account));
+          break;
+
+        case "Income" : 
+          dispatch(addIncome(user, {...detail, date: JSON.stringify(selectedDate).replaceAll('"', '')}))
+          break;
+
+        case "Budget" : 
+          const details = {
+            amount, 
+            category,
+            from: JSON.stringify(new Date(dateRange[0])).replaceAll('"', ''), 
+            to: JSON.stringify(new Date(dateRange[1])).replaceAll('"', '')
           }
-      }
-      handleClose();
-  };
 
-  const handleEdit = (value) => {    
-      const detail = {
-          amount,
-          descr,
-          category,
-          date: selectedDate,
-          account
-      }
+          dispatch(addBudget(user, details));
+        break;
 
-      if(props.value === "Budget") {
-            let details = {
-              amount, 
-              category,
-              account,
-              from: JSON.stringify(new Date(dateRange[0])).replaceAll('"', ''), 
-              to: JSON.stringify(new Date(dateRange[1])).replaceAll('"', '')
-            }
-            dispatch(editBudget(user, details));
-      }
-      handleClose();
-  }
-
-  const handleInput = (ev) => {
-      switch(ev.target.name) {
-        case "amount": 
-            setAmount(ev.target.value);
-            break;
-        case "description": 
-            setDescr(ev.target.value);
-            break;
         default: {
           return;
         }
+    }
+    handleClose();
+  };
+
+  const handleEdit = (value) => {    
+    const detail = {
+      amount,
+      descr,
+      category,
+      date: selectedDate,
+      account
+    }
+
+    if(props.value === "Budget") {
+          let details = {
+            amount, 
+            category,
+            account,
+            from: JSON.stringify(new Date(dateRange[0])).replaceAll('"', ''), 
+            to: JSON.stringify(new Date(dateRange[1])).replaceAll('"', '')
+          }
+          dispatch(editBudget(user, details));
+    }
+    handleClose();
+  }
+
+  const handleInput = (ev) => {
+    switch(ev.target.name) {
+      case "amount": 
+          setAmount(ev.target.value);
+          break;
+      case "description": 
+          setDescr(ev.target.value);
+          break;
+      default: {
+        return;
       }
+    }
   }
 
   return (

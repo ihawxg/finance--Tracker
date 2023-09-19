@@ -45,6 +45,13 @@ export default function BudgetsPage() {
 export const StyledButton = styled.div` 
     position: fixed;
     top: 0; right: 0px;
+
+    @media (max-width: 768px) {
+        width: 100%;
+        position: relative;
+        margin-bottom: 20px;
+    }
+
 `
 const Container = styled.div`
     margin: 20px;

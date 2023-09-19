@@ -65,10 +65,18 @@ const Profile = styled.div`
     align-items: center;
     gap: 50px;
     margin-top: 25px;
+    @media (max-width: 768px) {
+        flex-direction : column;
+        justify-content: flex-start;
+       
+    }
 `
 const ProfilePic = styled.img`
     border-radius: 50%;
-    width: 350px;
+    max-width: 350px;
+    @media (max-width: 768px) {
+        width: 200px;
+    }
 `
 const Info = styled.div`
     display: flex;
@@ -79,9 +87,9 @@ const CustomPaper = styled.div`
     display : flex;
     margin-top: -20px;
     padding: 30px;
-    height: 100vh;
+    height: 100%;
     width: 100%;
-    flex-flow: column wrap;
+    flex-flow: column nowrap;
     align-items : center;
     background: #D3CCE3;  /* fallback for old browsers */
     background: -webkit-linear-gradient(to right, #E9E4F0, #D3CCE3);  /* Chrome 10-25, Safari 5.1-6 */

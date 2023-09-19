@@ -13,7 +13,7 @@ import CategoryIcon from '@mui/icons-material/Category';
 import FeedIcon from '@mui/icons-material/Feed';
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import { toCurrency, formatTime, formatDate } from '../utils/util';
+import { toCurrency, formatTime, formatDate, uuidv4 } from '../utils/util';
 import { useSelector } from "react-redux";
 
 function createData(date, time, type, account, category, description, amount) {
@@ -69,10 +69,10 @@ export default function DataTable(props) {
             <CustomTableContainer sx={{ maxHeight: 440 }}>
                 <CustomTable stickyHeader aria-label="sticky table">
                     <TableHead sx={{ backgroundColor: 'rgb(68, 18, 96)' }}>
-                        <CustomRow key={Math.random() * 100}>
+                        <CustomRow key={uuidv4()}>
                             {columns.map((column) => (
                                 <CustomCol
-                                    key={column.id}
+                                    key={uuidv4()}
                                     align={column.align}
                                     style={{ minWidth: column.minWidth }}
                                 >
@@ -86,11 +86,11 @@ export default function DataTable(props) {
                             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                             .map((row) => {
                                 return (
-                                    <CustomRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                                    <CustomRow hover role="checkbox" tabIndex={-1} key={uuidv4()}>
                                         {columns.map((column) => {
                                             const value = row[column.id];
                                             return (
-                                                <CustomCol key={column.id} align={column.align}>
+                                                <CustomCol  key={uuidv4()} align={column.align}>
                                                     {column.format && typeof value === 'number'
                                                         ? column.format(value)
                                                         : value}

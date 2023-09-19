@@ -13,10 +13,10 @@ export default function GoalsPage() {
     const headerOpen = useSelector(state => state.headerStatus.isOpen);
     return (
         <StyledPage status={headerOpen} key={uuidv4()}>
+            <Heading key={uuidv4()}>Goals</Heading>
             <StyledButton key={uuidv4()}>
                 <AddGoalButton key={uuidv4()} title="Add New Goal" />
             </StyledButton>
-            <Heading key={uuidv4()}>Goals</Heading>
             { user.goals.filter(goal => goal.status === "ongoing")
                         .map(goal => <GoalCard key={uuidv4()} goal={goal} />)
             }

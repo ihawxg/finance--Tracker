@@ -60,17 +60,17 @@ export default function ReportsPage() {
         <div>    
             <PieCharts style={{justifyContent: "space-between"}}>
                 <Account>
-                <Column>    
-                    <h6>Incomes</h6>
-                    <PieChart purpose="Incomes" transactions={transactions.filter(item => item.type === 'income')} />
-                </Column>
-            </Account>
-            <Account>
-                 <Column>
-                    <h6>Expenses</h6>
-                    <PieChart puprose="Expenses" transactions={transactions.filter(item => item.type === 'expense')} />
-                </Column>
-            </Account>
+                    <Column>    
+                        <h6>Incomes</h6>
+                        <PieChart purpose="Incomes" transactions={transactions.filter(item => item.type === 'income')} />
+                    </Column>
+                </Account>
+                <Account>
+                    <Column>
+                        <h6>Expenses</h6>
+                        <PieChart puprose="Expenses" transactions={transactions.filter(item => item.type === 'expense')} />
+                    </Column>
+                </Account>
                
             </PieCharts>
             <Charts>
@@ -87,14 +87,21 @@ export default function ReportsPage() {
 
 const PieCharts = styled.div`
     width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
     display: flex;
     flex-flow : row wrap;
     justify-content: center;
+
 `
 const FullWidthButton = styled(StyledButton)`
    width: 100%;
 `
 export const Charts = styled(Account)`
    max-width: 92%;
-   margin-top: -15px;
+   display : flex;
+   flex-direction : column;
+   align-items: center;
+   justify-content: flex-start;
+  
 `

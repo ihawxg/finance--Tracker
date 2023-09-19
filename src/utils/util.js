@@ -48,6 +48,9 @@ export const getBudgetProgress = (amount, max) => {
 export const formatDate = (timestamp) => {
     return moment(timestamp).format("dddd, MMM Do YYYY")
 }
+export const formatDateNoDay = (timestamp) => {
+    return moment(timestamp).format("MMM Do YYYY")
+}
 export const formatTime = (timestamp) => {
     return moment(timestamp).format("h:mm:ss A")
 }

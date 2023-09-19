@@ -13,10 +13,10 @@ export default function CategoriesPage() {
 
     return (
         <StyledPage status={headerOpen}>
+            <Heading>Categories</Heading>
             <StyledButton>
                 <AddCategoryBTN isInHome={false}/>
             </StyledButton>
-            <Heading>Categories</Heading>
             <Columns>
                 <Box>
                     <CenteredHeading>Income Categories</CenteredHeading> 
@@ -56,10 +56,11 @@ const CenteredHeading = styled(Heading)`
     background: #ad5389;
     background: -webkit-linear-gradient(to right, #3c1053, #ad5389);
     background: linear-gradient(to right, #3c1053, #ad5389);
+   
 `
 const Box = styled.div`
     text-align: center;
-    width: 47%;
+    min-width: 47%;
     display : flex;
     flex-flow : row wrap;
     
@@ -70,6 +71,8 @@ const Box = styled.div`
     background: #D3CCE3;
     background: -webkit-linear-gradient(to right, #E9E4F0, #D3CCE3);
     background: linear-gradient(to right, #E9E4F0, #D3CCE3);  
+
+
 `
 const Columns = styled.div`
     display: flex;
