@@ -8,7 +8,7 @@ import { StyledButton } from "../pages/HistoryPage";
 import Box from '@mui/material/Box';
 
 export const DateRangeFilter = (props) => {
-    const [value, setValue] = React.useState(["", ""]);
+    const [value, setValue] = React.useState([new Date(), new Date()]);
 
     return (
       <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -30,9 +30,9 @@ export const DateRangeFilter = (props) => {
                 </DateRangeHistory> 
               ) : (
                 <DateRange flow={props.flow}>
-                <TextField sx={{ minWidth : props.flow == 'column' ? '240px' : '300px', m: 1 }} {...startProps} color="secondary"  />
-                {!props.flow && (<Box sx={{ marginLeft: 5 }}></Box>)}
-                <TextField sx={{ minWidth : props.flow == 'column' ? '240px' : '300px', m: 1 }} {...endProps} color="secondary"/>
+                  <TextField sx={{ minWidth : props.flow == 'column' ? '240px' : '300px', m: 1 }} error={false}  {...startProps} color="secondary"/>
+                  {!props.flow && (<Box sx={{ marginLeft: 5 }}></Box>)}
+                  <TextField sx={{ minWidth : props.flow == 'column' ? '240px' : '300px', m: 1 }} error={false}  {...endProps} color="secondary"/>
                 </DateRange>
               );
           }}
