@@ -4,6 +4,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { currencies } from "../utils/consts";
 import React from "react";
+import { uuidv4 } from '../utils/util';
 
 export default function MultipleSelect(props) {
     const [currency, setCurrency] = React.useState("BGN");
@@ -25,7 +26,7 @@ export default function MultipleSelect(props) {
                     onChange={handleChange}
                     >
                         {
-                            currencies.map(currency => <MenuItem value={currency}>{currency}</MenuItem>)
+                            currencies.map(currency => <MenuItem key={uuidv4()} value={currency}>{currency}</MenuItem>)
                         }
                     </Select>
             </FormControl>

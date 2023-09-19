@@ -55,9 +55,7 @@ export default function HistoryPage() {
                 <TypeFilter value={selectedType} onChange={(e) => { setSelectedType(e.target.value); filterTransactions(selectedAccounts, e.target.value, amountRange, selectedCategories, dateRange) }} />
                 <CategoryFilter value={selectedCategories} disabled={false} onChange={(e) => { setSelectedCategories(e.target.value); filterTransactions(selectedAccounts, selectedType, amountRange, e.target.value, dateRange) }} />
                 <DateRangeFilter clearFilters={clearFilters} disabled={true} value={dateRange} onChange={(e) => { setDateRange(e); filterTransactions(selectedAccounts, selectedType, amountRange, selectedCategories, e) }} /> 
-                
                 <AmountRangeFilter value={amountRange} max={max} onChange={(e) => { setAmountRange(e.target.value); filterTransactions(selectedAccounts, selectedType, e.target.value, selectedCategories, dateRange) }} />
-               
             </StyledFilters>
             <DataTable data={transactions} />
         </StyledPage>
@@ -84,7 +82,6 @@ export const Row = styled.div`
     @media(max-width: 768px) {
         flex-flow : column wrap;
         margin-left: auto; margin-right: auto;
-        
     } 
 `
 export const StyledFilters = styled.div`

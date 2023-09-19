@@ -16,7 +16,6 @@ import { loginAction } from '../../redux/actions/userActions';
 export default function LoginPage(){
 
     const dispatch = useDispatch();
-
     const navigate = useNavigate();
 
     const [email, setEmail] = useState("");

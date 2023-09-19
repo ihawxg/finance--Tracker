@@ -10,7 +10,7 @@ export default function AccountsPage(){
     const headerOpen = useSelector(state => state.headerStatus.isOpen);
     return (
         <StyledPage status={headerOpen}>
-            <Heading> Accounts</Heading>
+            <Heading>Accounts</Heading>
             <StyledButton>
                 <AddAccountBTN isInHome={false} />
             </StyledButton>

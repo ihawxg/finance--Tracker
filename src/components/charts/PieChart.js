@@ -4,6 +4,7 @@ import { Pie } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { useSelector } from 'react-redux';
 import { getColor } from "../../utils/util";
+import { isWithinInterval } from 'date-fns';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -31,7 +32,7 @@ export function PieChart(props) {
     const labels = Array.from(dataMap.keys());
     const data = Array.from(dataMap.values()).map(data => data.amount);
     const colors = Array.from(dataMap.values()).map(data => data.color);
-  
+   
     const pieData = {
       labels,
       datasets: [
@@ -41,7 +42,7 @@ export function PieChart(props) {
           backgroundColor: colors,
           borderColor: "#FFF",
           borderWidth: 2,
-        },
+        }
       ],
     };
     return <ChartContainer><Pie data={pieData} /></ChartContainer>;
