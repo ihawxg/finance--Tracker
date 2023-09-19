@@ -62,7 +62,7 @@ const Box = styled.div`
     width: 47%;
     display : flex;
     flex-flow : row wrap;
-    justify-content : space-evenly;
+    
     border : 1px solid rgba(68, 18, 96, .1);
     border-radius: 20px;
     box-shadow: 2px 3px 10px rgba(68, 18, 96, .2);

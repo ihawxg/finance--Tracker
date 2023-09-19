@@ -1,4 +1,4 @@
-import styles from "./styles/boxTest_module.css";
+
 import styled from "styled-components"; 
 import React from "react";
 import { BsWallet2, BsArrowUpRight, BsArrowDownRight, BsReceipt } from "react-icons/bs";

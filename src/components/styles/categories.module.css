@@ -1,13 +1,5 @@
 .container{
-    /* width: 100%; */
     display: flex;
     flex-wrap: wrap;
-    /* row-gap: 10px; */
-    /* margin-left: 30px; */
+    justify-content: center;
 }
-
-/* @media (max-width: 1680px){
-    .container{
-        margin-left: 60px;
-    }
-} */

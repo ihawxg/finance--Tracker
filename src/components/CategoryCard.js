@@ -1,4 +1,4 @@
-import styles from "./styles/categoryBox_module.css";
+import styles from "./styles/categoryBox.module.css";
 import styled from "styled-components";
 import React from "react";
 import Box from '@mui/material/Box';
@@ -37,7 +37,7 @@ export default function CategoryCard(props) {
 
     return (
         <>
-            <StyledPaper className="boxContainer">
+            <StyledPaper className={styles.boxContainer}>
                 <CategoryHeading>{props.label}</CategoryHeading>
                 <div className="increaseBox">
                     <ColorCard onClick={handleClick} color={props.color}/>

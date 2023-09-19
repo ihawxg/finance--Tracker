@@ -3,7 +3,6 @@ import AddCategoryBTN from '../AddCategoryBTN';
 import AddGoalButton from '../AddGoalButton';
 import AddAccountBTN from '../AddAccountBTN'
 import styled from 'styled-components';
-import styles from '../styles/total_box.module.css';
 import { useSelector } from "react-redux";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Pie } from 'react-chartjs-2';
@@ -160,8 +159,8 @@ const ChartWrapper = styled.div`
     min-width: 360px;
     margin-left: auto;
     
-    @media (max-width: 1287px){
-        width: 558px;
+    @media (max-width: 1158px){
+        width: 411px;
     }
 
     @media (min-width: 1300px){
