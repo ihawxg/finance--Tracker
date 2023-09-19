@@ -11,10 +11,14 @@ import { addGoal } from '../redux/actions/userActions';
 export default function AddGoalButton(props) {
   const [open, setOpen] = React.useState(false);
   const user = useSelector(state => state.userData.user);
+  const [nameVal, setNameVal] = React.useState("");
+  const [amountVal, setAmountVal] = React.useState("");
 
   const dispatch = useDispatch();
 
   const handleClickOpen = () => {
+    setNameVal("");
+    setAmountVal("");
     setOpen(true);
   };
 
@@ -34,10 +38,7 @@ export default function AddGoalButton(props) {
   function handleAmountChange(ev) {
     setAmountVal(ev.target.value);
   }
-  
-  const [nameVal, setNameVal] = React.useState("");
-  const [amountVal, setAmountVal] = React.useState("");
-
+ 
   return (
     <div>
       <Button className="w-200" variant="contained" color="success" onClick={handleClickOpen}>
@@ -45,35 +46,37 @@ export default function AddGoalButton(props) {
       </Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>{props.title}</DialogTitle>
-        <DialogContent>
+        <DialogContent sx={{ display : 'flex', flexFlow : 'column wrap', gap: '10px' }}>
         
             <TextField 
-            margin="dense"
-            id="name"
-            label="Goal Name"
-            type="text"
-            fullWidth
-            variant="standard"
-            value={nameVal}
-            onInput={handleNameChange}
+              margin="dense"
+              id="name"
+              color="secondary"
+              label="Goal Name"
+              type="text"
+              sx={{width : '240px'}}
+              variant="outlined"
+              value={nameVal}
+              onInput={handleNameChange}
           />
 
             <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Goal Amount"
-            type="number"
-            fullWidth
-            variant="standard"
-            value={amountVal}
-            onInput={handleAmountChange}
+              autoFocus
+              color="secondary"
+              margin="dense"
+              id="name"
+              label="Goal Amount"
+              type="number"
+              sx={{width : '240px'}}
+              variant="outlined"
+              value={amountVal}
+              onInput={handleAmountChange}
           />
 
         </DialogContent>
         <DialogActions>
-          <Button fullWidth={true} onClick={handleClose}>Cancel</Button>
-          <Button fullWidth={true} variant="contained" onClick={handleAdd}>Add</Button>
+          <Button color="secondary" fullWidth onClick={handleClose}>Cancel</Button>
+          <Button color="secondary" fullWidth variant="contained" disabled={!(nameVal && amountVal)} onClick={handleAdd}>Add</Button>
         </DialogActions>
       </Dialog>
     </div>

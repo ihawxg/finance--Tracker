@@ -16,7 +16,7 @@ import styles from "./styles/pages.module.css";
 
 export default function AddCategoryBTN(props) {
   const [open, setOpen] = React.useState(false);
-  const [categoryInfo, setCategoryInfo] = React.useState({name: "", type: "expense"});
+  const [categoryInfo, setCategoryInfo] = React.useState({name: "", type: null});
   const [value, setValue] = React.useState('expense');
   const [color, setColor] = React.useState("#fff");
 
@@ -29,6 +29,8 @@ export default function AddCategoryBTN(props) {
   };
 
   const handleClose = () => {
+    setCategoryInfo({name: "", type: null});
+    setValue("")
     setOpen(false);
   };
 
@@ -76,18 +78,16 @@ export default function AddCategoryBTN(props) {
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>{props.operation === "edit" ? "Edit" : "Add"} Category</DialogTitle>
         <DialogContent>
-          <DialogContentText>
-          {props.operation === "edit" ? "Edit category name or type" : "Enter category name and type!" }
-          </DialogContentText>
           <TextField
             autoFocus
+            color="secondary"
             margin="dense"
             id="categoryName"
             label="Category Name"
             name="name"
             type="text"
             fullWidth
-            variant="standard"
+            variant="outlined"
             value={categoryInfo.name}
             onChange={handleChangeText}
           />
@@ -98,8 +98,8 @@ export default function AddCategoryBTN(props) {
             name="type"
             value={value}
             onChange={handleRadioChange}>
-              <FormControlLabel value="income" control={<Radio />} label="Income" />
-              <FormControlLabel value="expense" control={<Radio />} label="Expense" />
+              <FormControlLabel value="income" control={<Radio color="success" />} label="Income" />
+              <FormControlLabel value="expense" control={<Radio color="error" />} label="Expense" />
           </RadioGroup>
           
           <HexColorPicker color={color} onChange={setColor}/>
@@ -107,8 +107,8 @@ export default function AddCategoryBTN(props) {
 
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}> Cancel </Button>
-          <Button onClick={handleAdd} disabled={!categoryInfo.name}> {props.operation === "edit" ? "Edit Category" : "Add Category" } </Button>
+          <Button fullWidth color="secondary" onClick={handleClose}> Cancel </Button>
+          <Button fullWidth color="secondary" variant='contained' onClick={handleAdd} disabled={!(categoryInfo.name && categoryInfo.type && color)}> {props.operation === "edit" ? "Edit Category" : "Add Category" } </Button>
         </DialogActions>
       </Dialog>
     </div>

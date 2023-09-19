@@ -16,6 +16,7 @@ import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import FlagIcon from '@mui/icons-material/Flag';
 import { useDispatch, useSelector } from "react-redux";
 import { logoutAction } from "../redux/actions/userActions";
+import { closeHeader, openHeader } from "../redux/actions/headerActions";
 
 export default function Header(){
    
@@ -25,6 +26,7 @@ export default function Header(){
 
     const handleClick = () => {
         setNavStatusOpen(!navStatusOpen);
+        dispatch(navStatusOpen ? closeHeader() : openHeader());
     }
     return (
         <>

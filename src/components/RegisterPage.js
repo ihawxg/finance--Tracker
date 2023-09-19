@@ -131,11 +131,55 @@ export default function RegisterPage(){
                 <div className={styles.Regform}>
                 <h3 className={styles.formText}>Registration</h3>
                     <form className={styles.input_container}>
-                        <TextField fullWidth name="firstName" id="fname" label="First Name" variant="outlined" autoComplete="current-first-name" value={userData.firstName} onInput={e => handleInput(e)} />
-                        <TextField fullWidth name="lastName" id="lname" label="Last Name" variant="outlined" autoComplete="current-last-name" value={userData.lastName} onInput={e => handleInput(e)}/>
-                        <TextField fullWidth name="email" id="email" label="Email" variant="outlined" value={userData.email} autoComplete="current-email" onInput={e => handleInput(e)}/>
-                        <TextField fullWidth name="pass" id="pass" label="Password" type="password" value={userData.pass} autoComplete="current-password" onInput={e => handleInput(e)}/>
-                        <TextField fullWidth name="confirm" id="pass-rep" label="Repeat Password" type="password" value={userData.confirm} autoComplete="current-password" onInput={e => handleInput(e)}/>
+                        <TextField 
+                            fullWidth 
+                            name="firstName" 
+                            id="fname" label="First Name" 
+                            variant="outlined" 
+                            autoComplete="current-first-name" 
+                            value={userData.firstName}
+                            inputProps={{ maxLength: 16 }} 
+                            onInput={e => handleInput(e)} />
+                        <TextField 
+                            fullWidth 
+                            name="lastName" 
+                            id="lname" 
+                            label="Last Name" 
+                            variant="outlined" 
+                            autoComplete="current-last-name" 
+                            value={userData.lastName} 
+                            inputProps={{ maxLength: 16 }} 
+                            onInput={e => handleInput(e)}/>
+                        <TextField 
+                            fullWidth 
+                            name="email" 
+                            id="email" 
+                            label="Email" 
+                            variant="outlined" 
+                            value={userData.email} 
+                            autoComplete="current-email" 
+                            inputProps={{ maxLength: 36 }} 
+                            onInput={e => handleInput(e)}/>
+                        <TextField 
+                            fullWidth 
+                            name="pass" 
+                            id="pass" 
+                            label="Password" 
+                            type="password" 
+                            value={userData.pass} 
+                            autoComplete="current-password" 
+                            inputProps={{ maxLength: 16 }} 
+                            onInput={e => handleInput(e)}/>
+                        <TextField 
+                            fullWidth 
+                            name="confirm" 
+                            id="pass-rep" 
+                            label="Repeat Password" 
+                            type="password" 
+                            value={userData.confirm} 
+                            autoComplete="current-password" 
+                            inputProps={{ maxLength: 16 }} 
+                            onInput={e => handleInput(e)}/>
                     </form>
                     <div className={styles.dateCurrencyContainer}>
                         <DatePick disabled={true} name="birthDate" label="Birthdate" handleDateChange={setUserData}/>

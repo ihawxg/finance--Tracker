@@ -8,8 +8,9 @@ import { StyledButton } from "./BudgetsPage";
 import { useSelector } from 'react-redux';
 export default function GoalsPage() {
     const user = useSelector(state => state.userData.user);
+    const headerOpen = useSelector(state => state.headerStatus.isOpen);
     return (
-        <StyledPage>
+        <StyledPage status={headerOpen}>
             <StyledButton>
                 <AddGoalButton title="Add New Goal" />
             </StyledButton>
@@ -30,7 +31,7 @@ const HistoryHeader = styled(Heading)`
 `
 const CustomPaper = styled(Paper)`
     margin-top: 25px;
-    background: #A1FFCE;
-    background: -webkit-linear-gradient(to right, #FAFFD1, #A1FFCE);
-    background: linear-gradient(to right, #FAFFD1, #A1FFCE);
+    background: #D3CCE3;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #E9E4F0, #D3CCE3);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #E9E4F0, #D3CCE3); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 `

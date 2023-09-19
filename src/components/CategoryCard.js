@@ -65,10 +65,7 @@ const CategoryHeading = styled.h4`
     font-weight: 600;
 `
 const StyledPaper = styled(Paper)`
-   
-    background: #A1FFCE;
-    background: -webkit-linear-gradient(to right, #FAFFD1, #A1FFCE);
-    background: linear-gradient(to right, #FAFFD1, #A1FFCE);
+
     border-radius: 20px;
     box-shadow: 2px 3px 10px rgba(68, 18, 96, .2);
     width: 190px;

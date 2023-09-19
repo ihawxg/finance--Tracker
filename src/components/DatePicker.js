@@ -10,12 +10,15 @@ export default function BasicDatePicker(props) {
     <StyledDate>
      <LocalizationProvider dateAdapter={AdapterDateFns}>
       <DatePicker
-        label={props.label}
+        label="Pick Date"
         value={props.value}
         onChange={date => props.onChange(date)}
         renderInput={(params) => <TextField {...params} />}
         maxDate={new Date()}
-      />
+        renderInput={(props) => (
+            <TextField sx={{ width : '240px' }} {...props}  color="secondary"  />
+        )}
+        />
     </LocalizationProvider>
     </StyledDate>
    

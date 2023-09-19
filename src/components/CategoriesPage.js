@@ -7,9 +7,9 @@ import { StyledButton } from "./BudgetsPage";
 
 export default function CategoriesPage() {
     const user = useSelector(state => state.userData.user);
-
+    const headerOpen = useSelector(state => state.headerStatus.isOpen);
     return (
-        <StyledPage>
+        <StyledPage status={headerOpen}>
             <StyledButton>
                 <AddCategoryBTN isInHome={false}/>
             </StyledButton>

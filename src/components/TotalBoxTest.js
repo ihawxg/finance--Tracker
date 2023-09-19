@@ -61,7 +61,7 @@ export default function TotalBoxTest(props){
 const Container = styled.div`
     min-height: 100px;
     position: relative;
-    width: 520px;
+    width: 100%;
     border-radius: 5px;
     display: flex;
     background: #ad5389;

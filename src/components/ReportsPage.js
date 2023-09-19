@@ -17,7 +17,8 @@ export default function ReportsPage() {
     const [amountRange, setAmountRange] = useState([0, max]);
     const [dateRange, setDateRange] = useState([null, null]);
     const user = useSelector(state => state.userData.user);
-   
+    const headerOpen = useSelector(state => state.headerStatus.isOpen);
+
    const filterTransactions = (accounts, amount, date) => {
         let filtered = user.transactions.filter(transaction => {
                 return accounts.length ? accounts.indexOf(transaction.account) > -1 : transaction;
@@ -42,17 +43,17 @@ export default function ReportsPage() {
    }
   
     return (
-        <StyledPage>
+        <StyledPage status={headerOpen}>
             <Heading>Reports & Analytics</Heading>
             <StyledFilters>
-                    <FiltersRow>
+                    <Row>
                         
-                    <AccountFilter value={selectedAccounts} onChange={(e) => { setSelectedAccounts(e.target.value); filterTransactions(e.target.value, amountRange, dateRange)} } />
-                    <AmountRangeFilter value={amountRange} max={max} onChange={ (e) => { setAmountRange(e.target.value); filterTransactions(selectedAccounts, e.target.value, dateRange) }} />
-                    <DateRangeFilter value={dateRange} onChange={ (e) => { setDateRange(e); filterTransactions(selectedAccounts, amountRange, e)} } />
-                    <StyledButton onClick={clearFilters}>Clear Filters</StyledButton>
-                        
-                    </FiltersRow>
+                        <AccountFilter value={selectedAccounts} onChange={(e) => { setSelectedAccounts(e.target.value); filterTransactions(e.target.value, amountRange, dateRange)} } />
+                        <DateRangeFilter value={dateRange} onChange={ (e) => { setDateRange(e); filterTransactions(selectedAccounts, amountRange, e)} } />
+                        <FullWidthButton  onClick={clearFilters}>Clear Filters</FullWidthButton>
+                        <AmountRangeFilter value={amountRange} max={max} onChange={ (e) => { setAmountRange(e.target.value); filterTransactions(selectedAccounts, e.target.value, dateRange) }} />
+
+                    </Row>
 
             </StyledFilters>
       {transactions.length ? (
@@ -89,13 +90,13 @@ const PieCharts = styled.div`
     display: flex;
     flex-flow : row wrap;
     justify-content: center;
+    
 
 `
-const FiltersRow = styled(Row)`
-   flex-direction: column;
-   align-items : center;
+const FullWidthButton = styled(StyledButton)`
+   width: 100%;
 `
 const Charts = styled(Account)`
-   max-width: 100%;
+   max-width: 92%;
    margin-top: -15px;
 `

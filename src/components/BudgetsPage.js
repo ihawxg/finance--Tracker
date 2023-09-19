@@ -10,8 +10,10 @@ export default function BudgetsPage() {
     const handleClick = (category) => {
         dispatch(removeBudget(user, category));
     }
+    const headerOpen = useSelector(state => state.headerStatus.isOpen);
+
     return (
-        <StyledPage>
+        <StyledPage status={headerOpen}>
             <Heading>Budgets</Heading>
             <StyledButton>
                 <FormDialog value="Budget" title="Add Budget" />
@@ -39,7 +41,7 @@ export default function BudgetsPage() {
 
 export const StyledButton = styled.div` 
     position: fixed;
-    top: 20px; right: 20px;
+    top: 0; right: 0px;
 `
 const Container = styled.div`
     margin: 20px;

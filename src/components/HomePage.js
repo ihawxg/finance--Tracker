@@ -22,7 +22,7 @@ export default function Home() {
     const user = useSelector(state => state.userData.user);
     const [toggle, setToggle] = React.useState(true);
     const dataMap = new Map();
-
+    const headerOpen = useSelector(state => state.headerStatus.isOpen);
     const handleClick = () => {
         setToggle(prev => !prev);
     }
@@ -75,13 +75,15 @@ export default function Home() {
     }
 
     return (
-        <StyledPage>
+        <StyledPage status={headerOpen}>
             <Heading>Welcome, {user.firstName}</Heading>
             <Row>
                 <ColumnWrapper>
                     <TotalBoxTest />
-                    <MainButtons> <FormDialog value="Expense" title="Add an expense" />
-                        <FormDialog value="Income" title="Add an income" /></MainButtons>
+                    <MainButtons> 
+                        <FormDialog value="Expense" title="Add an expense" />
+                        <FormDialog value="Income" title="Add an income" />
+                    </MainButtons>
                     <RecentHistoryTable />
                 </ColumnWrapper>
 
@@ -109,6 +111,7 @@ const MainButtons = styled.div`
     flex-direction : row;
     justify-content: space-between;
     width: 100%;
+    gap: 10px;
 `
 const Widget = styled(Account)`
     margin: 0;
@@ -118,28 +121,29 @@ const Widget = styled(Account)`
 const Row = styled.div`
     display: flex;
     flex-flow: row wrap;
-    justify-content : space-between;
+    justify-content : space-evenly;
+    align-items: flex-start;
+    gap: 20px;
 `
 const ColumnWrapper = styled.div`
     display:flex;
     flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
+    justify-content: space-between;
+    align-items: center;
     gap: 20px;
+
 `
 const ButtonsWrapper = styled.div`
-    // position:fixed;
-    // right: 80px; bottom : 30px;
     display: flex;
     flex-flow: row wrap;
     justify-content : flex-start;
-    gap : 5px;
-    width: 410px;
+    gap : 10px;
+    max-width: 410px;
 `
 
 const ChartWrapper = styled.div`
-    height: 360px;
-    width:360px;
+    min-height: 360px;
+    min-width: 360px;
     margin-left: auto;
     
 `

@@ -11,24 +11,21 @@ import { addAccountAction, editAccountAction } from '../redux/actions/userAction
 
 export default function AddAccountBTN(props) {
   const [open, setOpen] = React.useState(false);
-  const [accountInfo, setAccountInfo] = React.useState({name: "", amount: ""});
-
+  const [accountInfo, setAccountInfo] = React.useState({ name: "", amount: "" });
   const dispatch = useDispatch();
 
   const user = useSelector(state => state.userData.user);
-
   const handleClickOpen = () => {
     setOpen(true);
   };
-
   const handleClose = () => {
+    setAccountInfo({name : "", amount: ""})
     setOpen(false);
   };
-
   const handleAdd = () => {
     dispatch(addAccountAction(user, accountInfo.name, accountInfo.amount, user.accounts))
-    
-    setAccountInfo({name: "", amount: ""});
+
+    setAccountInfo({ name: "", amount: "" });
     setOpen(false);
   }
 
@@ -37,57 +34,56 @@ export default function AddAccountBTN(props) {
     //use redux to update the account
     dispatch(editAccountAction(user, props.name, accountInfo.name, user.accounts));
 
-    setAccountInfo({name: "", amount: ""});
+    setAccountInfo({ name: "", amount: "" });
     setOpen(false);
   }
 
   const handleChange = (ev) => {
-    setAccountInfo(prevInfo => ({...prevInfo, [ev.target.name]: ev.target.value}));
+    setAccountInfo(prevInfo => ({ ...prevInfo, [ev.target.name]: ev.target.value }));
   }
 
   return (
     <div>
-      <Button 
-          className={props.isInHome ? "w-200" : "w-100"}
-          variant="contained" 
-          color={ props.isInHome ? 'secondary' : 'success'} onClick={handleClickOpen}>
-          Add Account
+      <Button
+        className={props.isInHome ? "w-200" : "w-100"}
+        variant="contained"
+        color={props.isInHome ? 'secondary' : 'success'} onClick={handleClickOpen}>
+        Add Account
       </Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle> Add Account</DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            Enter name and start wage for the account you want to {props.operation === "edit" ? "edit" : "add"}!
-          </DialogContentText>
           <TextField
             autoFocus
+            sx={{ width: '240px' }}
             margin="dense"
+            color="secondary"
             id="accName"
             label="Account Name"
             name="name"
             type="text"
-            fullWidth
-            variant="standard"
+            variant="outlined"
             value={accountInfo.name}
             onChange={handleChange}
           />
-          <br/>
+          <br />
           {props.operation !== "edit" && <TextField
             autoFocus
             margin="dense"
+            color="secondary"
             id="accWage"
             label="Start Wage"
             name="amount"
             type="number"
-            fullWidth
-            variant="standard"
+            sx={{ width: '240px', marginTop : "15px" }}
+            variant="outlined"
             value={accountInfo.amount}
             onChange={handleChange}
           />}
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}> Cancel </Button>
-          <Button onClick={props.operation === "edit" ? handleEdit : handleAdd}>  {props.operation === "edit" ? "Edit" : "Add"} Account </Button>
+          <Button color="secondary"  sx={{width : '45%'}} onClick={handleClose}> Cancel </Button>
+          <Button color="secondary"  sx={{width : '50%'}} variant='contained' disabled={!(accountInfo.name && accountInfo.amount)} onClick={props.operation === "edit" ? handleEdit : handleAdd}>  {props.operation === "edit" ? "Edit" : "Add"} Account </Button>
         </DialogActions>
       </Dialog>
     </div>

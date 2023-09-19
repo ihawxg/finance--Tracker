@@ -39,10 +39,9 @@
     padding: 40px;
     min-height: 100vh;
     align-items: center;
-    background: #A1FFCE;
-    background: -webkit-linear-gradient(to right, #FAFFD1, #A1FFCE); 
-    background: linear-gradient(to right, #FAFFD1, #A1FFCE);
-
+    background: #ad5389;
+    background: -webkit-linear-gradient(to right, #3c1053, #ad5389);
+    background: linear-gradient(to right, #3c1053, #ad5389);
 }
 
 .formText{
@@ -52,7 +51,7 @@
     margin-top: 20px;
     text-transform: uppercase;
     letter-spacing: 2px;
-    color : #707070;
+    color :#3c1053;
 }
 
 .startBudget{

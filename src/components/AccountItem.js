@@ -31,7 +31,7 @@ const AccountName = styled.div`
     margin-top: 20px;
 `
 export const Account = styled.div`
-    max-width: 768px;
+    max-width: 900px;
     margin: 30px auto;
     padding: 30px;
     border : 1px solid rgba(68, 18, 96, .1);

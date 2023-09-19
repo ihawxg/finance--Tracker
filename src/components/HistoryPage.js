@@ -18,12 +18,13 @@ export default function HistoryPage() {
     const [selectedCategories, setSelectedCategories] = useState([]);
     const [dateRange, setDateRange] = useState([null, null]);
     const user = useSelector(state => state.userData.user)
+    const headerOpen = useSelector(state => state.headerStatus.isOpen);
 
     const filterTransactions = (accounts, incomeExpense, amount, categories, date) => {
-        let filtered = user.transactions.filter(transaction => {
+        let filtered =  user.transactions.filter(transaction => {
             return accounts.length ? accounts.indexOf(transaction.account) > -1 : transaction;
         }).filter(transaction => {
-            if ((incomeExpense.length === 0) || (incomeExpense.indexOf(transaction.type) > -1)) return transaction;
+            return ((incomeExpense.length === 0) || (incomeExpense.indexOf(transaction.type) > -1));
         }).filter(transaction => {
             let current = new Date(transaction.date).getTime();
             if (date[0]) {
@@ -47,15 +48,16 @@ export default function HistoryPage() {
         filterTransactions(selectedAccounts, selectedType, amountRange, selectedCategories, dateRange)
     }
     return (
-        <StyledPage>
+        <StyledPage status={headerOpen}>
             <Heading>Transaction history</Heading>
             <StyledFilters>
                 <AccountFilter value={selectedAccounts} onChange={(e) => { setSelectedAccounts(e.target.value); filterTransactions(e.target.value, selectedType, amountRange, selectedCategories, dateRange) }} />
                 <TypeFilter value={selectedType} onChange={(e) => { setSelectedType(e.target.value); filterTransactions(selectedAccounts, e.target.value, amountRange, selectedCategories, dateRange) }} />
                 <CategoryFilter value={selectedCategories} disabled={false} onChange={(e) => { setSelectedCategories(e.target.value); filterTransactions(selectedAccounts, selectedType, amountRange, e.target.value, dateRange) }} />
-                <DateRangeFilter disabled={true} value={dateRange} onChange={(e) => { setDateRange(e); filterTransactions(selectedAccounts, selectedType, amountRange, selectedCategories, e) }} />
-                <AmountRangeFilter value={amountRange} max={max} onChange={(e) => { setAmountRange(e.target.value); filterTransactions(selectedAccounts, selectedType, e.target.value, selectedCategories, dateRange) }} />
+                <DateRangeFilter disabled={true} value={dateRange} onChange={(e) => { setDateRange(e); filterTransactions(selectedAccounts, selectedType, amountRange, selectedCategories, e) }} /> 
                 <StyledButton onClick={clearFilters}>Clear Filters</StyledButton>
+                <AmountRangeFilter value={amountRange} max={max} onChange={(e) => { setAmountRange(e.target.value); filterTransactions(selectedAccounts, selectedType, e.target.value, selectedCategories, dateRange) }} />
+               
             </StyledFilters>
             <DataTable data={transactions} />
         </StyledPage>
@@ -63,9 +65,11 @@ export default function HistoryPage() {
 }
 
 export const StyledPage = styled.div`
-    width: 70%;
-    margin: 0 auto 30px ;
+    width: 80% ;
+    transform: ${props => props.status ? `translateX(8%)` : `translateX(0)`};
     text-align: center;
+    margin: 0 auto 30px;
+    transition: transform .3s ease-in-out;
 `
 export const Column = styled.div`
     display: flex;
@@ -77,20 +81,31 @@ export const Row = styled.div`
     flex-flow : row wrap;
     justify-content : space-between;
     gap: 10px;
+    @media(max-width: 768px) {
+        flex-flow : column wrap;
+        margin-left: auto; margin-right: auto;
+        
+    } 
 `
 export const StyledFilters = styled.div`
     display: flex;
+    width: 100%;
     flex-flow : row wrap;
-    justify-content: center;
+    justify-content: space-between;
     gap:10px;
     align-items: center;    
+    @media(max-width: 768px) {
+        flex-flow : column wrap;
+        margin-left: auto; margin-right: auto;
+        
+    } 
 `
 export const StyledButton = styled.button`
-    width: 100%;
-    margin: 10px;
-    border-radius: 5px;
+    width: 300px;
+    margin: 7px;
+    border-radius: 3px;
     box-sizing: border-box;
-    padding: 10px 0;
+    padding: 14px 0;
     color:purple;
     background-color : white;
     border: 1px solid purple;

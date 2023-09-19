@@ -12,9 +12,10 @@ export default function SelectVariants(props) {
 
   return (
     <div>
-      <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+      <FormControl color="secondary" variant="outlined" sx={{ width: '240px' }} >
         <InputLabel id="demo-simple-select-standard-label">{props.name === "account" ? "Account" : "Category"}</InputLabel>
         <Select
+
           disabled={props.disabled}
           labelId="demo-simple-select-standard-label"
           id="demo-simple-select-standard"
