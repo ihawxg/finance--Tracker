@@ -10,9 +10,9 @@ export default function BudgetItem({ name, amount, max, onClick, gray, dateFrom,
 
     const classNames = []
     if(amount > max) {
-        classNames.push('bg-danger', 'bg-opacity-10')
+        classNames.push('bg-danger', 'bg-opacity-10');
     }   else if(gray) {
-        classNames.push('bg-light', 'bg-opacity-80')
+        classNames.push('bg-light', 'bg-opacity-80');
     }
     const getDateString = (date) => {
         let month;
@@ -55,7 +55,7 @@ export default function BudgetItem({ name, amount, max, onClick, gray, dateFrom,
                     now={amount}    
                 />
                 <Stack direction='horizontal' gap='2' className='mt-4'>
-                    <FormDialog value="Budget" title="Edit Budget" operation="edit" />
+                    <FormDialog value="Budget" title="Edit Budget" operation="edit" editDetails={ name, amount, max, onClick, gray, dateFrom, dateTo }/>
                     <Button variant="outlined" color="error" className='ms-auto' onClick={onClick}> Remove </Button>
                 </Stack>
                 
