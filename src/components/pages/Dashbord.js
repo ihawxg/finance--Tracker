@@ -1,18 +1,18 @@
 import React from "react";
-import AddCategoryBTN from './AddCategoryBTN';
-import AddGoalButton from './AddGoalButton';
-import AddAccountBTN from './AddAccountBTN'
+import AddCategoryBTN from '../AddCategoryBTN';
+import AddGoalButton from '../AddGoalButton';
+import AddAccountBTN from '../AddAccountBTN'
 import styled from 'styled-components';
 import styles from './styles/total_box.module.css';
 import { useSelector } from "react-redux";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Pie } from 'react-chartjs-2';
-import { getColor } from "../utils/util";
-import RecentHistoryTable from "./RecentHistoryTable";
+import { getColor } from "../../utils/util";
+import RecentHistoryTable from "../RecentHistoryTable";
 import TotalBoxTest from "./TotalBoxTest";
 import { Heading, StyledPage } from "./HistoryPage";
-import FormDialog from './FormDialog';
-import { Account } from './AccountItem';
+import FormDialog from '../FormDialog';
+import { Account } from '../AccountItem';
 
 
 ChartJS.register(ArcElement, Tooltip, Legend);

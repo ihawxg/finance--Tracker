@@ -4,7 +4,7 @@ import React from "react";
 import { BsWallet2, BsArrowUpRight, BsArrowDownRight, BsReceipt } from "react-icons/bs";
 import { useSelector } from "react-redux";
 
-export default function TotalBoxTest(props){
+export default function TotalBox(props){
     const [counter, setCounter] = React.useState(0);
     const [toggle, setToggle] = React.useState(false);
 
@@ -35,6 +35,13 @@ export default function TotalBoxTest(props){
             label = "Total Expenses "
             break;
         case 3:
+            user.accounts.forEach(acc => {
+                details += acc.expenses.length + acc.incomes.length;
+            });
+            icon = <BsReceipt />;
+            label = "Total Transactions "
+            break;
+        default: 
             user.accounts.forEach(acc => {
                 details += acc.expenses.length + acc.incomes.length;
             });

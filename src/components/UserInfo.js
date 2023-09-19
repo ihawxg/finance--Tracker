@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import EditButton from './EditButton';
 import { updateUserInfoAction } from '../redux/actions/userActions';
 import styled from 'styled-components';
-import { Heading } from './HistoryPage';
+import { Heading } from './pages/HistoryPage';
 export default function UserInfo(){
 
     const [editable, setEditable] = React.useState(false);

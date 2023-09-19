@@ -36,6 +36,7 @@ export default function BudgetItem({ name, amount, max, onClick, gray, dateFrom,
         }
         return `${month} ${date.getDate()}, ${date.getFullYear()}`
     }
+
     return(
         <Card className={classNames.join(" ")}>
             <Card.Body>
@@ -55,7 +56,7 @@ export default function BudgetItem({ name, amount, max, onClick, gray, dateFrom,
                     now={amount}    
                 />
                 <Stack direction='horizontal' gap='2' className='mt-4'>
-                    <FormDialog value="Budget" title="Edit Budget" operation="edit" editDetails={ name, amount, max, onClick, gray, dateFrom, dateTo }/>
+                    <FormDialog value="Budget" title="Edit Budget" operation="edit" editdetails={ {name, max, dateFrom, dateTo} }/>
                     <Button variant="outlined" color="error" className='ms-auto' onClick={onClick}> Remove </Button>
                 </Stack>
                 

@@ -1,8 +1,8 @@
-import AddAccountBTN from "./AddAccountBTN";
+import AddAccountBTN from "../AddAccountBTN";
 import { useSelector } from "react-redux";
 
 import { StyledPage, Heading } from "./HistoryPage";
-import { AccountItem } from './AccountItem';
+import { AccountItem } from '../AccountItem';
 import { StyledButton } from "./BudgetsPage";
 
 export default function AccountsPage(){

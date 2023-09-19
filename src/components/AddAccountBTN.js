@@ -8,6 +8,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useDispatch, useSelector } from 'react-redux';
 import { addAccountAction, editAccountAction } from '../redux/actions/userActions';
+import { OurButton } from "./FormDialog";
 
 export default function AddAccountBTN(props) {
   const [open, setOpen] = React.useState(false);
@@ -29,27 +30,19 @@ export default function AddAccountBTN(props) {
     setOpen(false);
   }
 
-  const handleEdit = () => {
-
-    //use redux to update the account
-    dispatch(editAccountAction(user, props.name, accountInfo.name, user.accounts));
-
-    setAccountInfo({ name: "", amount: "" });
-    setOpen(false);
-  }
-
   const handleChange = (ev) => {
     setAccountInfo(prevInfo => ({ ...prevInfo, [ev.target.name]: ev.target.value }));
   }
 
   return (
     <div>
-      <Button
+      <OurButton
         className={props.isInHome ? "w-200" : "w-100"}
         variant="contained"
-        color={props.isInHome ? 'secondary' : 'success'} onClick={handleClickOpen}>
+        color='secondary'
+        onClick={handleClickOpen}>
         Add Account
-      </Button>
+      </OurButton>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle> Add Account</DialogTitle>
         <DialogContent>
@@ -83,7 +76,7 @@ export default function AddAccountBTN(props) {
         </DialogContent>
         <DialogActions>
           <Button color="secondary"  sx={{width : '45%'}} onClick={handleClose}> Cancel </Button>
-          <Button color="secondary"  sx={{width : '50%'}} variant='contained' disabled={!(accountInfo.name && accountInfo.amount)} onClick={props.operation === "edit" ? handleEdit : handleAdd}>  {props.operation === "edit" ? "Edit" : "Add"} Account </Button>
+          <Button color="secondary"  sx={{width : '50%'}} variant='contained' disabled={!(accountInfo.name && accountInfo.amount)} onClick={handleAdd}>  Add Account </Button>
         </DialogActions>
       </Dialog>
     </div>

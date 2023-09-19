@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
-import { removeBudget } from "../redux/actions/userActions";
-import FormDialog from "./FormDialog";
+import { removeBudget } from "../../redux/actions/userActions";
+import FormDialog from "../FormDialog";
 import { StyledPage, Heading } from "./HistoryPage";
-import BudgetItem from "./BudgetItem";
+import BudgetItem from "../BudgetItem";
 import styled from 'styled-components';
 export default function BudgetsPage() {
     const user = useSelector(state => state.userData.user);

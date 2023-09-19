@@ -1,5 +1,5 @@
 import styles from "./styles/about_us.module.css"
-import Form from './ContactForm';
+import Form from '../ContactForm';
 import styled from 'styled-components';
 import { StyledPage } from './HistoryPage';
 import analytics from './imgs/analytics.png';

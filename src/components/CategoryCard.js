@@ -8,11 +8,12 @@ import { HexColorPicker } from "react-colorful";
 import { useDispatch, useSelector } from "react-redux";
 import { editExpenseColor, editIncomeColor } from "../redux/actions/userActions";
 import Paper from '@mui/material/Paper';
+import { setSnackbar } from "../redux/actions/snackbarActions";
 
 
 export default function CategoryCard(props) {
     const [open, setOpen] = React.useState(false);
-    const [color, setColor] = React.useState("#fff");
+    const [color, setColor] = React.useState(props.color);
     const user = useSelector(state => state.userData.user);
     const dispatch = useDispatch();
 
@@ -36,7 +37,7 @@ export default function CategoryCard(props) {
 
     return (
         <>
-            <StyledPaper  className="boxContainer">
+            <StyledPaper className="boxContainer">
                 <CategoryHeading>{props.label}</CategoryHeading>
                 <div className="increaseBox">
                     <ColorCard onClick={handleClick} color={props.color}/>
@@ -49,7 +50,7 @@ export default function CategoryCard(props) {
             aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
-                    <h5>Change Category Color</h5>
+                    <h5>Edit Category</h5>
                     <HexColorPicker color={color} onChange={setColor}/>
                     <Button style={{width: "180px", marginTop: "20px"}} variant="contained" onClick={handleEditColor}>Edit Color</Button>
                 </Box>
@@ -65,13 +66,12 @@ const CategoryHeading = styled.h4`
     font-weight: 600;
 `
 const StyledPaper = styled(Paper)`
-
     border-radius: 20px;
     box-shadow: 2px 3px 10px rgba(68, 18, 96, .2);
     width: 190px;
     height: 190px;
     border: none;
-    margin-right: 21px;
+    margin-right: 10px;
 `
 const ColorCard = styled.span`
     display: block;
@@ -96,9 +96,10 @@ const style = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: "200px",
+    width: "400px",
+    height: "400px",
     bgcolor: 'background.paper',
     border: '2px solid #000',
     boxShadow: 24,
     p: 4,
-  };
+};

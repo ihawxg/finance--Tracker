@@ -52,6 +52,33 @@ export const formatTime = (timestamp) => {
     return moment(timestamp).format("h:mm:ss A")
 }
 
+export const uuidv4 = () => {
+    return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+        (c ^ (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))).toString(16)
+    );
+}
+
+export const isWithinDate = (date, from, to) => {
+    const timeFrom = new Date(from).getTime();
+    const timeDate = new Date(date).getTime();
+    const timeTo = new Date(to).getTime();
+
+    return (timeFrom < timeDate && timeDate < timeTo);
+}
+
+export const getAmount = (user, from, to, category) => {
+    let amount = 0;
+    user.accounts.forEach(acc => {
+        acc.expenses.forEach(exp => {
+        
+            if(exp.category === category && isWithinDate(exp.date, from, to)){
+                amount += Number(exp.amount);
+            }
+        })
+    })
+    return amount;
+}
+
 export const getMonthFromNumber = (item) => {
     switch(item) {
         case 0 : return "January";

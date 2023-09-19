@@ -18,6 +18,8 @@
 
 .categoryContainer{
     display: flex;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
     margin-top: 10px;
 }
@@ -26,7 +28,6 @@
     display: flex;
     width: 40vw;
     flex-wrap: wrap;
-    margin-top: 50px;
 }
 
 .categoryPage{
@@ -41,9 +42,9 @@
     display: flex;
 }
 
-styles.categoryLabel{
+/* .categoryLabel{
     margin-top: 50px;
-}
+} */
 
 *{
     font-family: 'Poppins', sans-serif;

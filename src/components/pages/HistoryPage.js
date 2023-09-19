@@ -1,13 +1,13 @@
 import { useSelector } from 'react-redux';
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import GetMaxAmount from "./filters/GetMaxAmount";
-import { AccountFilter } from "./filters/AccountFilter";
-import { AmountRangeFilter } from './filters/AmountRangeFilter';
-import { CategoryFilter } from './filters/CategoryFilter';
-import { DateRangeFilter } from './filters/DateRangeFilter';
-import { TypeFilter } from './filters/TypeFilter';
-import DataTable from "./Table";
+import GetMaxAmount from "../filters/GetMaxAmount";
+import { AccountFilter } from "../filters/AccountFilter";
+import { AmountRangeFilter } from '../filters/AmountRangeFilter';
+import { CategoryFilter } from '../filters/CategoryFilter';
+import { DateRangeFilter } from '../filters/DateRangeFilter';
+import { TypeFilter } from '../filters/TypeFilter';
+import DataTable from "../Table";
 
 export default function HistoryPage() {
     const max = GetMaxAmount();

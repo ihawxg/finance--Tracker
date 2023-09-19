@@ -1,5 +1,5 @@
 import React from "react";
-import DatePick from "./DatePick";
+import DatePick from "../DatePick";
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { Link, useNavigate } from "react-router-dom";
@@ -7,14 +7,14 @@ import styles from "./styles/reg_log.module.css";
 import Card from '@mui/material/Card';
 import { useState } from 'react';
 import Alert from '@mui/material/Alert';
-import { auth } from "../firebase";
+import { auth } from "../../backendConfig/firebase";
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { db } from "../firebase";
+import { db } from "../../backendConfig/firebase";
 import { addDoc, collection } from "firebase/firestore";
 import { useDispatch } from 'react-redux';
-import { setSnackbar } from '../redux/actions/snackbarActions';
-import { basicIncomeCategories, basicExpenseCategories } from "../utils/consts";
-import SelectCurrency from "./SelectCurrency";
+import { setSnackbar } from '../../redux/actions/snackbarActions';
+import { basicIncomeCategories, basicExpenseCategories } from "../../utils/consts";
+import SelectCurrency from "../SelectCurrency";
 
 export default function RegisterPage(){
     const dispatch = useDispatch();

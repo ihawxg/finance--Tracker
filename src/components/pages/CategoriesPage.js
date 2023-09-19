@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
-import AddCategoryBTN from './AddCategoryBTN';
-import CategoryCard from "./CategoryCard";
+import AddCategoryBTN from '../AddCategoryBTN';
+import CategoryCard from "../CategoryCard";
 import { StyledPage, Heading } from './HistoryPage';
 import styled from 'styled-components'
 import { StyledButton } from "./BudgetsPage";

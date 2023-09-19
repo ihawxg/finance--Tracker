@@ -7,6 +7,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useDispatch, useSelector } from 'react-redux';
 import { addGoal } from '../redux/actions/userActions';
+import { OurButton } from "./FormDialog";
 
 export default function AddGoalButton(props) {
   const [open, setOpen] = React.useState(false);
@@ -41,9 +42,9 @@ export default function AddGoalButton(props) {
  
   return (
     <div>
-      <Button className="w-200" variant="contained" color="success" onClick={handleClickOpen}>
+      <OurButton className="w-200" variant="contained" color='secondary' onClick={handleClickOpen}>
         {props.title}
-      </Button>
+      </OurButton>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>{props.title}</DialogTitle>
         <DialogContent sx={{ display : 'flex', flexFlow : 'column wrap', gap: '10px' }}>

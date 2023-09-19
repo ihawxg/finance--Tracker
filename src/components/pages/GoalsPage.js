@@ -1,9 +1,9 @@
 import Paper from '@mui/material/Paper';
 import { Heading, StyledPage } from "./HistoryPage";
 import styled from 'styled-components';
-import GoalHistory from "./GoalsHistory";
-import GoalCard from "./GoalCard";
-import AddGoalButton from './AddGoalButton';
+import GoalHistory from "../GoalsHistory";
+import GoalCard from "../GoalCard";
+import AddGoalButton from '../AddGoalButton';
 import { StyledButton } from "./BudgetsPage";
 import { useSelector } from 'react-redux';
 export default function GoalsPage() {
