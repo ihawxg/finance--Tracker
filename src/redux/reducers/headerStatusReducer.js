@@ -9,12 +9,14 @@ export const headerStatusReducer = (state = INITIAL_STATE, action) => {
     switch(action.type) {
         case OPEN_HEADER : 
             return {
+                ...state,
                 isOpen: true
             }
         case CLOSE_HEADER : 
             return {
+                ...state,
                 isOpen : false
-            }    
+            }
         default : 
             return state;    
     }

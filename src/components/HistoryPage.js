@@ -105,7 +105,7 @@ export const StyledButton = styled.button`
     margin: 7px;
     border-radius: 3px;
     box-sizing: border-box;
-    padding: 14px 0;
+    padding: 15px 0;
     color:purple;
     background-color : white;
     border: 1px solid purple;

@@ -163,7 +163,7 @@ export default function FormDialog(props) {
             <TextField
               autoFocus
               margin="dense"
-              sx={{width : '240px', marginBottom : props.value == 'Budget' ? "15px" : "0"}}
+              sx={{width : '240px', marginBottom : props.value == 'Budget' || props.value == 'Savings' ? "15px" : "0"}}
               id="name"
               label="Amount"
               type="number"

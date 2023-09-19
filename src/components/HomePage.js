@@ -80,7 +80,7 @@ export default function Home() {
             <Row>
                 <ColumnWrapper>
                     <TotalBoxTest />
-                    <MainButtons> 
+                    <MainButtons>
                         <FormDialog value="Expense" title="Add an expense" />
                         <FormDialog value="Income" title="Add an income" />
                     </MainButtons>
@@ -90,15 +90,20 @@ export default function Home() {
                 <ColumnWrapper>
                     <Widget>
                         <ChartWrapper onClick={handleClick}>
+                            <h6>{toggle ? "Incomes" : "Expenses"}</h6>
                             <Pie data={metaData} options={options} />
                         </ChartWrapper>
                     </Widget>
                     <ButtonsWrapper>
+                        <ButtonRow>
+                            <AddAccountBTN isInHome={true} />
+                            <AddCategoryBTN isInHome={true} />
+                        </ButtonRow>
+                        <ButtonRow>
+                            <AddGoalButton sx={{ backgroundColor: 'purple' }} title="Add Goal" />
+                            <FormDialog value="Budget" title="Add Budget" />
 
-                        <AddAccountBTN isInHome={true} />
-                        <AddCategoryBTN isInHome={true} />
-                        <AddGoalButton sx={{ backgroundColor: 'purple' }} title="Add Goal" />
-                        <FormDialog value="Budget" title="Add Budget" />
+                        </ButtonRow>
 
                     </ButtonsWrapper>
                 </ColumnWrapper>
@@ -111,6 +116,15 @@ const MainButtons = styled.div`
     flex-direction : row;
     justify-content: space-between;
     width: 100%;
+    gap: 10px;
+`
+const ButtonRow = styled.div`
+    display : flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-left: auto;
     gap: 10px;
 `
 const Widget = styled(Account)`
@@ -135,10 +149,10 @@ const ColumnWrapper = styled.div`
 `
 const ButtonsWrapper = styled.div`
     display: flex;
-    flex-flow: row wrap;
-    justify-content : flex-start;
-    gap : 10px;
-    max-width: 410px;
+    flex-flow: column wrap;
+    justify-content : space-between;
+    width: 100%;
+    gap:10px;
 `
 
 const ChartWrapper = styled.div`

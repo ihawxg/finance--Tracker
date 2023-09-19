@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import styles from "./styles/nav.module.css";
 import styled from 'styled-components';
 import { useState } from "react";
@@ -19,7 +19,9 @@ import { logoutAction } from "../redux/actions/userActions";
 import { closeHeader, openHeader } from "../redux/actions/headerActions";
 
 export default function Header(){
-   
+    const location = useLocation();
+    const { pathname } = location;
+    const page = pathname.split("/")[1];
     const [navStatusOpen, setNavStatusOpen] = useState(false);
     const logged = useSelector(state => state.userData.logged);
     const dispatch = useDispatch();
@@ -42,15 +44,15 @@ export default function Header(){
                 {
                     logged && 
                     <>
-                        <Link className={styles.btn} to="/home"><HomeIcon /><LinkName>Home</LinkName></Link>
-                        <Link className={styles.btn} to="/profile"><AssignmentIndIcon/><LinkName>My Profile</LinkName></Link>
-                        <Link className={styles.btn} to="/accounts"><AccountBalanceWalletIcon /><LinkName>Accounts</LinkName></Link> 
-                        <Link className={styles.btn} to="/reports"><AssessmentIcon /><LinkName>Reports</LinkName></Link>  
-                        <Link className={styles.btn} to="/budgets"><SavingsIcon /><LinkName>Budgets</LinkName></Link>  
-                        <Link className={styles.btn} to="/goals"><FlagIcon></FlagIcon><LinkName>Goals</LinkName></Link>
-                        <Link className={styles.btn} to="/categories"><CategoryIcon/><LinkName>Categories</LinkName></Link>  
-                        <Link className={styles.btn} to="/history"><HistoryIcon /><LinkName>History</LinkName></Link> 
-                        <Link className={styles.btn} onClick={() => dispatch(logoutAction)} to="/login"><LogoutIcon /><LinkName>Logout</LinkName></Link>
+                        <Link className={page === "home" ? `${styles.active} ${styles.btn}` : `${styles.btn}`} to="/home"><HomeIcon /><LinkName>Home</LinkName></Link>
+                        <Link className={page === "profile" ? `${styles.active} ${styles.btn}` : `${styles.btn}`} to="/profile"><AssignmentIndIcon/><LinkName>My Profile</LinkName></Link>
+                        <Link className={page === "accounts" ? `${styles.active} ${styles.btn}` : `${styles.btn}`} to="/accounts"><AccountBalanceWalletIcon /><LinkName>Accounts</LinkName></Link> 
+                        <Link className={page === "reports" ? `${styles.active} ${styles.btn}` : `${styles.btn}`} to="/reports"><AssessmentIcon /><LinkName>Reports</LinkName></Link>  
+                        <Link className={page === "budgets" ? `${styles.active} ${styles.btn}` : `${styles.btn}`} to="/budgets"><SavingsIcon /><LinkName>Budgets</LinkName></Link>  
+                        <Link className={page === "goals" ? `${styles.active} ${styles.btn}` : `${styles.btn}`} to="/goals"><FlagIcon></FlagIcon><LinkName>Goals</LinkName></Link>
+                        <Link className={page === "categories" ? `${styles.active} ${styles.btn}` : `${styles.btn}`} to="/categories"><CategoryIcon/><LinkName>Categories</LinkName></Link>  
+                        <Link className={page === "history" ? `${styles.active} ${styles.btn}` : `${styles.btn}`} to="/history"><HistoryIcon /><LinkName>History</LinkName></Link> 
+                        <Link className={page === "logout" ? `${styles.active} ${styles.btn}` : `${styles.btn}`} onClick={() => dispatch(logoutAction)} to="/login"><LogoutIcon /><LinkName>Logout</LinkName></Link>
                         <StyledIcon><Logo src="logo.png" onClick={handleClick} /></StyledIcon>
                     </>
                 }
