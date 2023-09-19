@@ -4,7 +4,6 @@ import { Card, ProgressBar, Stack } from 'react-bootstrap';
 import Button from '@mui/material/Button';
 import FormDialog from "./FormDialog";
 import { useSelector } from 'react-redux';
-import styled from "styled-components";
 import { CardButtons } from './GoalCard';
 export default function BudgetItem({ name, amount, max, onClick, gray, dateFrom, dateTo }) {
 

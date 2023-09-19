@@ -54,5 +54,5 @@ export const StyledButton = styled.div`
 
 `
 const Container = styled.div`
-    margin: 20px;
+    margin: 20px 0;
 `

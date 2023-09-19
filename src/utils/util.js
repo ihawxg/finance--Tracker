@@ -52,7 +52,7 @@ export const formatDateNoDay = (timestamp) => {
     return moment(timestamp).format("MMM Do YYYY")
 }
 export const formatTime = (timestamp) => {
-    return moment(timestamp).format("h:mm:ss A")
+    return moment(timestamp).format("h:mm A")
 }
 
 export const uuidv4 = () => {

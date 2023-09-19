@@ -70,7 +70,7 @@ const StyledHeader = styled.header`
     background: #ad5389;
     background: -webkit-linear-gradient(to right, #3c1053, #ad5389);
     background: linear-gradient(to right, #3c1053, #ad5389);
-    height: 100vh;
+    height: 100%;
     width: 160px;
     display: flex;
     flex-flow: column nowrap;
