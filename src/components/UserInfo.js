@@ -18,6 +18,8 @@ export default function UserInfo(){
 
     const [user, setUser] = React.useState({firstName: currentUser.firstName, lastName: currentUser.lastName, birthdate: currentUser.birthdate});
 
+    const [pic, setPic] = React.useState("prof_pic.png");
+
     const handleClick = () => {
         const currentYear = new Date().getFullYear();
         if((currentYear - Number(user.birthdate.slice(0,4))) < 18){
@@ -31,6 +33,14 @@ export default function UserInfo(){
         setEditable(prev => !prev);
     }
 
+    const handlePictureUpdate = (ev) => {
+        if(ev.target.value.split("\\")[2].split(".")[1] !== "png" && ev.target.value.split("\\")[2].split(".")[1] !== "jpg"){
+            dispatch(setSnackbar(true, "warning", "You are trying to upload a file that is not an image!"));
+            return;
+        }
+        setPic(ev.target.value.split("\\")[2]);
+    }
+
     const handleInput = (ev) => {
         setUser(prev => ({...prev, [ev.target.name]: ev.target.value}));
     }
@@ -39,13 +49,17 @@ export default function UserInfo(){
             <CustomPaper>
                 <HeadingProfile>My Profile</HeadingProfile>
                 <Profile>
-                    <ProfilePic src="prof_pic.png" alt="profile-pic"></ProfilePic>
+                    <ProfilePic src={pic} alt="profile-pic"></ProfilePic>
                     <Info>
                         <TextField disabled={!editable} id="fname" name="firstName" label="First Name" variant="outlined" value={user.firstName} onInput={handleInput} />
                         <TextField disabled={!editable} id="lname" name="lastName" label="Last Name" variant="outlined" value={user.lastName} onInput={handleInput} />
                         <TextField disabled name="email" id="email" label="Email" variant="outlined" value={currentUser.email} onInput={handleInput}/>
                         <DatePick label="Birthdate" disabled={!editable} value={new Date(user.birthdate)} className={styles.date} handleDateChange={setUser}/>
                         <EditButton disabled={user.firstName === "" || user.lastName === "" || user.birthdate === ""} handleClick={handleClick}/>
+                        <div className={styles.inputWrapper}>
+                            <input className={styles.fileInput} onChange={handlePictureUpdate} type="file" name="file1"/>
+                            Upload Avatar
+                        </div>
                     </Info>
                 </Profile>
             </CustomPaper> 
@@ -65,18 +79,10 @@ const Profile = styled.div`
     align-items: center;
     gap: 50px;
     margin-top: 25px;
-    @media (max-width: 768px) {
-        flex-direction : column;
-        justify-content: flex-start;
-       
-    }
 `
 const ProfilePic = styled.img`
     border-radius: 50%;
-    max-width: 350px;
-    @media (max-width: 768px) {
-        width: 200px;
-    }
+    width: 350px;
 `
 const Info = styled.div`
     display: flex;
@@ -91,10 +97,7 @@ const CustomPaper = styled.div`
     width: 100%;
     flex-flow: column wrap;
     align-items : center;
-    background: #D3CCE3;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #E9E4F0, #D3CCE3);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #E9E4F0, #D3CCE3); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-   @media (max-width: 990px) {
-    height: 100%;
-   }
+    background: #D3CCE3; 
+    background: -webkit-linear-gradient(to right, #E9E4F0, #D3CCE3);
+    background: linear-gradient(to right, #E9E4F0, #D3CCE3);
 `

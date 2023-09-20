@@ -2,7 +2,7 @@ import { db } from '../../backendConfig/firebase';
 import { collection, getDocs, updateDoc, doc } from "firebase/firestore"; 
 import { setSnackbar } from "./snackbarActions";
 import { getAmount } from "../../utils/util";
-import { CronJob, CronTime } from 'cron';
+import { CronJob } from 'cron';
 
 export const LOGIN = "LOGIN";
 export const LOGOUT = "LOGOUT";
@@ -245,6 +245,7 @@ export const addAccountAction = (user, name, amount, accounts) => {
         };
         
         await updateDoc(userRef, newUser);
+        dispatch(setSnackbar(true, "success", "Account added successfully!"));
         dispatch({type: UPDATE_ACCOUNTS, payload: newUser});
 
     }
@@ -260,34 +261,41 @@ export const addExpense = (user, details) => {
         
         const id = new Date().valueOf();
 
-        newAccounts.forEach(acc => {
-            if(acc.name === details.account){
-                if(Number(acc.total) <  Number(details.amount)){
-                    dispatch(setSnackbar(true, "error", `You are trying to exceed your total in ${acc.name}!`));
-                    return;
-                }
-                else{
-                    newTransactions = [...user.transactions, {
-                        type: "expense",
-                        date: details.date,
-                        amount: details.amount,
-                        category: details.category,
-                        description: details.descr,
-                        id: id,
-                        account: acc.name
-                    }];
+        const accountIndex = newAccounts.findIndex(acc => acc.name === details.account);
+        if(accountIndex === -1) {
+            return;
+        }
 
-                    const newExpenses = [...acc.expenses, {date: details.date,
-                        amount: details.amount,
-                        category: details.category,
-                        description: details.descr,
-                        id: id
-                    }];
-                    newAccounts[br] = {...newAccounts[br], expenses: newExpenses, total: (Number(newAccounts[br].total) - Number(details.amount)).toString()};
-                }
-            }
-            br++;
-        });
+        if(Number(newAccounts[accountIndex].total) <  Number(details.amount)){
+            dispatch(setSnackbar(true, "error", `You are trying to exceed your total in ${newAccounts[accountIndex].name}!`));
+            return;
+        }
+        else{
+            newAccounts[accountIndex].expenses.push({date: details.date,
+                amount: details.amount,
+                category: details.category,
+                description: details.descr,
+                id: id
+            });
+
+            newTransactions = [...user.transactions, {
+                type: "expense",
+                date: details.date,
+                amount: details.amount,
+                category: details.category,
+                description: details.descr,
+                id: id,
+                account: newAccounts[accountIndex].name
+            }];
+
+            const newExpenses = [...newAccounts[accountIndex].expenses, {date: details.date,
+                amount: details.amount,
+                category: details.category,
+                description: details.descr,
+                id: id
+            }];
+            newAccounts[br] = {...newAccounts[br], expenses: newExpenses, total: (Number(newAccounts[br].total) - Number(details.amount)).toString()};
+        }
 
         const newBudget = user.budgets;
         if(newBudget.some(budget => budget.category === details.category)){
@@ -297,6 +305,7 @@ export const addExpense = (user, details) => {
         }
 
         await updateDoc(userRef, {transactions: newTransactions, accounts: newAccounts});
+        dispatch(setSnackbar(true, "success", "Expense added successfull!"));
         dispatch({type: ADD_EXPENSE, payload: {transactions: newTransactions, accounts: newAccounts}});
     }
 } 
@@ -305,11 +314,9 @@ export const addIncome = (user, details) => {
     return async function(dispatch) {
         const userRef = doc(db, "users", user.id);
         const newAccounts = user.accounts;
-        let br = 0;
         let newTransactions = [];
 
         const id = new Date().valueOf();
-
 
         const accountIndex = newAccounts.findIndex(acc => acc.name === details.account);
         newAccounts[accountIndex].incomes.push({date: details.date,
@@ -332,6 +339,7 @@ export const addIncome = (user, details) => {
         }];
 
         await updateDoc(userRef, {transactions: newTransactions, accounts: newAccounts});
+        dispatch(setSnackbar(true, "success", "Income added successfully!"))
         dispatch({type: ADD_INCOME, payload: {transactions: newTransactions, accounts: newAccounts}});
     }
 } 
@@ -340,8 +348,8 @@ export const addBudget = (user, details) => {
     return async function(dispatch) {
         const userRef = doc(db, "users", user.id);
         const newBudgets = user.budgets;
-
         const amount = getAmount(user, details.from, details.to, details.category);
+
         //in case we already have the same budget category we re-write it
         if(newBudgets.some(budget => budget.category === details.category)){
             newBudgets[newBudgets.findIndex(budget => budget.category === details.category)] = {
@@ -381,7 +389,6 @@ export const addBudget = (user, details) => {
         //     console.log("removed " + details.category + " budget");
         //     dispatch(removeBudget(user, details.category));
         // }).start();
-
     }
 } 
 

@@ -14,7 +14,6 @@ import { addDoc, collection } from "firebase/firestore";
 import { useDispatch } from 'react-redux';
 import { setSnackbar } from '../../redux/actions/snackbarActions';
 import { basicIncomeCategories, basicExpenseCategories } from "../../utils/consts";
-import { uuidv4 } from "../../utils/util";
 import SelectCurrency from "../SelectCurrency";
 
 export default function RegisterPage(){
@@ -85,7 +84,7 @@ export default function RegisterPage(){
                 try{
                     createUser();
                     navigate("/login");
-                    dispatch(setSnackbar(true, "success", "Registration successfull!"))
+                    dispatch(setSnackbar(true, "success", "Registration is successfull!"));
                 }
                 catch(err){
                     setHasError(true);
@@ -135,13 +134,12 @@ export default function RegisterPage(){
 
     return (
         <div className={styles.formContainer}>
-            <Card className={styles.regCard} >
+            <Card className={styles.regCard}>
                 
-                <div className={styles.Regform} key={uuidv4()}>
-                <h3 className={styles.formText} >Registration</h3>
-                    <form className={styles.input_container} >
-                        <TextField
-                            key={uuidv4()}
+                <div className={styles.Regform}>
+                <h3 className={styles.formText}>Registration</h3>
+                    <form className={styles.input_container}>
+                        <TextField 
                             fullWidth 
                             name="firstName" 
                             error={errors.firstName}
@@ -152,7 +150,6 @@ export default function RegisterPage(){
                             inputProps={{ maxLength: 16 }} 
                             onInput={e => handleInput(e)} />
                         <TextField 
-                            key={uuidv4()}
                             fullWidth 
                             name="lastName" 
                             id="lname" 
@@ -164,7 +161,6 @@ export default function RegisterPage(){
                             inputProps={{ maxLength: 16 }} 
                             onInput={e => handleInput(e)}/>
                         <TextField 
-                            key={uuidv4()}
                             fullWidth 
                             name="email" 
                             id="email"
@@ -176,7 +172,6 @@ export default function RegisterPage(){
                             inputProps={{ maxLength: 36 }} 
                             onInput={e => handleInput(e)}/>
                         <TextField 
-                            key={uuidv4()}
                             fullWidth 
                             name="pass" 
                             id="pass"
@@ -188,7 +183,6 @@ export default function RegisterPage(){
                             inputProps={{ maxLength: 16 }} 
                             onInput={e => handleInput(e)}/>
                         <TextField 
-                            key={uuidv4()}
                             fullWidth 
                             name="confirm" 
                             id="pass-rep" 
@@ -200,15 +194,15 @@ export default function RegisterPage(){
                             inputProps={{ maxLength: 16 }} 
                             onInput={e => handleInput(e)}/>
                     </form>
-                    <div className={styles.dateCurrencyContainer}  key={uuidv4()}>
-                        <DatePick key={uuidv4()} disabled={true} name="birthDate" label="Birthdate" handleDateChange={setUserData}/>
-                        <TextField key={uuidv4()} className={styles.startBudget} name="startBudget" id="budget" label="Start Budget" variant="outlined" onInput={e => handleInput(e)} />
-                        <SelectCurrency key={uuidv4()} handleChange={setCurrency}/>
+                    <div className={styles.dateCurrencyContainer}>
+                        <DatePick disabled={true} name="birthDate" label="Birthdate" handleDateChange={setUserData}/>
+                        <TextField className={styles.startBudget} name="startBudget" id="budget" label="Start Budget" variant="outlined" onInput={e => handleInput(e)} />
+                        <SelectCurrency handleChange={setCurrency}/>
                     </div>
                     
-                    <Button key={uuidv4()} variant="contained" disabled={!isFilled()} onClick={handleClick}>Sign up</Button>
+                    <Button variant="contained" disabled={!isFilled()} onClick={handleClick}>Sign up</Button>
                 
-                    <div key={uuidv4()}>
+                    <div>
                         <span> You already have account? </span> <Link to="/login"> Sign in</Link>
                     </div>
                     { hasError && <Alert severity="error">{message}</Alert> }
