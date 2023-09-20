@@ -34,7 +34,7 @@ export default function RecentHistoryTable() {
                     <TableBody>
                     {recentTransactions.map((trans) => (
                         <TableRow
-                        style={{height: "60px"}}
+                        style={{height: "63px"}}
                         key={trans.id}
                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                         >

@@ -4,7 +4,7 @@ import DatePick from './DatePick';
 import React from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import EditButton from './EditButton';
-import { updateUserInfoAction } from '../redux/actions/userActions';
+import { updateAvatarAction, updateUserInfoAction } from '../redux/actions/userActions';
 import styled from 'styled-components';
 import { Heading } from './pages/HistoryPage';
 import { setSnackbar } from "../redux/actions/snackbarActions";
@@ -18,7 +18,7 @@ export default function UserInfo(){
 
     const [user, setUser] = React.useState({firstName: currentUser.firstName, lastName: currentUser.lastName, birthdate: currentUser.birthdate});
 
-    const [pic, setPic] = React.useState("prof_pic.png");
+    const [pic, setPic] = React.useState(currentUser.avatar);
 
     const handleClick = () => {
         const currentYear = new Date().getFullYear();
@@ -34,11 +34,14 @@ export default function UserInfo(){
     }
 
     const handlePictureUpdate = (ev) => {
-        if(ev.target.value.split("\\")[2].split(".")[1] !== "png" && ev.target.value.split("\\")[2].split(".")[1] !== "jpg"){
+        const path = ev.target.value.split("\\")[2];
+        const extension = path.split(".")[1];
+        if(extension !== "png" && extension !== "jpg"){
             dispatch(setSnackbar(true, "warning", "You are trying to upload a file that is not an image!"));
             return;
         }
-        setPic(ev.target.value.split("\\")[2]);
+        dispatch(updateAvatarAction(currentUser, path));
+        setPic(path);
     }
 
     const handleInput = (ev) => {

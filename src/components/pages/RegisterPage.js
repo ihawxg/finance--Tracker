@@ -28,13 +28,12 @@ export default function RegisterPage(){
 
     const [message, setMessage] = useState("You'r dead baka");
 
-    const [hasError, setHasError] = useState(false);
-
-    const usersCollectionRef = collection(db, "users");
+    const [hasError, setHasError] = useState(false); 
 
     const [errors, setErrors] = React.useState({firstName: false, lastName: false, email: false, pass: false, confirm: false, birthdate: false});
 
     const createUser = async () => {
+        const usersCollectionRef = collection(db, "users");
         const date = JSON.stringify(new Date()).replaceAll('"', '');
         //init a new User with his coresponding data
         await addDoc(usersCollectionRef, {  firstName: userData.firstName,
@@ -45,6 +44,7 @@ export default function RegisterPage(){
                                             categories: [],
                                             incomeCategories: basicIncomeCategories,
                                             expenseCategories: basicExpenseCategories,
+                                            avatar: "prof_pic.png",
                                             accounts: [{
                                                         name: "main",
                                                         incomes: [{category: "Initial Deposit", date: date, description: "Initial App Deposit", amount: userData.startBudget, id: 1}],
@@ -145,22 +145,21 @@ export default function RegisterPage(){
         <div className={styles.formContainer}>
             <Card className={styles.regCard} >
                 
-                <div className={styles.Regform} >
+                <div className={styles.Regform}>
                 <h3 className={styles.formText} >Registration</h3>
                     <form className={styles.input_container} >
                         <TextField
-                            
                             fullWidth 
                             name="firstName" 
                             error={errors.firstName}
-                            id="fname" label="First Name" 
+                            id="fname" 
+                            label="First Name" 
                             variant="outlined" 
                             autoComplete="current-first-name" 
                             value={userData.firstName}
                             inputProps={{ maxLength: 16 }} 
                             onInput={e => handleInput(e)} />
                         <TextField 
-                           
                             fullWidth 
                             name="lastName" 
                             id="lname" 
@@ -172,7 +171,6 @@ export default function RegisterPage(){
                             inputProps={{ maxLength: 16 }} 
                             onInput={e => handleInput(e)}/>
                         <TextField 
-                          
                             fullWidth 
                             name="email" 
                             id="email"
@@ -184,7 +182,6 @@ export default function RegisterPage(){
                             inputProps={{ maxLength: 36 }} 
                             onInput={e => handleInput(e)}/>
                         <TextField 
-                           
                             fullWidth 
                             name="pass" 
                             id="pass"
@@ -196,7 +193,6 @@ export default function RegisterPage(){
                             inputProps={{ maxLength: 16 }} 
                             onInput={e => handleInput(e)}/>
                         <TextField 
-                          
                             fullWidth 
                             name="confirm" 
                             id="pass-rep" 
@@ -216,7 +212,7 @@ export default function RegisterPage(){
                     
                     <Button variant="contained" disabled={!isFilled()} onClick={handleClick}>Sign up</Button>
                 
-                    <div >
+                    <div>
                         <span> You already have account? </span> <Link to="/login"> Sign in</Link>
                     </div>
                     { hasError && <Alert severity="error">{message}</Alert> }

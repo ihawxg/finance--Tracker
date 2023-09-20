@@ -130,8 +130,10 @@ const ButtonRow = styled.div`
 `
 const Widget = styled(Account)`
     margin: 0;
-    padding: 20px;
     border-radius: 5px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
 `
 const Row = styled.div`
     display: flex;
@@ -160,7 +162,10 @@ const ButtonsWrapper = styled.div`
 const ChartWrapper = styled.div`
     min-height: 360px;
     min-width: 360px;
-    margin-left: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     
     @media (max-width: 1158px){
         width: 411px;

@@ -17,7 +17,7 @@ import { OurButton } from "./FormDialog";
 
 export default function AddCategoryBTN(props) {
   const [open, setOpen] = React.useState(false);
-  const [categoryInfo, setCategoryInfo] = React.useState({name: "", type: null});
+  const [categoryInfo, setCategoryInfo] = React.useState({name: "", type: "expense"});
   const [value, setValue] = React.useState('expense');
   const [color, setColor] = React.useState("#fff");
 
@@ -30,7 +30,7 @@ export default function AddCategoryBTN(props) {
   };
 
   const handleClose = () => {
-    setCategoryInfo({name: "", type: null});
+    setCategoryInfo({name: "", type: "expense"});
     setValue("")
     setOpen(false);
   };
@@ -54,6 +54,7 @@ export default function AddCategoryBTN(props) {
 
   const handleRadioChange = (event) => {
     setValue(event.target.value);
+    console.log(event.target.value);
     setCategoryInfo(prevInfo => ({...prevInfo, type: event.target.value}));
   };
 
