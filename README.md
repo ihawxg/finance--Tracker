@@ -32,6 +32,4 @@ Functionalities:
 
 Technologies:
 
-USED :
-
 •	HTML5 , CSS3 , React , Styled components , Redux & Redux Thunk , Firebase for backend , Fetch & Promises , Moment.js , Chart.js , React-Router , Cron , Material UI , Bootstrap / react-bootstrap , Git + GithubTrello
