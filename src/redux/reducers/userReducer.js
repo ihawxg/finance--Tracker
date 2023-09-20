@@ -85,7 +85,6 @@ export const userReducer = (state = INITIAL_STATE, action) => {
             }
             
         case UPDATE_AVATAR:
-            console.log(action.payload);
             return {
                 ...state,
                 user: {

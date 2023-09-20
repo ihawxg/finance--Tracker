@@ -74,7 +74,6 @@ export const getAmount = (user, from, to, category) => {
     user.accounts.forEach(acc => {
         acc.expenses.forEach(exp => {
             if(exp.category === category && isWithinDate(exp.date, from, to)){
-                console.log(exp.category, exp.description)
                 amount += Number(exp.amount);
             }
         })

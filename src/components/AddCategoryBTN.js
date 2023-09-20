@@ -54,7 +54,6 @@ export default function AddCategoryBTN(props) {
 
   const handleRadioChange = (event) => {
     setValue(event.target.value);
-    console.log(event.target.value);
     setCategoryInfo(prevInfo => ({...prevInfo, type: event.target.value}));
   };
 
