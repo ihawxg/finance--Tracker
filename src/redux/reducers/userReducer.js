@@ -9,15 +9,13 @@ import { ADD_EXPENSE,
     CLEAR_GOALS,
     LOGIN,
     LOGOUT,
-    EDIT_CATEGORY_EXPENSE,
-    EDIT_CATEGORY_INCOME,
     UPDATE_ACCOUNTS,
-    EDIT_ACCOUNT,
     UPDATE_USER_INFO,
     EDIT_INCOME_CATEGORY_COLOR,
     EDIT_EXPENSE_CATEGORY_COLOR,
     ADD_TO_GOAL,
     REMOVE_GOAL,
+    UPDATE_AVATAR
 } from '../actions/userActions';
 
 const INITIAL_STATE = {
@@ -36,6 +34,7 @@ const INITIAL_STATE = {
 
         ],
         budgets: [],
+        avatar: "prof_pic.png",
         goals: [],
         incomeCategories: basicIncomeCategories,
         expenseCategories: basicExpenseCategories,
@@ -74,6 +73,7 @@ export const userReducer = (state = INITIAL_STATE, action) => {
             
                     ],
                     budgets: [],
+                    avatar: "prof_pic.png",
                     transactions: [],
                     incomeCategories: basicIncomeCategories,
                     expenseCategories: basicExpenseCategories,
@@ -83,6 +83,16 @@ export const userReducer = (state = INITIAL_STATE, action) => {
                     goals: []
                 }
             }
+            
+        case UPDATE_AVATAR:
+            console.log(action.payload);
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    avatar: action.payload
+                }
+            }    
         case ADD_INCOME :
             return {
                 ...state,
@@ -155,27 +165,7 @@ export const userReducer = (state = INITIAL_STATE, action) => {
                     expenseCategories: [...state.user.expenseCategories, action.payload],
                     categories: [...state.user.categories, action.payload]
                 }
-            }   
-        case EDIT_CATEGORY_EXPENSE : 
-            return {
-                ...state,
-                user : {
-                    ...state.user,
-                    expenseCategories: action.payload.expenseCategories,
-                    incomeCategories: action.payload.incomeCategories,
-                    categories: action.payload.categories
-                }
-            } 
-        case EDIT_CATEGORY_INCOME : 
-            return {
-                ...state,
-                user : {
-                    ...state.user,
-                    incomeCategories: action.payload.incomeCategories,
-                    expenseCategories: action.payload.expenseCategories,
-                    categories: action.payload.categories
-                }
-            } 
+            }    
         case UPDATE_ACCOUNTS : 
             return {
                 ...state,
@@ -183,15 +173,6 @@ export const userReducer = (state = INITIAL_STATE, action) => {
                     ...state.user,
                     accounts: [...action.payload.accounts],
                     transactions: [...action.payload.transactions]
-                }
-            } 
-
-        case EDIT_ACCOUNT:
-            return {
-                ...state,
-                user : {
-                    ...state.user,
-                    accounts: [...action.payload]
                 }
             }
 

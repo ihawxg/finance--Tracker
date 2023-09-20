@@ -16,17 +16,12 @@ export const ADD_CATEGORY = "ADD_CATEGORY";
 export const ADD_BUDGET = "ADD_CATEGORY";
 export const ADD_CATEGORY_INCOME = "ADD_CATEGORY_INCOME";
 export const ADD_CATEGORY_EXPENSE = "ADD_CATEGORY_EXPENSE";
-export const EDIT_CATEGORY_EXPENSE = "EDIT_CATEGORY_EXPENSE";
-export const EDIT_CATEGORY_INCOME = "EDIT_CATEGORY_INCOME";
 export const UPDATE_ACCOUNTS = "UPDATE_ACCOUNTS";
-export const EDIT_ACCOUNT = "EDIT_ACCOUNT";
-export const REMOVE_ACCOUNT = "REMOVE_ACCOUNT";
-export const EDIT_INCOME = "EDIT_INCOME";
-export const EDIT_EXPENSE = "EDIT_EXPENSE";
 export const UPDATE_USER_INFO = "UPDATE_USER_INFO";
 export const EDIT_EXPENSE_CATEGORY_COLOR = "EDIT_EXPENSE_CATEGORY_COLOR";
 export const EDIT_INCOME_CATEGORY_COLOR = "EDIT_INCOME_CATEGORY_COLOR";
 export const REMOVE_GOAL = "REMOVE_GOAL";
+export const UPDATE_AVATAR = "UPDATE_AVATAR";
 
 export const updateUserInfoAction = (id, details) => {
     return async function(dispatch) {
@@ -91,6 +86,15 @@ export const addGoal = (user, goalName, goalAmount) => {
 
         await updateDoc(userRef, {goals: newGoals});
         dispatch({type: ADD_GOAL, payload: newGoals});
+    }
+}
+
+export const updateAvatarAction = (user, picturePath) => {
+    return async function(dispatch) {
+        console.log("baba qga");
+        const userRef = doc(db, "users", user.id);
+        await updateDoc(userRef, {avatar: picturePath});
+        dispatch({type: UPDATE_AVATAR, payload: picturePath});
     }
 }
 
