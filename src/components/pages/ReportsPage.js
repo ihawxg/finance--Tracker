@@ -96,6 +96,10 @@ const PieCharts = styled.div`
 `
 const FullWidthButton = styled(StyledButton)`
    width: 100%;
+   @media (max-width: 768px) {
+       width: 300px;
+       margin: 0 auto;
+   }
 `
 export const Charts = styled(Account)`
    max-width: 92%;

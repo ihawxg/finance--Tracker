@@ -3,12 +3,14 @@ import { SET_SNACKBAR } from '../actions/snackbarActions';
 const INITIAL_STATE = {
     snackbarOpen : false,
     snackbarType : "success",
-    snackbarMessage : ""
+    snackbarMessage : "",
+    vertical : 'bottom',
+    horizontal : 'right'
 }
 
 export const snackbarReducer = (state = INITIAL_STATE, action) => {
     switch(action.type) {
-        case SET_SNACKBAR :
+        case SET_SNACKBAR : 
             const {snackbarOpen, snackbarType, snackbarMessage} = action.payload;
             return {
                 ...state,
@@ -19,4 +21,4 @@ export const snackbarReducer = (state = INITIAL_STATE, action) => {
         default :
             return state;
     }
-}
+} 

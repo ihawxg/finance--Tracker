@@ -4,7 +4,7 @@ import DatePick from './DatePick';
 import React from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import EditButton from './EditButton';
-import { updateAvatarAction, updateUserInfoAction } from '../redux/actions/userActions';
+import { updateUserInfoAction } from '../redux/actions/userActions';
 import styled from 'styled-components';
 import { Heading } from './pages/HistoryPage';
 import { setSnackbar } from "../redux/actions/snackbarActions";
@@ -18,7 +18,7 @@ export default function UserInfo(){
 
     const [user, setUser] = React.useState({firstName: currentUser.firstName, lastName: currentUser.lastName, birthdate: currentUser.birthdate});
 
-    const [pic, setPic] = React.useState(currentUser.avatar);
+    const [pic, setPic] = React.useState("prof_pic.png");
 
     const handleClick = () => {
         const currentYear = new Date().getFullYear();
@@ -34,14 +34,11 @@ export default function UserInfo(){
     }
 
     const handlePictureUpdate = (ev) => {
-        const path = ev.target.value.split("\\")[2];
-        const extension = path.split(".")[1];
-        if(extension !== "png" && extension !== "jpg"){
+        if(ev.target.value.split("\\")[2].split(".")[1] !== "png" && ev.target.value.split("\\")[2].split(".")[1] !== "jpg"){
             dispatch(setSnackbar(true, "warning", "You are trying to upload a file that is not an image!"));
             return;
         }
-        dispatch(updateAvatarAction(currentUser, path));
-        setPic(path);
+        setPic(ev.target.value.split("\\")[2]);
     }
 
     const handleInput = (ev) => {
@@ -61,7 +58,7 @@ export default function UserInfo(){
                         <EditButton disabled={user.firstName === "" || user.lastName === "" || user.birthdate === ""} handleClick={handleClick}/>
                         <div className={styles.inputWrapper}>
                             <input className={styles.fileInput} onChange={handlePictureUpdate} type="file" name="file1"/>
-                            Upload Avatar
+                            <UploadButton>Upload Avatar</UploadButton>
                         </div>
                     </Info>
                 </Profile>
@@ -104,15 +101,17 @@ const CustomPaper = styled.div`
     display : flex;
     margin-top: -20px;
     padding: 30px;
-    height: 100vh;
+    height: 100%;
     width: 100%;
     flex-flow: column wrap;
     align-items : center;
     background: #D3CCE3;
     background: -webkit-linear-gradient(to right, #E9E4F0, #D3CCE3);
     background: linear-gradient(to right, #E9E4F0, #D3CCE3);
-    @media (max-width: 990px) {
-        height: 100%;
-    }
-
+`
+const UploadButton = styled.span` 
+    font-weight: 300;
+    font-size: 14px;
+    text-transform: uppercase;
+    font-family: 'Roboto', sans-serif;
 `
