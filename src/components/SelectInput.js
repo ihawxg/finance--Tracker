@@ -34,10 +34,10 @@ export default function SelectInput(props) {
   return (
     <div>
       <FormControl sx={{ m: 1, width: 300 }}>
-        <InputLabel id="demo-multiple-checkbox-label">Accounts</InputLabel>
+        <InputLabel id="multiple-checkbox">Accounts</InputLabel>
         <Select
-          labelId="demo-multiple-checkbox-label"
-          id="demo-multiple-checkbox"
+          labelId="multiple-checkbox"
+          id="multiple-checkbox"
           multiple
           value={accountNames}
           onChange={handleChange}

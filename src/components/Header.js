@@ -17,6 +17,7 @@ import FlagIcon from '@mui/icons-material/Flag';
 import { useDispatch, useSelector } from "react-redux";
 import { logoutAction } from "../redux/actions/userActions";
 import { closeHeader, openHeader } from "../redux/actions/headerActions";
+import logo from '../components/imgs/logo.jpg';
 
 export default function Header(){
     const location = useLocation();
@@ -53,7 +54,7 @@ export default function Header(){
                         <Link className={page === "categories" ? `${styles.active} ${styles.btn}` : `${styles.btn}`} to="/categories"><CategoryIcon/><LinkName>Categories</LinkName></Link>  
                         <Link className={page === "history" ? `${styles.active} ${styles.btn}` : `${styles.btn}`} to="/history"><HistoryIcon /><LinkName>History</LinkName></Link> 
                         <Link className={page === "logout" ? `${styles.active} ${styles.btn}` : `${styles.btn}`} onClick={() => dispatch(logoutAction)} to="/login"><LogoutIcon /><LinkName>Logout</LinkName></Link>
-                        <StyledIcon><Logo src="logo.png" onClick={handleClick} /></StyledIcon>
+                        <StyledIcon><Logo src={logo} onClick={handleClick} /></StyledIcon>
                     </>
                 }
                 

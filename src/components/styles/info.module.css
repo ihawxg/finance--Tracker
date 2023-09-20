@@ -85,7 +85,11 @@
     display: flex;
     flex-direction: column;
     row-gap: 20px;
+    height: 97vh;
     align-items: center;
+    background: #D3CCE3;
+    background: -webkit-linear-gradient(to right, #E9E4F0, #D3CCE3);
+    background: linear-gradient(to right, #E9E4F0, #D3CCE3);
 }
 
 .date{

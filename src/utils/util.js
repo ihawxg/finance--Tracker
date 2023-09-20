@@ -27,7 +27,7 @@ export const getColor = (user, categoryName, type) => {
 }
 
 export const toCurrency = (num, currency = "BGN") => {
-    return Number(num).toLocaleString('en-US', {
+    return Number(num).toLocaleString({
         style: 'currency',
         currency
       })
@@ -74,7 +74,6 @@ export const getAmount = (user, from, to, category) => {
     user.accounts.forEach(acc => {
         acc.expenses.forEach(exp => {
             if(exp.category === category && isWithinDate(exp.date, from, to)){
-                // console.log(exp.category, exp.description)
                 amount += Number(exp.amount);
             }
         })

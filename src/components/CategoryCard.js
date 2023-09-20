@@ -37,7 +37,7 @@ export default function CategoryCard(props) {
         <>
             <StyledPaper className={styles.boxContainer}>
                 <CategoryHeading>{props.label}</CategoryHeading>
-                <div className="increaseBox">
+                <div className={styles.increaseBox}>
                     <ColorCard onClick={handleClick} color={props.color}/>
                 </div>
             </StyledPaper>
@@ -50,7 +50,7 @@ export default function CategoryCard(props) {
                 <Box sx={style}>
                     <h5>Edit Category</h5>
                     <HexColorPicker color={color} onChange={setColor}/>
-                    <Button style={{width: "180px", marginTop: "20px"}} variant="contained" onClick={handleEditColor}>Edit Color</Button>
+                    <Button style={{width: "200px", marginTop: "20px"}} variant="contained" color="secondary" onClick={handleEditColor}>Edit Color</Button>
                 </Box>
             </Modal>
         </>

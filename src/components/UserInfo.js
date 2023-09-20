@@ -104,7 +104,7 @@ const CustomPaper = styled.div`
     display : flex;
     margin-top: -20px;
     padding: 30px;
-    height: 100%;
+    height: 97vh;
     width: 100%;
     flex-flow: column wrap;
     align-items : center;

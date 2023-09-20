@@ -38,7 +38,7 @@ export default function DataTable(props) {
             format: (value) => toCurrency(value, currency),
             icon: <SavingsIcon />
         },
-        { id: 'date', label: 'Completed on', minWidth: 170, icon: <DateRangeIcon /> },
+        { id: 'date', label: 'Finished on', minWidth: 170, icon: <DateRangeIcon /> },
         { id: 'time', label: 'Time', minWidth: 100, align: 'left', icon: <AccessTimeIcon /> }
     ];
 

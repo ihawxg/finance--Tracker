@@ -59,5 +59,4 @@ export const AccountFilter = (props) => {
             </FormControl>
         </div>
     );
-
 }

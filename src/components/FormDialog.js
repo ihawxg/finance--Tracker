@@ -34,7 +34,6 @@ export const OurButton = styled(Button)({
 });
 
 export default function FormDialog(props) {
-
   const dateNow = new Date();
   const dateNextMonth = new Date();
   dateNextMonth.setMonth(dateNextMonth.getMonth() + 1);
@@ -115,13 +114,6 @@ export default function FormDialog(props) {
   };
 
   const handleEdit = (value) => {    
-      // const detail = {
-      //     amount,
-      //     descr,
-      //     category,
-      //     date: selectedDate,
-      //     account
-      // }
       if(props.value === "Budget") {
             let details = {
               amount, 

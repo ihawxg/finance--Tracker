@@ -46,10 +46,10 @@ export default function FormDialog() {
   return (
     <PushDownDiv>
       <ButtonHeader>
-        <Button variant="contained" color="info" sx={{borderRadius : '0', width : '50%', float : 'left'}} onClick={() => handleRedirect("login")}> LOGIN </Button>
+        <Button variant="contained" color="secondary" sx={{borderRadius : '0', width : '50%', float : 'left'}} onClick={() => handleRedirect("login")}> LOGIN </Button>
         <Button variant='contained' color='secondary' sx={{borderRadius : '0', width : '50%'}} onClick={() => handleRedirect("register")}> REGISTER </Button>
       </ButtonHeader>
-      <Button sx={{borderRadius : '0'}} variant="contained" fullWidth color="primary" onClick={handleOpen}>
+      <Button sx={{borderRadius : '0'}} variant="contained" fullWidth color="secondary" onClick={handleOpen}>
          CONTACT US NOW
       </Button>
       <Dialog open={open} onClose={handleClose}>

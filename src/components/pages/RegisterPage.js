@@ -103,39 +103,39 @@ export default function RegisterPage(){
         }
     }
 
-    //getting the local currency of the user
-    React.useEffect( () => {
-        let controller = new AbortController();
-        let signal = controller.signal;
+    //getting the local currency of the user automatically
+    // React.useEffect( () => {
+    //     let controller = new AbortController();
+    //     let signal = controller.signal;
 
-        function getCurrency(country){
-            fetch(`https://restcountries.com/v3.1/name/${country}?fullText=true`, signal)
-            .then(resp => resp.json())
-            .then(data => setCurrency(Object.keys(data[0].currencies)[0]))
-        }
+    //     function getCurrency(country){
+    //         fetch(`https://restcountries.com/v3.1/name/${country}?fullText=true`, signal)
+    //         .then(resp => resp.json())
+    //         .then(data => setCurrency(Object.keys(data[0].currencies)[0]))
+    //     }
 
-        fetch("https://spott.p.rapidapi.com/places/ip/me", {
-            signal,
-            "method": "GET",
-            "headers": {
-                "x-rapidapi-host": "spott.p.rapidapi.com",
-                "x-rapidapi-key": "c53e90f3c9msh82b20dd55873607p113bc7jsnf803978e85bc"
-            }
-        })
-        .then(resp => resp.json())
-        .then(data => {
-            if(typeof data.country != "undefined"){
-                getCurrency(data.country.name);
-            }
-            else{
-                getCurrency(data.name);
-            }
-        })
+    //     fetch("https://spott.p.rapidapi.com/places/ip/me", {
+    //         signal,
+    //         "method": "GET",
+    //         "headers": {
+    //             "x-rapidapi-host": "spott.p.rapidapi.com",
+    //             "x-rapidapi-key": "c53e90f3c9msh82b20dd55873607p113bc7jsnf803978e85bc"
+    //         }
+    //     })
+    //     .then(resp => resp.json())
+    //     .then(data => {
+    //         if(typeof data.country != "undefined"){
+    //             getCurrency(data.country.name);
+    //         }
+    //         else{
+    //             getCurrency(data.name);
+    //         }
+    //     });
 
-        return () => {
-            controller.abort();
-        }
-    }, []);
+    //     return () => {
+    //         controller.abort();
+    //     }
+    // }, []);
 
     const isFilled = () => {
         return (userData.firstName && userData.lastName && userData.email && userData.pass && userData.confirm && userData.birthdate && userData.startBudget && userData.startBudget !== "0");
