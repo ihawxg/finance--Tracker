@@ -79,10 +79,18 @@ const Profile = styled.div`
     align-items: center;
     gap: 50px;
     margin-top: 25px;
+    @media (max-width: 768px) {
+        flex-direction : column;
+        justify-content: flex-start;
+       
+    }
 `
 const ProfilePic = styled.img`
     border-radius: 50%;
-    width: 350px;
+    max-width: 350px;
+    @media (max-width: 768px) {
+        width: 200px;
+    }
 `
 const Info = styled.div`
     display: flex;
@@ -97,7 +105,11 @@ const CustomPaper = styled.div`
     width: 100%;
     flex-flow: column wrap;
     align-items : center;
-    background: #D3CCE3; 
+    background: #D3CCE3;
     background: -webkit-linear-gradient(to right, #E9E4F0, #D3CCE3);
     background: linear-gradient(to right, #E9E4F0, #D3CCE3);
+    @media (max-width: 990px) {
+        height: 100%;
+    }
+
 `

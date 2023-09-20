@@ -23,9 +23,13 @@ export const OurButton = styled(Button)({
   padding: '6px 12px',
   lineHeight: 1.5,
   background: "#753068",
+  minWidth : "240px",
   fontFamily: "Poppins",
   '&:hover': {
     background: '#ad5389',
+  },
+  '@media (max-width: 768px)': {
+    width: '100%', 
   }
 });
 
