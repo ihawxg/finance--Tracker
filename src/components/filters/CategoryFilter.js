@@ -54,7 +54,7 @@ export const CategoryFilter = (props) => {
                 >
                     {allCategories.map((category) => (
                         <MenuItem key={category.name} value={category.name}>
-                            <Checkbox  color="secondary" checked={selectedCategory.indexOf(category.name) > -1} />
+                            <Checkbox  color="secondary" checked={props.value.indexOf(category.name) > -1} />
                             <ListItemText primary={category.name} />
                         </MenuItem>
                     ))}

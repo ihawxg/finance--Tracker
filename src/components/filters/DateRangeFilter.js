@@ -8,16 +8,15 @@ import { StyledButton } from "../pages/HistoryPage";
 import Box from '@mui/material/Box';
 
 export const DateRangeFilter = (props) => {
-    const [value, setValue] = React.useState([new Date(), new Date()]);
 
     return (
       <LocalizationProvider dateAdapter={AdapterDateFns}>
           <DateRangePicker
+            clearable
             color="secondary"
             value={props.value}
             maxDate={ props.disabled ? new Date() : new Date('2048-12-01T14:07:28.000Z') }
             onChange={(newValue) => {
-              setValue(newValue);
               props.onChange(newValue);
             }}
 

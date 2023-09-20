@@ -29,7 +29,7 @@ export default function HistoryPage() {
             let current = new Date(transaction.date).getTime();
             if (date[0]) {
                 let start = date[0].getTime();
-                let end = (date[1] || new Date()).getTime();
+                let end = (date[1] || new Date()).setHours(23, 59, 59);
                 return (current >= start && current <= end);
             } else return transaction;
         }).filter(transaction => {
@@ -45,17 +45,32 @@ export default function HistoryPage() {
         setAmountRange([0, max])
         setSelectedCategories([])
         setDateRange([null, null])
-        filterTransactions(selectedAccounts, selectedType, amountRange, selectedCategories, dateRange)
+        filterTransactions([], [], [0, max], [], [null, null])
     }
     return (
         <StyledPage status={headerOpen}>
             <Heading>Transaction history</Heading>
             <StyledFilters>
-                <AccountFilter value={selectedAccounts} onChange={(e) => { setSelectedAccounts(e.target.value); filterTransactions(e.target.value, selectedType, amountRange, selectedCategories, dateRange) }} />
-                <TypeFilter value={selectedType} onChange={(e) => { setSelectedType(e.target.value); filterTransactions(selectedAccounts, e.target.value, amountRange, selectedCategories, dateRange) }} />
-                <CategoryFilter value={selectedCategories} disabled={false} onChange={(e) => { setSelectedCategories(e.target.value); filterTransactions(selectedAccounts, selectedType, amountRange, e.target.value, dateRange) }} />
-                <DateRangeFilter clearFilters={clearFilters} disabled={true} value={dateRange} onChange={(e) => { setDateRange(e); filterTransactions(selectedAccounts, selectedType, amountRange, selectedCategories, e) }} /> 
-                <AmountRangeFilter value={amountRange} max={max} onChange={(e) => { setAmountRange(e.target.value); filterTransactions(selectedAccounts, selectedType, e.target.value, selectedCategories, dateRange) }} />
+                <AccountFilter value={selectedAccounts} onChange={(e) => { 
+                    setSelectedAccounts(e.target.value); 
+                    filterTransactions(e.target.value, selectedType, amountRange, selectedCategories, dateRange) }}
+                />
+                <TypeFilter value={selectedType} onChange={(e) => { 
+                    setSelectedType(e.target.value); 
+                    filterTransactions(selectedAccounts, e.target.value, amountRange, selectedCategories, dateRange) }} 
+                />
+                <CategoryFilter value={selectedCategories} disabled={false} onChange={(e) => { 
+                    setSelectedCategories(e.target.value); 
+                    filterTransactions(selectedAccounts, selectedType, amountRange, e.target.value, dateRange) }} 
+                />
+                <DateRangeFilter value={dateRange} clearFilters={clearFilters} disabled={true} onChange={(e) => { 
+                    setDateRange(e);
+                    filterTransactions(selectedAccounts, selectedType, amountRange, selectedCategories, e) }} 
+                /> 
+                <AmountRangeFilter value={amountRange} max={max} onChange={(e) => { 
+                    setAmountRange(e.target.value); 
+                    filterTransactions(selectedAccounts, selectedType, e.target.value, selectedCategories, dateRange) }} 
+                />
             </StyledFilters>
             <DataTable data={transactions} />
         </StyledPage>

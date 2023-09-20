@@ -47,11 +47,11 @@ export const TypeFilter = (props) => {
                 >
                     
                     <MenuItem key="income" value="income">
-                        <Checkbox color="secondary" checked={selectedType.indexOf("income") > -1} />
+                        <Checkbox color="secondary" checked={props.value.indexOf("income") > -1} />
                         <ListItemText primary="income" />
                     </MenuItem>
                     <MenuItem key="expense" value="expense">
-                        <Checkbox  color="secondary" checked={selectedType.indexOf("expense") > -1} />
+                        <Checkbox  color="secondary" checked={props.value.indexOf("expense") > -1} />
                         <ListItemText primary="expense" />
                     </MenuItem>
                 </Select>
