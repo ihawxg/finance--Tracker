@@ -67,6 +67,6 @@ export const BarChart = (props) => {
     };
 
     return (
-        <Bar  data={data}/>
+        <Bar data={data}/>
     )
 } 

@@ -8,8 +8,6 @@ import { HexColorPicker } from "react-colorful";
 import { useDispatch, useSelector } from "react-redux";
 import { editExpenseColor, editIncomeColor } from "../redux/actions/userActions";
 import Paper from '@mui/material/Paper';
-import { setSnackbar } from "../redux/actions/snackbarActions";
-
 
 export default function CategoryCard(props) {
     const [open, setOpen] = React.useState(false);
@@ -81,8 +79,8 @@ const ColorCard = styled.span`
     background-color: ${props => props.color};
     transition: width 1s, height 1s;
     &:hover{
-      width: 70px;
-      height: 70px;
+      width: 60px;
+      height: 60px;
       cursor: pointer;
     }
 `;

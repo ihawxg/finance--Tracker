@@ -37,10 +37,10 @@ export default function AddCategoryBTN(props) {
 
   const handleAdd = () => {
     if(value === "income") {
-        dispatch(updateUserIncomeCategories(user, categoryInfo, color));
+        dispatch(updateUserIncomeCategories(user, categoryInfo.name, color));
     } 
     else {
-        dispatch(updateUserExpenseCategories(user, categoryInfo, color));
+        dispatch(updateUserExpenseCategories(user, categoryInfo.name, color));
     }
     
     setCategoryInfo({name: "", type: "expense"});

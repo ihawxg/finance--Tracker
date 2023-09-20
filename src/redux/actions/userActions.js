@@ -16,17 +16,12 @@ export const ADD_CATEGORY = "ADD_CATEGORY";
 export const ADD_BUDGET = "ADD_CATEGORY";
 export const ADD_CATEGORY_INCOME = "ADD_CATEGORY_INCOME";
 export const ADD_CATEGORY_EXPENSE = "ADD_CATEGORY_EXPENSE";
-export const EDIT_CATEGORY_EXPENSE = "EDIT_CATEGORY_EXPENSE";
-export const EDIT_CATEGORY_INCOME = "EDIT_CATEGORY_INCOME";
 export const UPDATE_ACCOUNTS = "UPDATE_ACCOUNTS";
-export const EDIT_ACCOUNT = "EDIT_ACCOUNT";
-export const REMOVE_ACCOUNT = "REMOVE_ACCOUNT";
-export const EDIT_INCOME = "EDIT_INCOME";
-export const EDIT_EXPENSE = "EDIT_EXPENSE";
 export const UPDATE_USER_INFO = "UPDATE_USER_INFO";
 export const EDIT_EXPENSE_CATEGORY_COLOR = "EDIT_EXPENSE_CATEGORY_COLOR";
 export const EDIT_INCOME_CATEGORY_COLOR = "EDIT_INCOME_CATEGORY_COLOR";
 export const REMOVE_GOAL = "REMOVE_GOAL";
+export const UPDATE_AVATAR = "UPDATE_AVATAR";
 
 export const updateUserInfoAction = (id, details) => {
     return async function(dispatch) {
@@ -69,20 +64,6 @@ export const clearGoalsAction = {
     type : CLEAR_GOALS
 }
 
-export const addCategoryIncomeAction = (category) => {
-    return {
-        type : ADD_CATEGORY_INCOME,
-        payload : category
-    }
-}
-
-export const addCategoryExpenseAction = (category) => {
-    return {
-        type : ADD_CATEGORY_EXPENSE,
-        payload : category
-    }
-}
-
 export const addGoal = (user, goalName, goalAmount) => {
     return async function(dispatch) {
         const userRef = doc(db, "users", user.id);
@@ -91,6 +72,15 @@ export const addGoal = (user, goalName, goalAmount) => {
 
         await updateDoc(userRef, {goals: newGoals});
         dispatch({type: ADD_GOAL, payload: newGoals});
+    }
+}
+
+export const updateAvatarAction = (user, picturePath) => {
+    return async function(dispatch) {
+        console.log("baba qga");
+        const userRef = doc(db, "users", user.id);
+        await updateDoc(userRef, {avatar: picturePath});
+        dispatch({type: UPDATE_AVATAR, payload: picturePath});
     }
 }
 
@@ -257,8 +247,6 @@ export const addExpense = (user, details) => {
         const newAccounts = user.accounts;
         let newTransactions = [];
         
-        let br = 0;
-        
         const id = new Date().valueOf();
 
         const accountIndex = newAccounts.findIndex(acc => acc.name === details.account);
@@ -271,13 +259,6 @@ export const addExpense = (user, details) => {
             return;
         }
         else{
-            newAccounts[accountIndex].expenses.push({date: details.date,
-                amount: details.amount,
-                category: details.category,
-                description: details.descr,
-                id: id
-            });
-
             newTransactions = [...user.transactions, {
                 type: "expense",
                 date: details.date,
@@ -294,18 +275,24 @@ export const addExpense = (user, details) => {
                 description: details.descr,
                 id: id
             }];
-            newAccounts[br] = {...newAccounts[br], expenses: newExpenses, total: (Number(newAccounts[br].total) - Number(details.amount)).toString()};
+            newAccounts[accountIndex] = {...newAccounts[accountIndex], expenses: newExpenses, total: (Number(newAccounts[accountIndex].total) - Number(details.amount)).toString()};
         }
 
+        let amountExceeded = false;
         const newBudget = user.budgets;
         if(newBudget.some(budget => budget.category === details.category)){
             const ind = newBudget.findIndex(budget => budget.category === details.category);
             const prevBudget = {...newBudget[ind], amount: newBudget[ind].max};
+            if(Number(prevBudget.amount) < getAmount(user, prevBudget.from, prevBudget.to, prevBudget.category)) {
+                amountExceeded = true;
+            }
             dispatch(addBudget(user, prevBudget));
         }
 
         await updateDoc(userRef, {transactions: newTransactions, accounts: newAccounts});
-        dispatch(setSnackbar(true, "success", "Expense added successfully!"));
+        if(!amountExceeded){
+            dispatch(setSnackbar(true, "success", "Expense added successfull!"));
+        }
         dispatch({type: ADD_EXPENSE, payload: {transactions: newTransactions, accounts: newAccounts}});
     }
 } 
@@ -349,7 +336,7 @@ export const addBudget = (user, details) => {
         const userRef = doc(db, "users", user.id);
         const newBudgets = user.budgets;
         const amount = getAmount(user, details.from, details.to, details.category);
-
+        console.log(amount);
         //in case we already have the same budget category we re-write it
         if(newBudgets.some(budget => budget.category === details.category)){
             newBudgets[newBudgets.findIndex(budget => budget.category === details.category)] = {
@@ -378,11 +365,11 @@ export const addBudget = (user, details) => {
         dispatch({type: UPDATE_BUDGET, payload: newBudgets});
 
         //for demonstration purspose
-        let date = new Date();
-        date.setMinutes(date.getMinutes() + 1);
-        new CronJob(date,() => {
-            dispatch(removeBudget(user, details.category));
-        }).start();
+        // let date = new Date();
+        // date.setMinutes(date.getMinutes() + 1);
+        // new CronJob(date,() => {
+        //     dispatch(removeBudget(user, details.category));
+        // }).start();
 
         //code for real removing budgets on time
         // new CronJob(new Date(details.to),() => {
